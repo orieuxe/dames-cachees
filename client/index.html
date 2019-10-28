@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dame cachées</title>
+    <script src="lib/jquery.min.js"></script>
+    <!-- <script src="https://gist.github.com/gordonbrander/2230317.js"></script> -->
+
+    <!-- Chess librairies -->
+    <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
+    <script src="js/constants.js"></script>
+    <script src="lib/myChessboard.js"></script>
+    <script src="lib/myChess.js"></script>
+  </head>
+
+  <body style="font-size: 20px;">
+    <div id="board" style="width: 300px"></div>
+
+    <!-- multiplayer hidden Queen Game -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/hiddenQueenGame.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/client.js"></script>
+  </body>
+</html>
