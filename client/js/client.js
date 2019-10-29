@@ -1,6 +1,5 @@
 const sock = io();
 var boardOrientation = null;
-
 var board = null;
 var player = null;
 
@@ -11,12 +10,12 @@ const createClient = (color) => {
 }
 
 const createGame = (message) => {
-  Chatbox.writeEvent(message);
   const fen = board.getFen();
   board.board.clear();
   setTimeout(function () {
+    Chatbox.writeEvent(message);
     board = new PlayingBoard(fen);
-  }, 50);
+  }, 100);
 }
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')

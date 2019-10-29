@@ -1,6 +1,6 @@
 class PlayingBoard{
   constructor(fen){
-    this.game = new Chess();
+    this.chess = new Chess();
     this.color = boardOrientation.charAt(0);
 
     sock.on('makeMove', this.makeMove.bind(this));
@@ -14,7 +14,7 @@ class PlayingBoard{
       pieceTheme:this.getPieceTheme.bind(this),
     }
     this.board = ChessBoard('board', config);
-    this.game.load(fen + " w KQkq - 0 1");
+    this.chess.load(fen + " w KQkq - 0 1");
   }
 
   getPieceTheme(pieceString){
@@ -38,13 +38,13 @@ class PlayingBoard{
     // only pick up pieces for the player to move
     if(!piece.includes(this.color)) return false;
 
-    // do not pick up pieces if the game is over
-    if (this.game.game_over()) return false
+    // do not pick up pieces if the this.chess is over
+    if (this.chess.game_over()) return false
   }
 
   onDrop (source, target) {
     // see if the move is legal
-    var move = this.game.move({
+    var move = this.chess.move({
       from: source,
       to: target,
       promotion: 'q' // NOTE: always promote to a queen for example simplicity
@@ -52,16 +52,51 @@ class PlayingBoard{
 
     // illegal move
     if (move === null) return 'snapback';
+
+
     sock.emit('move', move);
     this.updateBoardPosition();
   }
 
   updateBoardPosition(){
-    this.board.position(this.game.fen())
+    this.board.position(this.chess.fen())
+
+    // this.updateStatus();
   }
 
+ updateStatus () {
+  var status = ''
+
+  var moveColor = 'White'
+  if (this.chess.turn() === 'b') {
+    moveColor = 'Black'
+  }
+
+  // checkmate?
+  if (this.chess.in_checkmate()) {
+    status = 'Game over, ' + moveColor + ' is in checkmate.'
+  }
+
+  // draw?
+  else if (this.chess.in_draw()) {
+    status = 'Game over, drawn position'
+  }
+
+  // game still on
+  else {
+    status = moveColor + ' to move'
+
+    // check?
+    if (this.chess.in_check()) {
+      status += ', ' + moveColor + ' is in check'
+    }
+  }
+
+  Chatbox.writeEvent(status)
+}
+
   makeMove(move) {
-    this.game.move(move);
+    this.chess.move(move);
     this.updateBoardPosition();
   }
 }
