@@ -13,7 +13,10 @@ const createClient = (color) => {
 const createGame = (message) => {
   Chatbox.writeEvent(message);
   const fen = board.getFen();
-  board = new PlayingBoard(fen);
+  board.board.clear();
+  setTimeout(function () {
+    board = new PlayingBoard(fen);
+  }, 50);
 }
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
