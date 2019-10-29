@@ -325,7 +325,7 @@ var Chess = function(fen) {
           sum_fields += parseInt(rows[i][k], 10);
           previous_was_number = true;
         } else {
-          if (!/^[prnbqkPRNBQK]$/.test(rows[i][k])) {
+          if (!/^[pnbrqkhPNBRQKH]$/.test(rows[i][k])) {
             return { valid: false, error_number: 9, error: errors[9] };
           }
           sum_fields += 1;

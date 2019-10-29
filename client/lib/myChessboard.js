@@ -512,6 +512,12 @@
 
   // TODO: add some asserts here for calculatePositionFromMoves
 
+  function putPieceOnSquare(position, piece, square){
+    var newPosition = deepCopy(position)
+    newPosition[square] = piece;
+    return newPosition;
+  }
+
   // ---------------------------------------------------------------------------
   // HTML
   // ---------------------------------------------------------------------------
@@ -1482,6 +1488,21 @@
 
       // return the new position object
       return newPos
+    }
+
+    widget.put = function(piece, square) {
+      //if invalid piece
+      if (!validPieceCode(piece)) {
+        error(2826, 'Invalid piece passed to the put method.', piece)
+        return
+      }
+
+      //if invalid square
+      if (!validSquare(square)) {
+        error(2826, 'Invalid square passed to the put method.', square)
+        return
+      }
+      setCurrentPosition(putPieceOnSquare(currentPosition, piece, square));
     }
 
     widget.orientation = function (arg) {

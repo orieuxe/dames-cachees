@@ -1,7 +1,7 @@
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-const HqGame = require('./hq-game');
+const HqGameRoom = require('./HqGameRoom');
 
 const app = express();
 
@@ -19,7 +19,7 @@ io.on('connection', (sock) => {
   if(waitingSocket){
     //start a game
     const waiterIsWhite = true;
-    new HqGame(waitingSocket, sock, waiterIsWhite)
+    new HqGameRoom(waitingSocket, sock, waiterIsWhite)
     waitingSocket = null;
   }else{
     waitingSocket = sock;
