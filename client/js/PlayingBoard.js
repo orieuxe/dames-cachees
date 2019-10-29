@@ -26,7 +26,6 @@ class PlayingBoard extends AbstractBoard{
   }
 
   onDrop (source, target) {
-
     // see if the move is legal
     var move = this.chess.move({
       from: source,
@@ -45,39 +44,29 @@ class PlayingBoard extends AbstractBoard{
   updateBoardPosition(){
     this.board.position(this.chess.fen())
 
-    // this.updateStatus();
+    this.updateStatus();
   }
 
- updateStatus () {
-  var status = ''
+  updateStatus () {
+    if( this.chess.game_over()){
+      let message = "Partie Terminée !";
 
-  var moveColor = 'White'
-  if (this.chess.turn() === 'b') {
-    moveColor = 'Black'
-  }
+      let turn = this.chess.turn();
+      let moveColor = "blancs";
+      if (turn === 'w'){
+        moveColor = "noirs"
+      }
 
-  // checkmate?
-  if (this.chess.in_checkmate()) {
-    status = 'Game over, ' + moveColor + ' is in checkmate.'
-  }
+      if (this.chess.in_checkmate()) {
+        message += ` Les ${moveColor} gagnent par échec et mat`
+      }
 
-  // draw?
-  else if (this.chess.in_draw()) {
-    status = 'Game over, drawn position'
-  }
-
-  // game still on
-  else {
-    status = moveColor + ' to move'
-
-    // check?
-    if (this.chess.in_check()) {
-      status += ', ' + moveColor + ' is in check'
+      if(!this.chess.has_king(turn)){
+        message += ` Les ${moveColor} gagnent en prenant le roi !`
+      }
+      Chatbox.writeEvent(message);
     }
   }
-
-  Chatbox.writeEvent(status)
-}
 
   makeMove(move) {
     this.chess.move(move);

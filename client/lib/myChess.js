@@ -106,7 +106,7 @@ var Chess = function(fen) {
     -15,  0,  0,  0,  0,  0,  0,-16,  0,  0,  0,  0,  0,  0,-17
   ];
 
-  var SHIFTS = { p: 0, n: 1, b: 2, r: 3, q: 4, k: 5, h:4};
+  var SHIFTS = { p: 0, n: 1, b: 2, r: 3, q: 4, k: 5};
 
   var FLAGS = {
     NORMAL: 'n',
@@ -766,6 +766,14 @@ var Chess = function(fen) {
     return false;
   }
 
+  function both_have_kings(){
+    return has_king(WHITE) && has_king(BLACK);
+  }
+
+  function has_king(color){
+    return board[kings[color]].type === KING;
+  }
+
   function king_attacked(color) {
     return attacked(swap_color(color), kings[color]);
   }
@@ -1338,13 +1346,18 @@ var Chess = function(fen) {
       return in_threefold_repetition();
     },
 
+    has_king: function (color) {
+      return has_king(color);
+    },
+
     game_over: function() {
       return (
         half_moves >= 100 ||
         in_checkmate() ||
         in_stalemate() ||
         insufficient_material() ||
-        in_threefold_repetition()
+        in_threefold_repetition() ||
+        !both_have_kings()
       );
     },
 
