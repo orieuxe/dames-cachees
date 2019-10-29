@@ -1,11 +1,12 @@
-class SelectHqBoard{
+class SelectHqBoard extends AbstractBoard{
   constructor(){
-    this.color = boardOrientation.charAt(0);
+    super();
     var config = {
       draggable: true,
       position: "start",
       onDragStart: this.onHqChoice.bind(this),
       orientation: boardOrientation,
+      pieceTheme:this.getPieceTheme.bind(this),
     }
     this.board = ChessBoard('board', config);
 
@@ -25,9 +26,5 @@ class SelectHqBoard{
   putHq(hq){
     const piece = hq.color+'H';
     this.board.put(piece, hq.square);
-  }
-
-  getFen(){
-    return this.board.position('fen');
   }
 }
