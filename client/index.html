@@ -8,11 +8,27 @@
     <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
     <script src="lib/myChessboard.js"></script>
     <script src="lib/myChess.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
   </head>
 
   <body style="font-size: 20px;">
-    <div id="playerList"></div>
-    <div id="board" style="width: 300px"></div>
+    <div class="titre">
+      <h1>Dames Cachées</h1>
+    </div>
+    <div class="parent">
+      <div class="div1">
+        <div id="playerList"></div>
+        <div id="board"></div>
+      </div>
+      <div id="chat" class="div2">
+        <div id="chat-box">
+          <ul id="chat-history"></ul>
+        </div>
+        <input type="textarea" name="msg" value="">
+        <button type="button" name="button">Chat</button>
+      </div>
+    </div>
 
     <!-- multiplayer hidden Queen Game -->
     <script src="/socket.io/socket.io.js"></script>

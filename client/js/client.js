@@ -3,8 +3,10 @@ var boardOrientation = null;
 var board = null;
 var player = null;
 var $playerList = $("#playerList")
+var $msgInput = $("#chat input");
+var $msgSend = $("#chat button");
 
-// Chatbox.writeEvent('Bienvenue sur Dames Cachées')
+Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
 const createClient = (color) => {
   $playerList.hide();
@@ -37,6 +39,13 @@ const showClients = (clients) => {
 $playerList.on('click',".client",(event) => {
   let opponentId = event.target.id
   sock.emit('opponentClick', opponentId);
+});
+
+//send new chat msg
+$msgSend.on('click',() => {
+  let msg = $msgInput.val()
+  console.log(msg);
+  sock.emit('message', msg);
 });
 
 //New client / client quitting lobby

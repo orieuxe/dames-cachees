@@ -1,0 +1,15 @@
+.parent {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+}
+
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+
+#chat-box{
+  overflow: auto;
+  height: 80vh ;
+}

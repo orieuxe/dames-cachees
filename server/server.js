@@ -33,6 +33,10 @@ io.on('connection', (sock) => {
     updateWaitingList();
     new HqGameRoom(sock, opponent, true);
   })
+
+  sock.on('message', (message) => {
+    io.emit('message', message)
+  })
 });
 
 server.on('error', (err) =>{
