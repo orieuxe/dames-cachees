@@ -1,34 +1,36 @@
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-const HqGameRoom = require('./HqGameRoom');
-
 const app = express();
-
+const server = http.createServer(app);
 const clientPath = `${__dirname}/../client`;
-console.log(`Serving static from ${clientPath}`);
+const io = socketio(server);
 
 app.use(express.static(clientPath));
 
-const server = http.createServer(app);
-const io = socketio(server);
+const HqGameRoom = require('./HqGameRoom');
+const waitingRoom = 'waitingRoom';
 
-var updateClientList = (namespace) => {
-  namespace.clients((error, clients) => {
-    if (error) throw error;
-    namespace.emit("clientsChange", clients);
-  })
+var updateWaitingList = () => {
+  const waitingList = io.sockets.adapter.rooms[waitingRoom]
+  if (waitingList !== undefined) {
+    var clients = Object.keys(waitingList.sockets)
+    io.in(waitingRoom).emit('clientsChange', clients);
+  }
 }
 
 io.on('connection', (sock) => {
-  const lobbyNamespace = io.of('/')
-  updateClientList(lobbyNamespace);
+  sock.join('waitingRoom');
+  updateWaitingList();
   sock.on('disconnect', () => {
-    updateClientList(lobbyNamespace);
+    updateWaitingList();
   })
 
   sock.on('opponentClick', (opponentId) => {
     opponent = io.sockets.connected[opponentId];
+    opponent.leave('waitingRoom')
+    sock.leave('waitingRoom')
+    updateWaitingList();
     new HqGameRoom(sock, opponent, true);
   })
 });

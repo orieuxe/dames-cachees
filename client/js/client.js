@@ -2,8 +2,12 @@ const sock = io();
 var boardOrientation = null;
 var board = null;
 var player = null;
+var $playerList = $("#playerList")
+
+// Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
 const createClient = (color) => {
+  $playerList.hide();
   boardOrientation = color;
   player = new Player("timoru");
   board = new SelectHqBoard();
@@ -18,14 +22,7 @@ const createGame = (message) => {
   }, 100);
 }
 
-Chatbox.writeEvent('Bienvenue sur Dames Cachées')
-sock.on('message', Chatbox.writeEvent);
-sock.on('color', createClient);
-sock.on('gameStarts', createGame);
-
-var $playerList = $("#playerList")
-
-const showAllClients = (clients) => {
+const showClients = (clients) => {
   $playerList.empty();
   clients.forEach((client) => {
     //doesn't show own client
@@ -43,4 +40,7 @@ $playerList.on('click',".client",(event) => {
 });
 
 //New client / client quitting lobby
-sock.on('clientsChange', showAllClients);
+sock.on('clientsChange', showClients);
+sock.on('message', Chatbox.writeEvent);
+sock.on('color', createClient);
+sock.on('gameStarts', createGame);
