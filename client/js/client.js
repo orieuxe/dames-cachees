@@ -5,6 +5,7 @@ var player = null;
 var $waitingRoom = $("#waitingRoom");
 var $playerList = $("#playerList");
 var $msgInput = $("#chat-input");
+var $loginInput = $("#login");
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
@@ -25,6 +26,7 @@ const createGame = (message) => {
 }
 
 const showClients = (clients) => {
+  $waitingRoom.show();
   $playerList.empty();
   clients.forEach((client) => {
     html = `<button id=${client} class="client">${client}</button>`;
@@ -48,6 +50,15 @@ $msgInput.keypress(function(event) {
       let msg = $msgInput.val()
       $msgInput.val('');
       sock.emit('message', msg);
+    }
+});
+
+//player registered
+$loginInput.keypress(function(event) {
+    if (event.key === "Enter") {
+      let name = $loginInput.val()
+      $loginInput.remove();
+      sock.emit('clientRegistered', name);
     }
 });
 

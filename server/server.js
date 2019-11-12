@@ -20,8 +20,6 @@ var updateWaitingList = () => {
 }
 
 io.on('connection', (sock) => {
-  sock.join('waitingRoom');
-  updateWaitingList();
   sock.on('disconnect', () => {
     updateWaitingList();
   })
@@ -36,6 +34,12 @@ io.on('connection', (sock) => {
 
   sock.on('message', (message) => {
     io.emit('message', message)
+  })
+
+  sock.on('clientRegistered', (name) => {
+    sock.name = name
+    sock.join('waitingRoom');
+    updateWaitingList();
   })
 });
 
