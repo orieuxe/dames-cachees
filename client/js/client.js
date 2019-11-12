@@ -2,14 +2,14 @@ const sock = io();
 var boardOrientation = null;
 var board = null;
 var player = null;
-var $playerList = $("#playerList")
-var $msgInput = $("#chat input");
-var $msgSend = $("#chat button");
+var $waitingRoom = $("#waitingRoom");
+var $playerList = $("#playerList");
+var $msgInput = $("#chat-input");
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
 const createClient = (color) => {
-  $playerList.hide();
+  $waitingRoom.hide();
   boardOrientation = color;
   player = new Player("timoru");
   board = new SelectHqBoard();
@@ -27,10 +27,11 @@ const createGame = (message) => {
 const showClients = (clients) => {
   $playerList.empty();
   clients.forEach((client) => {
-    //doesn't show own client
-    if (client != sock.id){
-      html = `<button id=${client} class="client">${client}</button>`;
-      $playerList.append(html);
+    html = `<button id=${client} class="client">${client}</button>`;
+    $playerList.append(html);
+    //Can't click if own user
+    if (client == sock.id){
+      $playerList.children().last().attr('disabled', true)
     }
   })
 }
@@ -42,10 +43,12 @@ $playerList.on('click',".client",(event) => {
 });
 
 //send new chat msg
-$msgSend.on('click',() => {
-  let msg = $msgInput.val()
-  console.log(msg);
-  sock.emit('message', msg);
+$msgInput.keypress(function(event) {
+    if (event.key === "Enter") {
+      let msg = $msgInput.val()
+      $msgInput.val('');
+      sock.emit('message', msg);
+    }
 });
 
 //New client / client quitting lobby
