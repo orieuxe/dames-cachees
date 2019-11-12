@@ -14,7 +14,13 @@ const waitingRoom = 'waitingRoom';
 var updateWaitingList = () => {
   const waitingList = io.sockets.adapter.rooms[waitingRoom]
   if (waitingList !== undefined) {
-    var clients = Object.keys(waitingList.sockets)
+    const socketIds = Object.keys(waitingList.sockets)
+    const clients = socketIds.map(id => {
+      return{
+        id: id,
+        name: io.sockets.connected[id].name
+      }
+    });
     io.in(waitingRoom).emit('clientsChange', clients);
   }
 }
@@ -34,6 +40,10 @@ io.on('connection', (sock) => {
 
   sock.on('message', (message) => {
     io.emit('message', message)
+  })
+
+  sock.on('clientMessage', (message) => {
+    io.emit('clientMessage', message)
   })
 
   sock.on('clientRegistered', (name) => {

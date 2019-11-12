@@ -8,7 +8,7 @@ class HqGameRoom {
     const colors = s1IsWhite ? ['white', 'black'] : ['black', 'white'];
     this.sendColorsToPlayers(colors);
 
-    this.sendToPlayers("message", `nouveau match ${s1.id} vs ${s2.id}`);
+    this.sendToPlayers("message", `nouveau match ${s1.name} vs ${s2.name}`);
     this.sendToPlayers("message", "Veuillez selectionner votre dame cachée");
 
     this.players.forEach((player, idx) => {
