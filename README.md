@@ -1,18 +1,20 @@
-# Dames Cachées
+# Dames Cachées - Hidden Queen
 
-Variante jeu échecs dame cachées
+Avant de débuter la partie, chaque joueur dissimule une dame parmi ses pions. La partie se déroule ensuite traditionnellement. La variante n'est alors plus un jeu d'information complète.
+
+Before starting the game, each player hides a queen among his own pawns. Then the game goes on normally. This variant is not a complete information game anymore.
 
 TODO
 -----
 
-* Coup illegal dames caché = perte partie ?
-* lobby matchmaking
-* chat
-* interface gestion Promotion.
-* better UI
-* Engine HQ (Python ?)
-* clocks ?
-* Editeur position HQ (=> sparePieces)
+- [ ] HQ becomes a queen afer a player decides reveal it.
+- [ ] Draw Offer, Resign button
+- [ ] chat becomes private during a game
+- [ ] piece promotion menu
+- [ ] HQ chess editor
+- [ ] HQ Engine (Python ?)
+- [ ] clocks
+- [ ] multilingual project
 
 Usage
 -----
