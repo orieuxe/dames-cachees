@@ -6,6 +6,10 @@ class HqGameRoom {
 
     this.players.forEach((player, idx) => {
       const opponent = this.players[(idx + 1)%2];
+      player.on('clientMessage', (message) => {
+        this.sendToPlayers("clientMessage", message);
+      })
+
       player.on('move', (move) => {
         this.sendToPlayer(opponent, 'makeMove', move);
       })
@@ -30,7 +34,6 @@ class HqGameRoom {
     this.players = [s1,s2];
 
     this.sendColorsToPlayers(['white', 'black']);
-    this.sendToPlayers("message", `nouveau match ${s1.name} vs ${s2.name}`);
     this.sendToPlayers("message", "Veuillez selectionner votre dame cachée");
   }
 

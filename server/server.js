@@ -11,18 +11,35 @@ app.use(express.static(clientPath));
 const HqGameRoom = require('./HqGameRoom');
 const waitingRoom = 'waitingRoom';
 
-var updateWaitingList = () => {
-  const waitingList = io.sockets.adapter.rooms[waitingRoom]
-  if (waitingList !== undefined) {
-    const socketIds = Object.keys(waitingList.sockets)
-    const clients = socketIds.map(id => {
-      return{
-        id: id,
-        name: io.sockets.connected[id].name
-      }
-    });
-    io.in(waitingRoom).emit('clientsChange', clients);
+const getSocketIds = (room) => {
+  const list = io.sockets.adapter.rooms[room];
+  if (list !== undefined) {
+    return Object.keys(list.sockets);
   }
+  return [];
+}
+
+const isInRoom = (sock, room) =>{
+  const socketIds = getSocketIds(room);
+  return socketIds.includes(sock.id);
+}
+
+const updateWaitingList = () => {
+  const socketIds = getSocketIds(waitingRoom);
+  const clients = socketIds.map(id => {
+    return{
+      id: id,
+      name: io.sockets.connected[id].name
+    }
+  });
+  io.in(waitingRoom).emit('clientsChange', clients);
+}
+
+const broadcastMessage = (message) => {
+  io.in(waitingRoom).emit('message', message);
+}
+const broadcastClientMessage = (clientMessage) => {
+  io.in(waitingRoom).emit('clientMessage', clientMessage);
 }
 
 io.on('connection', (sock) => {
@@ -30,28 +47,28 @@ io.on('connection', (sock) => {
     updateWaitingList();
   })
 
-  sock.on('opponentClick', (opponentId) => {
-    opponent = io.sockets.connected[opponentId];
-    opponent.leave('waitingRoom')
-    sock.leave('waitingRoom')
-    updateWaitingList();
-    new HqGameRoom(sock, opponent);
-  })
-
-  sock.on('message', (message) => {
-    io.emit('message', message)
-  })
-
-  sock.on('clientMessage', (message) => {
-    io.emit('clientMessage', message)
-  })
+  sock.on('clientMessage', broadcastClientMessage);
 
   sock.on('clientRegistered', (name) => {
     sock.name = name
-    sock.join('waitingRoom');
+    sock.join(waitingRoom);
     updateWaitingList();
   })
 
+  sock.on('opponentClick', (opponentId) => {
+    //announcing match
+    opponent = io.sockets.connected[opponentId];
+    broadcastMessage(`nouveau match ${sock.name} vs ${opponent.name}`)
+
+    //leaving waitingRoom
+    opponent.leave(waitingRoom)
+    sock.leave(waitingRoom)
+    sock.off('clientMessage', broadcastClientMessage);
+    updateWaitingList();
+
+    //create game room
+    new HqGameRoom(sock, opponent);
+  })
 });
 
 server.on('error', (err) =>{
