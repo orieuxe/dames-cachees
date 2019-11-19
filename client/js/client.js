@@ -20,6 +20,12 @@ const createGame = (message) => {
   }, 100);
 }
 
+const newTestBoard = (colorOrientation) => {
+  $login.remove();
+  player = new Player(name);
+  createClient(colorOrientation);
+}
+
 const showClients = (clients) => {
   $waitingRoom.show();
   $playerList.empty();
@@ -64,6 +70,8 @@ $playerName.keypress(function(event) {
 $rematchBtn.click((e) => {
   sock.emit('rematch');
 })
+
+// newTestBoard("white");// manually create a board facing white
 
 //New client / client quitting lobby
 sock.on('clientsChange', showClients);
