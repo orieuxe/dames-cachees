@@ -35,7 +35,7 @@ io.on('connection', (sock) => {
     opponent.leave('waitingRoom')
     sock.leave('waitingRoom')
     updateWaitingList();
-    new HqGameRoom(sock, opponent, true);
+    new HqGameRoom(sock, opponent);
   })
 
   sock.on('message', (message) => {
@@ -51,6 +51,7 @@ io.on('connection', (sock) => {
     sock.join('waitingRoom');
     updateWaitingList();
   })
+
 });
 
 server.on('error', (err) =>{

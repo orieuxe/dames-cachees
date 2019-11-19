@@ -65,6 +65,7 @@ class PlayingBoard extends AbstractBoard{
         message += ` Les ${moveColor} gagnent en prenant le roi !`
       }
       Chatbox.writeEvent(message);
+      $rematchBtn.show();
     }
   }
 

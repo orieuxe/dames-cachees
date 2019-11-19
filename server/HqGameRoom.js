@@ -1,15 +1,8 @@
 // const Player = require('./player');
 
 class HqGameRoom {
-  constructor(s1,s2, s1IsWhite){
-    this.players = [s1,s2]
-    this.hqs = [null,null];
-
-    const colors = s1IsWhite ? ['white', 'black'] : ['black', 'white'];
-    this.sendColorsToPlayers(colors);
-
-    this.sendToPlayers("message", `nouveau match ${s1.name} vs ${s2.name}`);
-    this.sendToPlayers("message", "Veuillez selectionner votre dame cachée");
+  constructor(s1,s2){
+    this.initGameRoom(s1,s2);
 
     this.players.forEach((player, idx) => {
       const opponent = this.players[(idx + 1)%2];
@@ -21,7 +14,24 @@ class HqGameRoom {
         this.hqs[idx] = square;
         this.checkBothHqChosen();
       })
+
+      player.on('rematch', () => {
+        this.rematchOffers[idx] = true;
+        this.sendToPlayer(opponent, "message",`${player.name} veut rejouer !`);
+        this.checkRematchOffers();
+      })
     })
+  }
+
+  initGameRoom(s1,s2){
+    this.hqs = [null,null];
+    this.rematchOffers = [false, false];
+    this.drawOffers = [false, false];
+    this.players = [s1,s2];
+
+    this.sendColorsToPlayers(['white', 'black']);
+    this.sendToPlayers("message", `nouveau match ${s1.name} vs ${s2.name}`);
+    this.sendToPlayers("message", "Veuillez selectionner votre dame cachée");
   }
 
   sendToPlayers(key, msg){
@@ -40,6 +50,12 @@ class HqGameRoom {
     if (this.hqs.every(hq => hq !== null)){
       this.hqs.forEach(hq => this.sendToPlayers('putHq',hq));
       this.sendToPlayers("gameStarts", "La partie commence !");
+    }
+  }
+
+  checkRematchOffers(){
+    if (this.rematchOffers.every(offer => offer)){
+      this.initGameRoom(this.players[1],this.players[0])
     }
   }
 }

@@ -2,11 +2,6 @@ const sock = io();
 var boardOrientation = null;
 var board = null;
 var player = null;
-var $waitingRoom = $("#waitingRoom");
-var $playerList = $("#playerList");
-var $msgInput = $("#chat-input");
-var $login = $("#login");
-var $playerName = $("#playerName");
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
@@ -65,6 +60,10 @@ $playerName.keypress(function(event) {
       sock.emit('clientRegistered', name);
     }
 });
+
+$rematchBtn.click((e) => {
+  sock.emit('rematch');
+})
 
 //New client / client quitting lobby
 sock.on('clientsChange', showClients);

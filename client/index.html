@@ -17,14 +17,14 @@
       <h1>Dames Cachées</h1>
     </div>
     <div class="parent">
-      <div id="chat" class="div1">
+      <div id="chat">
         <div id="chat-box">
           <ul id="chat-history"></ul>
         </div>
         <textarea id="chat-input"></textarea>
       </div>
 
-      <div class="div2">
+      <div id="main-content">
         <div id="login">
           <h2>Login</h2>
           <input id="playerName" placeholder="votre nom..." name="" value=""/>
@@ -36,8 +36,23 @@
         <div id="board"></div>
       </div>
 
-    </div>
+      <div id="side-content">
+        <button id="rematch-btn" hidden>Rematch</button>
+        <button id="draw-btn" hidden>Draw</button>
+        <button id="resign-btn" hidden>Resign</button>
+      </div>
 
+    </div>
+    <script type="text/javascript">
+      var $waitingRoom = $("#waitingRoom");
+      var $playerList = $("#playerList");
+      var $msgInput = $("#chat-input");
+      var $login = $("#login");
+      var $playerName = $("#playerName");
+      var $resingBtn = $('#resign-btn');
+      var $rematchBtn = $('#rematch-btn');
+      var $drawBtn = $('#draw-btn');
+    </script>
     <!-- multiplayer hidden Queen Game -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/Chatbox.js"></script>
