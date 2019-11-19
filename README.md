@@ -9,7 +9,7 @@ TODO
 
 - [ ] HQ becomes a queen afer a player decides reveal it.
 - [ ] Draw Offer, Resign button
-- [ ] chat becomes private during a game
+- [x] chat becomes private during a game
 - [ ] piece promotion menu
 - [ ] HQ chess editor
 - [ ] HQ Engine (Python ?)
