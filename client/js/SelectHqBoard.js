@@ -1,6 +1,13 @@
 class SelectHqBoard extends AbstractBoard{
   constructor(){
     super();
+    this.initSelectBoard();
+
+    sock.on('putHq', this.putHq.bind(this));
+  }
+
+  initSelectBoard(){
+    this.updateColor();
     var config = {
       draggable: true,
       position: "start",
@@ -9,8 +16,6 @@ class SelectHqBoard extends AbstractBoard{
       pieceTheme:this.getPieceTheme.bind(this),
     }
     this.board = ChessBoard('board', config);
-
-    sock.on('putHq', this.putHq.bind(this));
   }
 
   onHqChoice(square, piece){

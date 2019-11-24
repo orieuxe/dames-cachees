@@ -1,6 +1,21 @@
 class PlayingBoard extends AbstractBoard{
   constructor(fen){
     super();
+    this.initPlayingBoard(fen);
+
+    sock.on('makeMove', this.makeMove.bind(this));
+    sock.on('drawAgreed', () => {
+      this.isGameOver = true;
+      this.sendEndMessage("Partie nulle par accord mutuel !");
+    })
+    sock.on('resign', (playerName) => {
+      this.isGameOver = true;
+      this.sendEndMessage(`Partie Terminée, ${playerName} abandonne !`);
+    })
+  }
+
+  initPlayingBoard(fen){
+    this.updateColor();
     var config = {
       draggable: true,
       position: fen,
@@ -13,8 +28,7 @@ class PlayingBoard extends AbstractBoard{
 
     this.chess = new Chess();
     this.chess.load(fen + " w KQkq - 0 1");
-
-    sock.on('makeMove', this.makeMove.bind(this));
+    this.isGameOver = false;
   }
 
   onDragStart (source, piece, position, orientation) {
@@ -22,7 +36,7 @@ class PlayingBoard extends AbstractBoard{
     if(!piece.includes(this.color)) return false;
 
     // do not pick up pieces if the this.chess is over
-    if (this.chess.game_over()) return false
+    if (this.isGameOver) return false
   }
 
   onDrop (source, target) {
@@ -36,41 +50,45 @@ class PlayingBoard extends AbstractBoard{
     // illegal move
     if (move === null) return 'snapback';
 
-
     sock.emit('move', move);
+
     this.updateBoardPosition();
+    this.checkGameOver();
   }
 
   updateBoardPosition(){
-    this.board.position(this.chess.fen())
-
-    this.updateStatus();
+    this.board.position(this.chess.fen());
   }
 
-  updateStatus () {
+  checkGameOver(){
     if( this.chess.game_over()){
-      let message = "Partie Terminée !";
-
-      let turn = this.chess.turn();
-      let moveColor = "blancs";
-      if (turn === 'w'){
-        moveColor = "noirs"
-      }
-
-      if (this.chess.in_checkmate()) {
-        message += ` Les ${moveColor} gagnent par échec et mat`
-      }
-
-      if(!this.chess.has_king(turn)){
-        message += ` Les ${moveColor} gagnent en prenant le roi !`
-      }
-      Chatbox.writeEvent(message);
-      $rematchBtn.show();
+      this.isGameOver = true;
+      this.sendEndMessage("Partie Terminée !");
     }
+  }
+
+  sendEndMessage(message){
+
+    let turn = this.chess.turn();
+    let moveColor = "blancs";
+    if (turn === 'w'){
+      moveColor = "noirs"
+    }
+
+    if (this.chess.in_checkmate()) {
+      message += ` Les ${moveColor} gagnent par échec et mat`
+    }
+
+    if(!this.chess.has_king(turn)){
+      message += ` Les ${moveColor} gagnent en prenant le roi !`
+    }
+    Chatbox.writeEvent(message);
+    $rematchBtn.show();
   }
 
   makeMove(move) {
     this.chess.move(move);
     this.updateBoardPosition();
+    this.checkGameOver();
   }
 }

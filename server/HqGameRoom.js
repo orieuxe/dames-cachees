@@ -1,4 +1,4 @@
-// const Player = require('./player');
+const GameState = require('./GameState');
 
 class HqGameRoom {
   constructor(s1,s2){
@@ -24,10 +24,22 @@ class HqGameRoom {
         this.sendToPlayer(opponent, "message",`${player.name} veut rejouer !`);
         this.checkRematchOffers();
       })
+
+      player.on('draw', () => {
+        this.drawOffers[idx] = true;
+        this.sendToPlayer(opponent, "message",`${player.name} propose nulle !`);
+        this.checkDrawOffers();
+      })
+
+      player.on('resign', () => {
+        this.sendToPlayers("resign", player.name);
+        this.state = GameState.OVER;
+      })
     })
   }
 
   initGameRoom(s1,s2){
+    this.state = GameState.HQSELECT;
     this.hqs = [null,null];
     this.rematchOffers = [false, false];
     this.drawOffers = [false, false];
@@ -54,12 +66,20 @@ class HqGameRoom {
       this.hqs.forEach(hq => this.sendToPlayers('putHq',hq));
       this.sendToPlayers("gameStarts", "La partie commence !");
     }
+    this.state = GameState.ONGOING
   }
 
   checkRematchOffers(){
     if (this.rematchOffers.every(offer => offer)){
       this.initGameRoom(this.players[1],this.players[0])
     }
+  }
+
+  checkDrawOffers(){
+    if (this.drawOffers.every(offer => offer)){
+      this.sendToPlayers("drawAgreed", null);
+    }
+    this.state = GameState.OVER;
   }
 }
 

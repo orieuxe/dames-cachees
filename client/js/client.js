@@ -1,22 +1,37 @@
 const sock = io();
 var boardOrientation = null;
 var board = null;
+var selectBoard = null;
+var playingBoard = null;
 var player = null;
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
 const createClient = (color) => {
+  $rematchBtn.hide();
   $waitingRoom.hide();
   boardOrientation = color;
-  board = new SelectHqBoard();
+  if (selectBoard === null){
+    selectBoard = new SelectHqBoard();
+  }else{
+    selectBoard.initSelectBoard();
+  }
+  board = selectBoard;
 }
 
 const createGame = (message) => {
   const fen = board.getFen();
   board.board.clear();
+  $drawBtn.show();
+  $resingBtn.show();
   setTimeout(function () {
     Chatbox.writeEvent(message);
-    board = new PlayingBoard(fen);
+    if (playingBoard === null){
+      playingBoard = new PlayingBoard(fen);
+    }else{
+      playingBoard.initPlayingBoard(fen);
+    }
+    board = playingBoard
   }, 100);
 }
 
@@ -68,7 +83,17 @@ $playerName.keypress(function(event) {
 });
 
 $rematchBtn.click((e) => {
+  Chatbox.writeEvent("offre de rematch envoyé...")
   sock.emit('rematch');
+})
+
+$drawBtn.click((e) => {
+  Chatbox.writeEvent("proposition de nulle envoyée...")
+  sock.emit('draw');
+})
+
+$resingBtn.click((e) => {
+  sock.emit('resign');
 })
 
 // newTestBoard("white");// manually create a board facing white

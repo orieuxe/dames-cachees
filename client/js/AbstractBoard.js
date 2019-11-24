@@ -1,5 +1,9 @@
 class AbstractBoard{
     constructor(){
+      this.updateColor();
+    }
+
+    updateColor(){
       this.color = boardOrientation.charAt(0);
     }
 
