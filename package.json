@@ -4,5 +4,8 @@
   "description": "",
   "scripts": {
     "start": "cd server && npm start"
+  },
+  "dependencies": {
+    "server": "file:./server"
   }
 }
