@@ -4,11 +4,15 @@ Avant de débuter la partie, chaque joueur dissimule une dame parmi ses pions. L
 
 Before starting the game, each player hides a queen among his own pawns. Then the game goes on normally. This variant is not a complete information game anymore.
 
+WEBSITE
+-------
+https://dames-cachees.herokuapp.com/
+
 TODO
 -----
 
 - [ ] HQ becomes a queen afer a player decides reveal it.
-- [ ] Draw Offer, Resign button
+- [x] Draw Offer, Resign button
 - [x] chat becomes private during a game
 - [ ] piece promotion menu
 - [ ] HQ chess editor
@@ -20,7 +24,6 @@ Usage
 -----
 
 ```
-cd server
 npm install
 npm start
 ```
