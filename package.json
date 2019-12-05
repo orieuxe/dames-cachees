@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "dev": "cd server && npm run dev"
   },
   "dependencies": {
     "server": "file:./server"

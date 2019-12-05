@@ -11,13 +11,11 @@ https://dames-cachees.herokuapp.com/
 TODO
 -----
 
-- [ ] HQ becomes a queen afer a player decides reveal it.
-- [x] Draw Offer, Resign button
-- [x] chat becomes private during a game
+- [ ] HQ becomes a real queen afer a player decides reveal it.
+- [ ] fix scrolling chatbox
+- [ ] chat notification when player join/leave the game
 - [ ] piece promotion menu
-- [ ] HQ chess editor
 - [ ] HQ Engine (Python ?)
-- [ ] clocks
 - [ ] multilingual project
 
 Usage
