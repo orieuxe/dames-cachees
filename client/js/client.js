@@ -35,10 +35,12 @@ const createGame = (message) => {
   }, 100);
 }
 
-const newTestBoard = (colorOrientation) => {
+//client automatically logs in
+const autoLogin = () => {
   $login.remove();
+  const name = `player`
   player = new Player(name);
-  createClient(colorOrientation);
+  sock.emit('clientRegistered', name);
 }
 
 const showClients = (clients) => {
@@ -96,7 +98,6 @@ $resingBtn.click((e) => {
   sock.emit('resign');
 })
 
-// newTestBoard("white");// manually create a board facing white
 
 //New client / client quitting lobby
 sock.on('clientsChange', showClients);
@@ -104,3 +105,6 @@ sock.on('message', Chatbox.writeEvent);
 sock.on('clientMessage', Chatbox.writeMessage);
 sock.on('color', createClient);
 sock.on('gameStarts', createGame);
+
+
+// autoLogin(); //uncomment this for faster testing
