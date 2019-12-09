@@ -1,13 +1,16 @@
 class Chatbox{
   static writeEvent(text){
-    const chatHistory = $('#chat-history')
-    const chatBox = $('#chat-box')
-    chatHistory.append(`<li>${text}</li>`)
-    chatBox.scrollTop(chatBox.height())
+    Chatbox.addText(text);
   }
 
   static writeMessage(message){
-    const text = `${message.author} : ${message.content}`
-    Chatbox.writeEvent(text);
+    Chatbox.addText(`<b>${message.author}</b> ${message.content}`);
+  }
+
+  static addText(text){
+    const chatHistory = $('#chat-history')
+    const chatBox = $('#chat-box')
+    chatHistory.append(`<li>${text}</li>`)
+    chatBox.scrollTop(chatHistory.height())
   }
 }

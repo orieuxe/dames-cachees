@@ -58,7 +58,7 @@ io.on('connection', (sock) => {
   sock.on('opponentClick', (opponentId) => {
     //announcing match
     opponent = io.sockets.connected[opponentId];
-    broadcastMessage(`nouveau match ${sock.name} vs ${opponent.name}`)
+    broadcastMessage(`Nouveau match ${sock.name} vs ${opponent.name}`)
 
     //leaving waitingRoom
     opponent.leave(waitingRoom)

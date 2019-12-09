@@ -1,6 +1,6 @@
 .parent {
 display: grid;
-grid-template-columns: 40vw 50vw 10vw;
+grid-template-columns: 40vw 50vw 5vw;
 grid-template-rows: 1fr;
 grid-column-gap: 0px;
 grid-row-gap: 0px;
@@ -12,14 +12,20 @@ grid-row-gap: 0px;
 
 #chat-box{
   overflow: auto;
-  height: 80vh ;
+  height: 76vh ;
 }
 
 textarea {
    resize: none;
-   width: 100%;
+   width: 98%;
 }
 
 #board{
-  width: 80vh;
+  width: 40vw;
+}
+
+ul{
+  list-style:none;
+  margin-left:0;
+  padding-left:0;
 }
