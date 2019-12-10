@@ -13,7 +13,7 @@ TODO
 
 - [x] HQ becomes a real queen afer a player decides reveal it.
 - [x] fix scrolling chatbox
-- [ ] chat notification when player join/leave the game
+- [x] chat notification when player join/leave the game
 - [ ] piece promotion menu
 - [ ] HQ Engine (Python ?)
 - [ ] multilingual project

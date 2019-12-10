@@ -39,6 +39,11 @@ class HqGameRoom {
         this.sendToPlayers("resign", player.name);
         this.state = GameState.OVER;
       })
+
+      player.on('disconnect', () => {
+        this.sendToPlayer(opponent, "event", `${player.name} a quitté la partie !`)
+        this.state = GameState.OVER;
+      })
     })
   }
 
