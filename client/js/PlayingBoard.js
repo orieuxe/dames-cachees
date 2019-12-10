@@ -4,6 +4,7 @@ class PlayingBoard extends AbstractBoard{
     this.initPlayingBoard(fen);
 
     sock.on('makeMove', this.makeMove.bind(this));
+    sock.on('putQ', this.putQ.bind(this));
     sock.on('drawAgreed', () => {
       this.isGameOver = true;
       this.sendEndMessage("Partie nulle par accord mutuel !");
@@ -51,13 +52,40 @@ class PlayingBoard extends AbstractBoard{
     if (move === null) return 'snapback';
 
     sock.emit('move', move);
-
     this.updateBoardPosition();
+
+    if(PlayingBoard.hqHasMovedLikeQ(move)){
+      sock.emit('putQ', move);
+    }
+    
     this.checkGameOver();
   }
 
   updateBoardPosition(){
     this.board.position(this.chess.fen());
+  }
+
+
+  static hqHasMovedLikeQ(move){
+    if (move.piece != 'h') return false;
+    const colorCoef = (move.color == 'w') ? 1 : -1;
+    const start_rank = (move.color == 'w') ? "2" : "7";
+    const delta_file = move.to.charCodeAt(0) - move.from.charCodeAt(0)
+    const delta_rank = (move.to.charCodeAt(1) - move.from.charCodeAt(1)) * colorCoef
+    if (delta_rank == 1){
+      if (delta_file == 0 && !move.flags.includes("c")) return false;
+      if ((delta_file == -1 || delta_file == 1) && move.flags.includes("c")) return false
+    }
+    if (delta_rank == 2){
+      if (delta_file == 0 && move.from[1] == start_rank) return false;
+    }
+    return true;
+  }
+
+  putQ(move){
+    this.chess.put({ type: this.chess.QUEEN, color: move.color }, move.to);
+    this.chess.load(this.chess.fen());
+    this.updateBoardPosition();
   }
 
   checkGameOver(){

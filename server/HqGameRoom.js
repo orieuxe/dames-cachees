@@ -19,6 +19,10 @@ class HqGameRoom {
         this.checkBothHqChosen();
       })
 
+      player.on('putQ', (move) => {
+        this.sendToPlayers("putQ", move);
+      })
+
       player.on('rematch', () => {
         this.rematchOffers[idx] = true;
         this.sendToPlayer(opponent, "message",`${player.name} veut rejouer !`);

@@ -11,7 +11,7 @@ https://dames-cachees.herokuapp.com/
 TODO
 -----
 
-- [ ] HQ becomes a real queen afer a player decides reveal it.
+- [x] HQ becomes a real queen afer a player decides reveal it.
 - [x] fix scrolling chatbox
 - [ ] chat notification when player join/leave the game
 - [ ] piece promotion menu
