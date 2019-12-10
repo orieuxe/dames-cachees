@@ -7,7 +7,7 @@ var player = null;
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
-const createClient = (color) => {
+const startSelect = (color) => {
   $rematchBtn.hide();
   $waitingRoom.hide();
   boardOrientation = color;
@@ -19,13 +19,13 @@ const createClient = (color) => {
   board = selectBoard;
 }
 
-const createGame = (message) => {
+const startPlay = () => {
   const fen = board.getFen();
   board.board.clear();
   $drawBtn.show();
   $resingBtn.show();
   setTimeout(function () {
-    Chatbox.writeEvent(message);
+    Chatbox.writeEvent("La partie commence !");
     if (playingBoard === null){
       playingBoard = new PlayingBoard(fen);
     }else{
@@ -67,7 +67,7 @@ $msgInput.keypress(function(event) {
     if (event.key === "Enter") {
       let msg = $msgInput.val()
       $msgInput.val('');
-      sock.emit('clientMessage', {
+      sock.emit('message', {
         author: player.getName(),
         content:msg
       });
@@ -85,12 +85,12 @@ $playerName.keypress(function(event) {
 });
 
 $rematchBtn.click((e) => {
-  Chatbox.writeEvent("offre de rematch envoyé...")
+  Chatbox.writeEvent("Offre de rematch envoyée...")
   sock.emit('rematch');
 })
 
 $drawBtn.click((e) => {
-  Chatbox.writeEvent("proposition de nulle envoyée...")
+  Chatbox.writeEvent("Proposition de nulle envoyée...")
   sock.emit('draw');
 })
 
@@ -101,10 +101,10 @@ $resingBtn.click((e) => {
 
 //New client / client quitting lobby
 sock.on('clientsChange', showClients);
-sock.on('message', Chatbox.writeEvent);
-sock.on('clientMessage', Chatbox.writeMessage);
-sock.on('color', createClient);
-sock.on('gameStarts', createGame);
+sock.on('event', Chatbox.writeEvent);
+sock.on('message', Chatbox.writeMessage);
+sock.on('startSelect', startSelect);
+sock.on('startPlay', startPlay);
 
 
 // autoLogin(); //uncomment this for faster testing

@@ -35,19 +35,20 @@ const updateWaitingList = () => {
   io.in(waitingRoom).emit('clientsChange', clients);
 }
 
-const broadcastMessage = (message) => {
-  io.in(waitingRoom).emit('message', message);
+const broadcastEvent = (message) => {
+  io.in(waitingRoom).emit('event', message);
 }
-const broadcastClientMessage = (clientMessage) => {
-  io.in(waitingRoom).emit('clientMessage', clientMessage);
+const broadcastMessage = (clientMessage) => {
+  io.in(waitingRoom).emit('message', clientMessage);
 }
 
 io.on('connection', (sock) => {
   sock.on('disconnect', () => {
+
     updateWaitingList();
   })
 
-  sock.on('clientMessage', broadcastClientMessage);
+  sock.on('clientMessage', broadcastMessage);
 
   sock.on('clientRegistered', (name) => {
     sock.name = name
@@ -58,12 +59,12 @@ io.on('connection', (sock) => {
   sock.on('opponentClick', (opponentId) => {
     //announcing match
     opponent = io.sockets.connected[opponentId];
-    broadcastMessage(`Nouveau match ${sock.name} vs ${opponent.name}`)
+    broadcastEvent(`Nouveau match ${sock.name} vs ${opponent.name}`)
 
     //leaving waitingRoom
     opponent.leave(waitingRoom)
     sock.leave(waitingRoom)
-    sock.off('clientMessage', broadcastClientMessage);
+    sock.off('clientMessage', broadcastMessage);
     updateWaitingList();
 
     //create game room
