@@ -10,6 +10,7 @@ Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 const startSelect = (color) => {
   $rematchBtn.hide();
   $waitingRoom.hide();
+  $gameRoomList.hide();
   boardOrientation = color;
   if (selectBoard === null){
     selectBoard = new SelectHqBoard();

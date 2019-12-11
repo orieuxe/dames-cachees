@@ -37,6 +37,9 @@
       </div>
 
       <div id="side-content">
+        <a href="list.html" id="game-room-list">
+          <button>Matchs en cours</button>
+        </a>
         <button id="rematch-btn" hidden>Rematch</button>
         <button id="draw-btn" hidden>Draw</button>
         <button id="resign-btn" hidden>Resign</button>
@@ -52,6 +55,7 @@
       var $resingBtn = $('#resign-btn');
       var $rematchBtn = $('#rematch-btn');
       var $drawBtn = $('#draw-btn');
+      var $gameRoomList = $('#game-room-list');
     </script>
     <!-- multiplayer hidden Queen Game -->
     <script src="/socket.io/socket.io.js"></script>

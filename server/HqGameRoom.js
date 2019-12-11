@@ -40,6 +40,15 @@ class HqGameRoom {
         this.state = GameState.OVER;
       })
 
+      player.on('gameInfo', (game) => {
+        this.fen = game.fen
+        if (game.over) {
+          this.state = GameState.OVER
+        }
+        console.log("gameInfo");
+        player.emit('updateCurrentGames', null)
+      })
+
       player.on('disconnect', () => {
         this.sendToPlayer(opponent, "event", `${player.name} a quitté la partie !`)
         this.state = GameState.OVER;
@@ -74,8 +83,8 @@ class HqGameRoom {
     if (this.hqs.every(hq => hq !== null)){
       this.hqs.forEach(hq => this.sendToPlayers('putHq',hq));
       this.sendToPlayers("startPlay", null);
+      this.state = GameState.ONGOING
     }
-    this.state = GameState.ONGOING
   }
 
   checkRematchOffers(){

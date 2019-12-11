@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dame cachées</title>
+    <script src="lib/jquery.min.js"></script>
+
+    <!-- Chess librairies -->
+    <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
+    <link rel="stylesheet" type="text/css" href="css/list.css">
+    <script src="lib/myChessboard.js"></script>
+  </head>
+
+  <body style="font-size: 20px;">
+    <div class="titre">
+      <h1>Matchs en cours</h1>
+    </div>
+    <div class="navigation">
+      <a href="index.html" id="index">
+        <button>Jouer</button>
+      </a>
+    </div>
+    <div id="game-room-list">
+    </div>
+    <script type="text/javascript">
+      var $gameRoomList = $('#game-room-list')
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/gameRoomList.js"></script>
+  </body>
+</html>

@@ -9,7 +9,9 @@ const io = socketio(server);
 app.use(express.static(clientPath));
 
 const HqGameRoom = require('./HqGameRoom');
+const GameState = require('./GameState');
 const waitingRoom = 'waitingRoom';
+var gameRoomList = [];
 
 const getSocketIds = (room) => {
   const list = io.sockets.adapter.rooms[room];
@@ -42,9 +44,30 @@ const broadcastMessage = (clientMessage) => {
   io.in(waitingRoom).emit('message', clientMessage);
 }
 
+const getCurrentGames = () => {
+  var currentGames = []
+  gameRoomList.forEach((gameRoom) => {
+    currentGames.push({
+      state : Object(gameRoom.state),
+      fen : gameRoom.fen,
+      white : gameRoom.players[0].name,
+      black : gameRoom.players[1].name
+    })
+  });
+  console.log(currentGames);
+  return currentGames
+}
+
+var list = io.of('/list')
+list.on('connection', (sock) => {
+  list.emit('createList', getCurrentGames());
+  sock.on('disconnect', () => {
+    // console.log("disconnnection" + sock.id);
+  })
+})
+
 io.on('connection', (sock) => {
   sock.on('disconnect', () => {
-
     updateWaitingList();
   })
 
@@ -68,7 +91,11 @@ io.on('connection', (sock) => {
     updateWaitingList();
 
     //create game room
-    new HqGameRoom(sock, opponent);
+    gameRoomList.push(new HqGameRoom(sock, opponent));
+  })
+
+  sock.on('updateCurrentGames', () => {
+    list.emit('updateList', getCurrentGames())
   })
 });
 

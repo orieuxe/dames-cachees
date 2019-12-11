@@ -57,8 +57,9 @@ class PlayingBoard extends AbstractBoard{
     if(PlayingBoard.hqHasMovedLikeQ(move)){
       sock.emit('putQ', move);
     }
-    
+
     this.checkGameOver();
+    this.updateGameInfo();
   }
 
   updateBoardPosition(){
@@ -86,6 +87,7 @@ class PlayingBoard extends AbstractBoard{
     this.chess.put({ type: this.chess.QUEEN, color: move.color }, move.to);
     this.chess.load(this.chess.fen());
     this.updateBoardPosition();
+    this.updateGameInfo();
   }
 
   checkGameOver(){
@@ -118,5 +120,16 @@ class PlayingBoard extends AbstractBoard{
     this.chess.move(move);
     this.updateBoardPosition();
     this.checkGameOver();
-  }
+    this.updateGameInfo();
+   }
+
+   updateGameInfo(){
+     if (this.color == 'w') {
+       sock.emit('gameInfo', {
+         fen:this.chess.fen(),
+         over:this.isGameOver
+       })
+       sock.emit('updateCurrentGames', null)
+     }
+   }
 }
