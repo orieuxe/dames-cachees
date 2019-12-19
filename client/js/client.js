@@ -1,23 +1,28 @@
-const sock = io();
+const sock = io()
 var boardOrientation = null;
 var board = null;
 var selectBoard = null;
 var playingBoard = null;
 var player = null;
+var opponent = null;
+var gameRoomId = null;
 
 Chatbox.writeEvent('Bienvenue sur Dames Cachées')
 
-const startSelect = (color) => {
+const startSelect = (infos) => {
   $rematchBtn.hide();
   $waitingRoom.hide();
   $gameRoomList.hide();
-  boardOrientation = color;
+  boardOrientation = infos.color;
+  gameRoomId = infos.id;
+  opponent = new Player(infos.opponent);
   if (selectBoard === null){
     selectBoard = new SelectHqBoard();
   }else{
     selectBoard.initSelectBoard();
   }
   board = selectBoard;
+  board.sendGameInfo();
 }
 
 const startPlay = () => {
@@ -33,15 +38,8 @@ const startPlay = () => {
       playingBoard.initPlayingBoard(fen);
     }
     board = playingBoard
+    board.sendGameInfo();
   }, 100);
-}
-
-//client automatically logs in
-const autoLogin = () => {
-  $login.remove();
-  const name = `player`
-  player = new Player(name);
-  sock.emit('clientRegistered', name);
 }
 
 const showClients = (clients) => {
@@ -107,5 +105,6 @@ sock.on('message', Chatbox.writeMessage);
 sock.on('startSelect', startSelect);
 sock.on('startPlay', startPlay);
 
-
-// autoLogin(); //uncomment this for faster testing
+if (constants.AUTO_LOGIN) {
+  $login.remove();
+}

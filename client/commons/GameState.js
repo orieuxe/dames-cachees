@@ -4,4 +4,6 @@ const GameState = Object.freeze({
     OVER:     "over"
 });
 
-module.exports = GameState;
+if (typeof module !== 'undefined') {
+  module.exports = GameState;
+}

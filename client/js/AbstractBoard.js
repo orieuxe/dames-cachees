@@ -1,10 +1,11 @@
 class AbstractBoard{
     constructor(){
-      this.updateColor();
+      this.initBoard();
     }
 
-    updateColor(){
+    initBoard(){
       this.color = boardOrientation.charAt(0);
+      this.state = null;
     }
 
     getFen(){
@@ -26,5 +27,15 @@ class AbstractBoard{
      }
 
      return 'img/chesspieces/' + pieceDir + '/' + pieceString +'.png'
-    }
+   }
+
+   sendGameInfo(){
+     if (this.color == 'w') {
+       sock.emit('gameInfo', {
+         fen:this.getFen(),
+         state:this.state,
+         id:gameRoomId
+       })
+     }
+   }
 }

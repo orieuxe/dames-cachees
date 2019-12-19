@@ -1,22 +1,22 @@
 class PlayingBoard extends AbstractBoard{
   constructor(fen){
     super();
-    this.initPlayingBoard(fen);
+    this.initBoard(fen);
 
     sock.on('makeMove', this.makeMove.bind(this));
     sock.on('putQ', this.putQ.bind(this));
     sock.on('drawAgreed', () => {
-      this.isGameOver = true;
+      this.isGameOver = GameState.OVER;
       this.sendEndMessage("Partie nulle par accord mutuel !");
     })
     sock.on('resign', (playerName) => {
-      this.isGameOver = true;
+      this.isGameOver = GameState.OVER;
       this.sendEndMessage(`Partie Terminée, ${playerName} abandonne !`);
     })
   }
 
-  initPlayingBoard(fen){
-    this.updateColor();
+  initBoard(fen){
+    super.initBoard();
     var config = {
       draggable: true,
       position: fen,
@@ -29,15 +29,15 @@ class PlayingBoard extends AbstractBoard{
 
     this.chess = new Chess();
     this.chess.load(fen + " w KQkq - 0 1");
-    this.isGameOver = false;
+    this.state = GameState.ONGOING;
   }
 
   onDragStart (source, piece, position, orientation) {
     // only pick up pieces for the player to move
     if(!piece.includes(this.color)) return false;
 
-    // do not pick up pieces if the this.chess is over
-    if (this.isGameOver) return false
+    // do not pick up pieces if the game is over
+    if (this.state == GameState.OVER) return false
   }
 
   onDrop (source, target) {
@@ -54,12 +54,12 @@ class PlayingBoard extends AbstractBoard{
     sock.emit('move', move);
     this.updateBoardPosition();
 
-    if(PlayingBoard.hqHasMovedLikeQ(move)){
+    if(this.hqHasMovedLikeQ(move)){
       sock.emit('putQ', move);
     }
 
     this.checkGameOver();
-    this.updateGameInfo();
+    this.sendGameInfo();
   }
 
   updateBoardPosition(){
@@ -67,15 +67,15 @@ class PlayingBoard extends AbstractBoard{
   }
 
 
-  static hqHasMovedLikeQ(move){
-    if (move.piece != 'h') return false;
-    const colorCoef = (move.color == 'w') ? 1 : -1;
-    const start_rank = (move.color == 'w') ? "2" : "7";
+  hqHasMovedLikeQ(move){
+    if (move.piece != this.chess.HIDDEN_QUEEN) return false;
+    const colorCoef = (move.color == this.chess.WHITE) ? 1 : -1;
+    const start_rank = (move.color == this.chess.WHITE) ? "2" : "7";
     const delta_file = move.to.charCodeAt(0) - move.from.charCodeAt(0)
     const delta_rank = (move.to.charCodeAt(1) - move.from.charCodeAt(1)) * colorCoef
     if (delta_rank == 1){
-      if (delta_file == 0 && !move.flags.includes("c")) return false;
-      if ((delta_file == -1 || delta_file == 1) && move.flags.includes("c")) return false
+      if (delta_file == 0 && !move.flags.includes(this.chess.FLAGS.CAPTURE)) return false;
+      if ((delta_file == -1 || delta_file == 1) && move.flags.includes(this.chess.FLAGS.CAPTURE)) return false
     }
     if (delta_rank == 2){
       if (delta_file == 0 && move.from[1] == start_rank) return false;
@@ -87,7 +87,7 @@ class PlayingBoard extends AbstractBoard{
     this.chess.put({ type: this.chess.QUEEN, color: move.color }, move.to);
     this.chess.load(this.chess.fen());
     this.updateBoardPosition();
-    this.updateGameInfo();
+    this.sendGameInfo();
   }
 
   checkGameOver(){
@@ -101,7 +101,7 @@ class PlayingBoard extends AbstractBoard{
 
     let turn = this.chess.turn();
     let moveColor = "blancs";
-    if (turn === 'w'){
+    if (turn === this.chess.WHITE){
       moveColor = "noirs"
     }
 
@@ -120,16 +120,6 @@ class PlayingBoard extends AbstractBoard{
     this.chess.move(move);
     this.updateBoardPosition();
     this.checkGameOver();
-    this.updateGameInfo();
-   }
-
-   updateGameInfo(){
-     if (this.color == 'w') {
-       sock.emit('gameInfo', {
-         fen:this.chess.fen(),
-         over:this.isGameOver
-       })
-       sock.emit('updateCurrentGames', null)
-     }
+    this.sendGameInfo();
    }
 }

@@ -1,33 +1,21 @@
-var sock = io.connect('http://localhost:8080/list')
-var boards = []
+var sock = io.connect(`http://localhost:${constants.LOCALHOSTPORT}/list`)
+var boards = {}
 
-const GameState = Object.freeze({
-    HQSELECT: "hqslect",
-    ONGOING:  "ongoing",
-    OVER:     "over"
-});
-
-const renderBoard = (game, idx) => {
+const renderBoard = (game) => {
   var config = {
     position: game.fen,
   }
-  boardId = `board-${idx}`;
+  boardId = game.id
   $gameRoomList.append(`<div class="board" id="${boardId}"></div>`)
-  boards.push(ChessBoard(boardId, config));
-}
-
-const updateBoard = (game, idx) => {
-  boards[idx].position(game.fen);
+  boards[boardId] = ChessBoard(boardId, config);
 }
 
 sock.on('createList', (list) => {
-  list.forEach((game, i) => {
-    renderBoard(game, i);
+  list.forEach((game) => {
+    renderBoard(game);
   })
 })
 
-sock.on('updateList', (list) => {
-  list.forEach((game, i) => {
-    updateBoard(game, i);
-  })
+sock.on('updateGame', (game) => {
+  boards[game.id].position(game.fen);
 })

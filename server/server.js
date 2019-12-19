@@ -3,15 +3,20 @@ const express = require('express');
 const socketio = require('socket.io');
 const app = express();
 const server = http.createServer(app);
-const clientPath = `${__dirname}/../client`;
 const io = socketio(server);
 
-app.use(express.static(clientPath));
 
+const clientPath = `${__dirname}/../client`;
+const constants = require(`${clientPath}/commons/constants.js`);
 const HqGameRoom = require('./HqGameRoom');
-const GameState = require('./GameState');
-const waitingRoom = 'waitingRoom';
+
+app.use(express.static(clientPath));
+const waitingRoom = constants.WAITINGROOM;
+
 var gameRoomList = [];
+if (constants.AUTO_LOGIN){
+  var clientCounter = 0;
+}
 
 const getSocketIds = (room) => {
   const list = io.sockets.adapter.rooms[room];
@@ -48,6 +53,7 @@ const getCurrentGames = () => {
   var currentGames = []
   gameRoomList.forEach((gameRoom) => {
     currentGames.push({
+      id : gameRoom.id,
       state : Object(gameRoom.state),
       fen : gameRoom.fen,
       white : gameRoom.players[0].name,
@@ -58,6 +64,12 @@ const getCurrentGames = () => {
   return currentGames
 }
 
+const registerPlayer = (sock, name) => {
+  sock.name = name
+  sock.join(waitingRoom);
+  updateWaitingList();
+}
+
 var list = io.of('/list')
 list.on('connection', (sock) => {
   list.emit('createList', getCurrentGames());
@@ -66,18 +78,20 @@ list.on('connection', (sock) => {
   })
 })
 
-io.on('connection', (sock) => {
+var index = io.of('/')
+index.on('connection', (sock) => {
+  if (constants.AUTO_LOGIN) {
+    registerPlayer(sock, `player${++clientCounter}`);
+  }
+
   sock.on('disconnect', () => {
+    console.log(`${sock.name} a déco`);
     updateWaitingList();
   })
 
-  sock.on('clientMessage', broadcastMessage);
+  sock.on('message', broadcastMessage);
 
-  sock.on('clientRegistered', (name) => {
-    sock.name = name
-    sock.join(waitingRoom);
-    updateWaitingList();
-  })
+  sock.on('clientRegistered', (name) => {registerPlayer(sock, name)})
 
   sock.on('opponentClick', (opponentId) => {
     //announcing match
@@ -87,15 +101,16 @@ io.on('connection', (sock) => {
     //leaving waitingRoom
     opponent.leave(waitingRoom)
     sock.leave(waitingRoom)
-    sock.off('clientMessage', broadcastMessage);
+    sock.off('message', broadcastMessage);
     updateWaitingList();
 
     //create game room
-    gameRoomList.push(new HqGameRoom(sock, opponent));
+    var gameRoom = new HqGameRoom(sock, opponent);
+    gameRoomList.push(gameRoom);
   })
 
-  sock.on('updateCurrentGames', () => {
-    list.emit('updateList', getCurrentGames())
+  sock.on('gameInfo', (infos) => {
+    list.emit('updateGame', infos)
   })
 });
 
@@ -103,6 +118,6 @@ server.on('error', (err) =>{
   console.error('Server error:', err);
 });
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log('HQ started on 8080');
+server.listen(process.env.PORT || constants.LOCALHOSTPORT, () => {
+  console.log(`HQ started on ${constants.LOCALHOSTPORT}`);
 });

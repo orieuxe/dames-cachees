@@ -1,11 +1,12 @@
-const GameState = require('./GameState');
+const clientPath = `${__dirname}/../client`;
+const GameState = require(`${clientPath}/commons/GameState`);
 
 class HqGameRoom {
   constructor(s1,s2){
     this.initGameRoom(s1,s2);
 
     this.players.forEach((player, idx) => {
-      const opponent = this.players[(idx + 1)%2];
+      const opponent = this.getOpponent(idx);
       player.on('message', (message) => {
         this.sendToPlayers("message", message);
       })
@@ -40,30 +41,34 @@ class HqGameRoom {
         this.state = GameState.OVER;
       })
 
-      player.on('gameInfo', (game) => {
-        this.fen = game.fen
-        if (game.over) {
-          this.state = GameState.OVER
-        }
-        console.log("gameInfo");
-        player.emit('updateCurrentGames', null)
-      })
-
       player.on('disconnect', () => {
         this.sendToPlayer(opponent, "event", `${player.name} a quitté la partie !`)
         this.state = GameState.OVER;
+      })
+
+      player.on('gameInfo', (infos) => {
+        this.fen = infos.fen;
+        this.state = infos.state;
       })
     })
   }
 
   initGameRoom(s1,s2){
+    const colors = ['white', 'black'];
+    this.id = s1.id + s2.id;
     this.state = GameState.HQSELECT;
     this.hqs = [null,null];
     this.rematchOffers = [false, false];
     this.drawOffers = [false, false];
     this.players = [s1,s2];
 
-    this.sendColorsToPlayers(['white', 'black']);
+    this.players.forEach((p,i) => {
+      this.sendToPlayer(p, 'startSelect', {
+        color : colors[i],
+        id : this.id,
+        opponent : this.getOpponent(i).name
+      });
+    });
     this.sendToPlayers("event", "Veuillez selectionner votre dame cachée");
   }
 
@@ -98,6 +103,10 @@ class HqGameRoom {
       this.sendToPlayers("drawAgreed", null);
     }
     this.state = GameState.OVER;
+  }
+
+  getOpponent(idx){
+    return this.players[(idx + 1)%2];
   }
 }
 
