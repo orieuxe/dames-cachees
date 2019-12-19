@@ -1,6 +1,6 @@
 # Dames Cachées - Hidden Queen
 
-Avant de débuter la partie, chaque joueur dissimule une dame parmi ses pions. La partie se déroule ensuite traditionnellement. La variante n'est alors plus un jeu d'information complète.
+Avant de débuter la partie, chaque joueur dissimule une dame parmi ses pions. La partie se déroule ensuite normalement. La variante n'est alors plus un jeu d'information complète.
 
 Before starting the game, each player hides a queen among his own pawns. Then the game goes on normally. This variant is not a complete information game anymore.
 
@@ -11,12 +11,10 @@ https://dames-cachees.herokuapp.com/
 TODO
 -----
 
-- [x] HQ becomes a real queen afer a player decides reveal it.
-- [x] fix scrolling chatbox
-- [x] chat notification when player join/leave the game
-- [ ] piece promotion menu
-- [ ] HQ Engine (Python ?)
+- [ ] better UI for matches in progess
 - [ ] multilingual project
+- [ ] piece promotion menu
+- [ ] HQ python engine
 
 Usage
 -----
