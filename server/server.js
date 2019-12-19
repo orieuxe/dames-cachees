@@ -85,7 +85,6 @@ index.on('connection', (sock) => {
   }
 
   sock.on('disconnect', () => {
-    console.log(`${sock.name} a déco`);
     updateWaitingList();
   })
 

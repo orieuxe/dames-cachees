@@ -1,4 +1,4 @@
-const sock = io()
+const sock = io('/')
 var boardOrientation = null;
 var board = null;
 var selectBoard = null;

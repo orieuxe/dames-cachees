@@ -1,4 +1,4 @@
-var sock = io.connect(`http://localhost:${constants.LOCALHOSTPORT}/list`)
+var sock = io('/list')
 var boards = {}
 
 const renderBoard = (game) => {
