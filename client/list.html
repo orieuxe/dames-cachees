@@ -19,10 +19,18 @@
         <button>Retour à l'acccueil</button>
       </a>
     </div>
+    <div class="game-room" id="game-room-prototype">
+      <div class="board"></div>
+      <div class="infos">
+        <span class="white"></span> vs <span class="black"></span><br>
+      </div>
+    </div>
     <div id="game-room-list">
+
     </div>
     <script type="text/javascript">
       var $gameRoomList = $('#game-room-list')
+      var $gameRoomPrototype = $('#game-room-prototype')
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="commons/constants.js"></script>

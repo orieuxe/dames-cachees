@@ -1,18 +1,24 @@
 var sock = io('/list')
 var boards = {}
 
-const renderBoard = (game) => {
+const renderGame = (game) => {
   var config = {
     position: game.fen,
   }
-  boardId = game.id
-  $gameRoomList.append(`<div class="board" id="${boardId}"></div>`)
-  boards[boardId] = ChessBoard(boardId, config);
+  $gameRoom = $gameRoomPrototype.clone();
+  $gameRoom.removeAttr('id');
+  const boardId = 'game-'+game.id;
+  $gameRoom.children('.board').attr('id', boardId);
+  $infos = $gameRoom.children('.infos');
+  $infos.children('.white').text(game.white);
+  $infos.children('.black').text(game.black);
+  $gameRoomList.append($gameRoom);
+  boards[game.id] = ChessBoard(boardId, config);
 }
 
 sock.on('createList', (list) => {
   list.forEach((game) => {
-    renderBoard(game);
+    renderGame(game);
   })
 })
 

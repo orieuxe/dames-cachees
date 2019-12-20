@@ -1,3 +1,13 @@
-.board{
+.game-room{
   width: 30vw;
+  display: inline-block;
+  padding: 3px
+}
+
+#game-room-prototype{
+  display: none;
+}
+
+.infos{
+  text-align: center;
 }
