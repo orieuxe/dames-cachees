@@ -2,8 +2,8 @@ const clientPath = `${__dirname}/../client`;
 const GameState = require(`${clientPath}/commons/GameState`);
 
 class HqGameRoom {
-  constructor(s1,s2){
-    this.initGameRoom(s1,s2);
+  constructor(s1,s2, id){
+    this.initGameRoom(s1,s2, id);
 
     this.players.forEach((player, idx) => {
       const opponent = this.getOpponent(idx);
@@ -53,9 +53,9 @@ class HqGameRoom {
     })
   }
 
-  initGameRoom(s1,s2){
+  initGameRoom(s1,s2, id){
     const colors = ['white', 'black'];
-    this.id = s1.id + s2.id;
+    this.id = id;
     this.state = GameState.HQSELECT;
     this.hqs = [null,null];
     this.rematchOffers = [false, false];
@@ -94,7 +94,7 @@ class HqGameRoom {
 
   checkRematchOffers(){
     if (this.rematchOffers.every(offer => offer)){
-      this.initGameRoom(this.players[1],this.players[0])
+      this.initGameRoom(this.players[1],this.players[0], this.id)
     }
   }
 

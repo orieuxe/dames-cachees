@@ -19,7 +19,7 @@ const startSelect = (infos) => {
   if (selectBoard === null){
     selectBoard = new SelectHqBoard();
   }else{
-    selectBoard.initSelectBoard();
+    selectBoard.initBoard();
   }
   board = selectBoard;
   board.sendGameInfo();
@@ -35,7 +35,7 @@ const startPlay = () => {
     if (playingBoard === null){
       playingBoard = new PlayingBoard(fen);
     }else{
-      playingBoard.initPlayingBoard(fen);
+      playingBoard.initBoard(fen);
     }
     board = playingBoard
     board.sendGameInfo();

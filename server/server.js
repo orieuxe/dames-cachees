@@ -60,7 +60,6 @@ const getCurrentGames = () => {
       black : gameRoom.players[1].name
     })
   });
-  console.log(currentGames);
   return currentGames
 }
 
@@ -104,7 +103,7 @@ index.on('connection', (sock) => {
     updateWaitingList();
 
     //create game room
-    var gameRoom = new HqGameRoom(sock, opponent);
+    var gameRoom = new HqGameRoom(sock, opponent, gameRoomList.length);
     gameRoomList.push(gameRoom);
   })
 
