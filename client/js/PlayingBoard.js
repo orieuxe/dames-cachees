@@ -6,12 +6,14 @@ class PlayingBoard extends AbstractBoard{
     sock.on('makeMove', this.makeMove.bind(this));
     sock.on('putQ', this.putQ.bind(this));
     sock.on('drawAgreed', () => {
-      this.isGameOver = GameState.OVER;
+      this.state = GameState.OVER;
       this.sendEndMessage("Partie nulle par accord mutuel !");
+      this.sendGameInfo();
     })
     sock.on('resign', (playerName) => {
-      this.isGameOver = GameState.OVER;
+      this.state = GameState.OVER;
       this.sendEndMessage(`Partie Terminée, ${playerName} abandonne !`);
+      this.sendGameInfo();
     })
   }
 
@@ -92,7 +94,7 @@ class PlayingBoard extends AbstractBoard{
 
   checkGameOver(){
     if( this.chess.game_over()){
-      this.isGameOver = true;
+      this.state = GameState.OVER;
       this.sendEndMessage("Partie Terminée !");
     }
   }

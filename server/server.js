@@ -8,12 +8,13 @@ const io = socketio(server);
 
 const clientPath = `${__dirname}/../client`;
 const constants = require(`${clientPath}/commons/constants.js`);
+const GameState = require(`${clientPath}/commons/GameState.js`);
 const HqGameRoom = require('./HqGameRoom');
 
 app.use(express.static(clientPath));
 const waitingRoom = constants.WAITINGROOM;
 
-var gameRoomList = [];
+var gameRoomMap = {}
 if (constants.AUTO_LOGIN){
   var clientCounter = 0;
 }
@@ -51,14 +52,19 @@ const broadcastMessage = (clientMessage) => {
 
 const getCurrentGames = () => {
   var currentGames = []
+  const gameRoomList = Object.values(gameRoomMap);
   gameRoomList.forEach((gameRoom) => {
-    currentGames.push({
-      id : gameRoom.id,
-      state : Object(gameRoom.state),
-      fen : gameRoom.fen,
-      white : gameRoom.players[0].name,
-      black : gameRoom.players[1].name
-    })
+    if (gameRoom.state == GameState.OVER) {
+      delete gameRoomMap[gameRoom.id];
+    }else{
+      currentGames.push({
+        id : gameRoom.id,
+        state : gameRoom.state,
+        fen : gameRoom.fen,
+        white : gameRoom.players[0].name,
+        black : gameRoom.players[1].name
+      })
+    }
   });
   return currentGames
 }
@@ -103,8 +109,8 @@ index.on('connection', (sock) => {
     updateWaitingList();
 
     //create game room
-    var gameRoom = new HqGameRoom(sock, opponent, gameRoomList.length);
-    gameRoomList.push(gameRoom);
+    var gameRoom = new HqGameRoom(sock, opponent, gameRoomMap.length);
+    gameRoomMap[gameRoom.id] = gameRoom;
   })
 
   sock.on('gameInfo', (infos) => {
