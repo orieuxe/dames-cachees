@@ -51,6 +51,10 @@ const showClients = (clients) => {
     //Can't click if own user
     if (client.id == sock.id){
       $playerList.children().last().attr('disabled', true)
+      //register own player if AUTO_LOGIN enabled
+      if (constants.AUTO_LOGIN && player === null){
+        player = new Player(client.name)
+      }
     }
   })
 }
