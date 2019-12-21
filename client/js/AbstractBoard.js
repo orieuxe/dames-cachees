@@ -34,7 +34,9 @@ class AbstractBoard{
        sock.emit('gameInfo', {
          fen:this.getFen(),
          state:this.state,
-         id:gameRoomId
+         id:gameRoomId,
+         white:player.getName(),
+         black:opponent.getName()
        })
      }
    }

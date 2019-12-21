@@ -1,19 +1,26 @@
 var sock = io('/list')
 var boards = {}
 
+const getGameRoomId = (gameId) => { return 'game-room'+gameId; }
+const getBoardId = (gameId) => { return 'board'+gameId; }
+
 const renderGame = (game) => {
   var config = {
     position: game.fen,
   }
   $gameRoom = $gameRoomPrototype.clone();
-  $gameRoom.removeAttr('id');
-  const boardId = 'game-'+game.id;
-  $gameRoom.children('.board').attr('id', boardId);
+  $gameRoom.attr('id', getGameRoomId(game.id));
+  $gameRoom.children('.board').attr('id', getBoardId(game.id));
+  $gameRoomList.append($gameRoom);
+  boards[game.id] = ChessBoard(getBoardId(game.id), config);
+  setInfos(game);
+}
+
+const setInfos = (game) => {
+  $gameRoom = $('#'+getGameRoomId(game.id));
   $infos = $gameRoom.children('.infos');
   $infos.children('.white').text(game.white);
   $infos.children('.black').text(game.black);
-  $gameRoomList.append($gameRoom);
-  boards[game.id] = ChessBoard(boardId, config);
 }
 
 sock.on('createList', (list) => {
@@ -23,5 +30,10 @@ sock.on('createList', (list) => {
 })
 
 sock.on('updateGame', (game) => {
-  boards[game.id].position(game.fen);
+  if (boards.hasOwnProperty(game.id)) {
+    boards[game.id].position(game.fen);
+    setInfos(game);
+  }else{
+    renderGame(game);
+  }
 })
