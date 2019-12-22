@@ -1,8 +1,4 @@
 class AbstractBoard{
-    constructor(){
-      this.initBoard();
-    }
-
     initBoard(){
       this.color = boardOrientation.charAt(0);
       this.state = null;
