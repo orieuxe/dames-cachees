@@ -1,12 +1,15 @@
 {
   "name": "dames-cachees",
   "version": "1.0.0",
-  "description": "",
+  "description": "une variante du jeu d'échecs",
   "scripts": {
-    "start": "cd server && npm start",
-    "dev": "cd server && npm run dev"
+    "start": "node server/server.js",
+    "dev": "nodemon --watch server/server.js"
   },
   "dependencies": {
-    "server": "file:./server"
+    "i18next": "^19.0.2",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.4",
+    "socket.io": "^2.3.0"
   }
 }
