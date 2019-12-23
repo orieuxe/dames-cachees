@@ -1,0 +1,11 @@
+{
+	"title":"Hidden Queen",
+	"welcome":"Welcome to $t(title) !",
+	"login-title":"Login",
+	"playerName":"Your name...",
+	"waitingRoom-title":"Waiting players",
+	"game-room-list":"Lives matches",
+	"rematch-btn":"Rematch",
+	"resign-btn":"Resign",
+	"draw-btn":"Draw"
+}

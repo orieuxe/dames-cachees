@@ -6,6 +6,8 @@
 
     <!-- Chess librairies -->
     <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
+    <script src="lib/i18next.min.js"></script>
+    <script src="lib/i18nextBackend.min.js"></script>
     <script src="lib/myChessboard.js"></script>
     <script src="lib/myChess.js"></script>
 
@@ -13,9 +15,7 @@
   </head>
 
   <body style="font-size: 20px;">
-    <div class="titre">
-      <h1>Dames Cachées</h1>
-    </div>
+    <h1 id="title"></h1>
     <div class="parent">
       <div id="chat">
         <div id="chat-box">
@@ -26,20 +26,18 @@
 
       <div id="main-content">
         <div id="login">
-          <h2>Login</h2>
+          <h2 id="login-title">Login</h2>
           <input id="playerName" placeholder="votre nom..." name="" value=""/>
         </div>
         <div id="waitingRoom" hidden>
-          <h2>Joueurs en attente</h2>
+          <h2 id="waitingRoom-title">Joueurs en attente</h2>
           <div id="playerList"></div>
         </div>
         <div id="board"></div>
       </div>
 
       <div id="side-content">
-        <a href="list" id="game-room-list">
-          <button>Matchs en cours</button>
-        </a>
+        <a href="list" id="game-room-list">Matchs en cours</a>
         <button id="rematch-btn" hidden>Rematch</button>
         <button id="draw-btn" hidden>Draw</button>
         <button id="resign-btn" hidden>Resign</button>
@@ -47,6 +45,9 @@
 
     </div>
     <script type="text/javascript">
+      var $title = $('#title');
+      var $loginTitle = $('#login-title');
+
       var $waitingRoom = $("#waitingRoom");
       var $playerList = $("#playerList");
       var $msgInput = $("#chat-input");
@@ -65,6 +66,7 @@
     <script src="js/AbstractBoard.js"></script>
     <script src="js/SelectHqBoard.js"></script>
     <script src="js/PlayingBoard.js"></script>
+    <script src="js/translate.js"></script>
     <script src="js/client.js"></script>
   </body>
 </html>

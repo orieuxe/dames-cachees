@@ -1,0 +1,11 @@
+{
+	"title":"Dames Cachées",
+	"welcome":"Bienvenue sur $t(title) !",
+	"login-title":"Login",
+	"playerName":"Votre nom...",
+	"waitingRoom-title":"Joueurs en attente",
+	"game-room-list":"Matchs en cours",
+	"rematch-btn":"Revanche",
+	"resign-btn":"Abandonner",
+	"draw-btn":"Proposer nulle"
+}
