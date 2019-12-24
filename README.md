@@ -11,8 +11,8 @@ https://dames-cachees.herokuapp.com/
 TODO
 -----
 
+- [x] multilingual project
 - [ ] better UI for matches in progess
-- [ ] multilingual project
 - [ ] piece promotion menu
 - [ ] HQ python engine
 
