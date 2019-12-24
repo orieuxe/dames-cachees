@@ -1,23 +1,21 @@
 <!doctype html>
 <html>
   <head>
-    <title>Dame cachées</title>
+    <title></title>
     <script src="lib/jquery.min.js"></script>
 
     <!-- Chess librairies -->
     <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
     <link rel="stylesheet" type="text/css" href="css/list.css">
+    <script src="lib/i18next.min.js"></script>
+    <script src="lib/i18nextBackend.min.js"></script>
     <script src="lib/myChessboard.js"></script>
   </head>
 
   <body style="font-size: 20px;">
-    <div class="titre">
-      <h1>Matchs en cours</h1>
-    </div>
+    <h1 id="all-games"></h1>
     <div class="navigation">
-      <a href="/">
-        <button>Retour à l'acccueil</button>
-      </a>
+      <a id="back-home" href="/"></a>
     </div>
     <div class="game-room" id="game-room-prototype">
       <div class="board"></div>
@@ -35,6 +33,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="commons/constants.js"></script>
     <script src="commons/GameState.js"></script>
+    <script src="js/translate.js"></script>
     <script src="js/gameRoomList.js"></script>
   </body>
 </html>

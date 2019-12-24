@@ -22,9 +22,9 @@ class SelectHqBoard extends AbstractBoard{
   onHqChoice(square, piece){
     if(piece.includes(this.color) && piece[1] == 'P'){
       sock.emit('putHq', {color:this.color, square:square});
-      Chatbox.writeEvent(`Votre dame cachée : ${square}`)
+      Chatbox.writeEvent('select.hq', {square:square});
     }else{
-      Chatbox.writeEvent("Mauvaise Pièce !")
+      Chatbox.writeEvent('select.wrong-piece');
     }
     return false;
   }

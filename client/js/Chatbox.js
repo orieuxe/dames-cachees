@@ -1,6 +1,6 @@
 class Chatbox{
-  static writeEvent(text){
-    Chatbox.addText(text);
+  static writeEvent(key, args){
+    Chatbox.addText(i18next.t(key, args));
   }
 
   static writeMessage(message){

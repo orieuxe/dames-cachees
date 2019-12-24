@@ -4,6 +4,9 @@ const constants = require(`${clientPath}/commons/constants.js`);
 
 module.exports = (io) => {
   const waitingRoom = constants.WAITINGROOM;
+  if (constants.AUTO_LOGIN) {
+    var clientCounter = 0;
+  }
 
   const getSocketIds = (room) => {
     const list = io.sockets.adapter.rooms[room];
@@ -24,9 +27,6 @@ module.exports = (io) => {
     io.in(waitingRoom).emit('clientsChange', clients);
   }
 
-  const broadcastEvent = (message) => {
-    io.in(waitingRoom).emit('event', message);
-  }
   const broadcastMessage = (clientMessage) => {
     io.in(waitingRoom).emit('message', clientMessage);
   }
@@ -54,7 +54,13 @@ module.exports = (io) => {
     sock.on('opponentClick', (opponentId) => {
       //announcing match
       opponent = io.sockets.connected[opponentId];
-      broadcastEvent(`Nouveau match ${sock.name} vs ${opponent.name}`)
+      io.in(waitingRoom).emit('event', {
+        key: "new-match",
+        args:{
+          whitePlayer:sock.name,
+          blackPlayer:opponent.name
+        }
+      });
 
       //leaving waitingRoom
       opponent.leave(waitingRoom)

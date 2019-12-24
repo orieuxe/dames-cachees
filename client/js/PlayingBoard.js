@@ -6,13 +6,13 @@ class PlayingBoard extends AbstractBoard{
     sock.on('makeMove', this.makeMove.bind(this));
     sock.on('putQ', this.putQ.bind(this));
     sock.on('drawAgreed', () => {
-      this.state = GameState.OVER;
-      this.sendEndMessage("Partie nulle par accord mutuel !");
+      this.setGameOver();
+      Chatbox.writeEvent('draw.agreed');
       this.sendGameInfo();
     })
     sock.on('resign', (playerName) => {
-      this.state = GameState.OVER;
-      this.sendEndMessage(`Partie Terminée, ${playerName} abandonne !`);
+      this.setGameOver();
+      Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.resignation'});
       this.sendGameInfo();
     })
   }
@@ -94,28 +94,35 @@ class PlayingBoard extends AbstractBoard{
 
   checkGameOver(){
     if( this.chess.game_over()){
-      this.state = GameState.OVER;
-      this.sendEndMessage("Partie Terminée !");
+      this.setGameOver();
+      var reason = 'unknown-reason';
+      if (this.chess.in_checkmate()) {
+        reason = 'checkmate';
+      }
+
+      if(!this.chess.has_king(this.chess.turn())){
+        reason = 'king-capture';
+      }
+
+      //get the winning player name.
+      let moveColor = this.chess.WHITE;
+      if (this.chess.turn() === this.chess.WHITE){
+        moveColor = this.chess.BLACK
+      }
+      let movePlayer = player.getName();
+      if (moveColor !== this.color) {
+        movePlayer = opponent.getName();
+      }
+
+      Chatbox.writeEvent("play.win", {player : movePlayer, reason : `play.end-reason.${reason}`});
     }
   }
 
-  sendEndMessage(message){
-
-    let turn = this.chess.turn();
-    let moveColor = "blancs";
-    if (turn === this.chess.WHITE){
-      moveColor = "noirs"
-    }
-
-    if (this.chess.in_checkmate()) {
-      message += ` Les ${moveColor} gagnent par échec et mat`
-    }
-
-    if(!this.chess.has_king(turn)){
-      message += ` Les ${moveColor} gagnent en prenant le roi !`
-    }
-    Chatbox.writeEvent(message);
+  setGameOver(){
+    this.state = GameState.OVER;
     $rematchBtn.show();
+    $resingBtn.hide();
+    $drawBtn.hide();
   }
 
   makeMove(move) {

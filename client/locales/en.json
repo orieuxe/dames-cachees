@@ -1,11 +1,43 @@
 {
-	"title":"Hidden Queen",
+	"title":"Hidden Queens",
+	"hq": "hidden queen",
 	"welcome":"Welcome to $t(title) !",
+	"back-home":"Back to home",
 	"login-title":"Login",
 	"playerName":"Your name...",
 	"waitingRoom-title":"Waiting players",
-	"game-room-list":"Lives matches",
+	"all-games":"Lives matches",
 	"rematch-btn":"Rematch",
 	"resign-btn":"Resign",
-	"draw-btn":"Draw"
+	"draw-btn":"Draw",
+	"new-match":"New match {{whitePlayer}} vs {{blackPlayer}} !",
+	"select":{
+		"start":"Please select your $t(hq)",
+		"hq":"Your $t(hq) : {{square}}",
+		"wrong-piece":"Wrong piece !"
+	},
+	"play":{
+		"start":"Let the game begin !",
+		"over":"Game over",
+		"win":"$t(play.over) ! {{player}} wins $t({{reason}}) !",
+		"end-reason":{
+			"king-capture":"by capturing the king",
+			"checkmate":"by checkmate",
+			"resignation":"by resignation"
+		}
+	},
+	"draw":{
+		"offer":{
+			"sent": "Draw offered...",
+			"recieved": "{{player}} offers a draw !"
+		},
+		"agreed":"Game drawn by mutual agrement !"
+	},
+	"rematch":{
+		"offer":{
+			"sent": "Rematch requested...",
+			"recieved": "{{player}} wants to play again !"
+		}
+	},
+	"disconnect":"{{player}} left the game !"
 }

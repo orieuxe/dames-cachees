@@ -2,19 +2,23 @@
 i18next
   .use(i18nextXHRBackend)
   .init({
-    debug: true,
+    debug: false,
     lng: navigator.language.substring(0,2),
     fallbackLng: "en",
     backend: {
       loadPath: "../locales/{{lng}}.json"
     }
   }, () => {
-    updateContent()
-    clientReady()
+    if (typeof clientReady === "function") {
+      clientReady();
+    }
+    updateContent();
   });
 })();
 
 function updateContent() {
+  $('title').html(i18next.t('title'));
+
   $('button, a, :header').each((i, elt) => {
     $(elt).html(i18next.t(elt.id))
   })

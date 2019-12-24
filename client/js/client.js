@@ -8,12 +8,21 @@ var opponent = null;
 var gameRoomId = null;
 
 const clientReady = () => {
-  Chatbox.writeEvent(i18next.t('welcome'))
+  Chatbox.writeEvent('welcome');
+
+  const writeEvent = (key) => {
+    if(typeof key === 'object'){
+      Chatbox.writeEvent(key.key, key.args);
+    }else{
+      Chatbox.writeEvent(key);
+    }
+  }
 
   const startSelect = (infos) => {
-    $rematchBtn.hide();
+    Chatbox.writeEvent('select.start')
+    $rematchBtn.hide()
     $waitingRoom.hide();
-    $gameRoomList.hide();
+    $allGames.hide();
     boardOrientation = infos.color;
     gameRoomId = infos.id;
     opponent = new Player(infos.opponent);
@@ -32,7 +41,7 @@ const clientReady = () => {
     $drawBtn.show();
     $resingBtn.show();
     setTimeout(function () {
-      Chatbox.writeEvent("La partie commence !");
+      Chatbox.writeEvent('play.start');
       if (playingBoard === null){
         playingBoard = new PlayingBoard(fen);
       }else{
@@ -89,12 +98,12 @@ const clientReady = () => {
   });
 
   $rematchBtn.click((e) => {
-    Chatbox.writeEvent("Offre de rematch envoyée...")
+    Chatbox.writeEvent('rematch.offer.sent')
     sock.emit('rematch');
   })
 
   $drawBtn.click((e) => {
-    Chatbox.writeEvent("Proposition de nulle envoyée...")
+    Chatbox.writeEvent('draw.offer.sent')
     sock.emit('draw');
   })
 
@@ -105,7 +114,7 @@ const clientReady = () => {
 
   //New client / client quitting lobby
   sock.on('clientsChange', showClients);
-  sock.on('event', Chatbox.writeEvent);
+  sock.on('event', writeEvent);
   sock.on('message', Chatbox.writeMessage);
   sock.on('startSelect', startSelect);
   sock.on('startPlay', startPlay);

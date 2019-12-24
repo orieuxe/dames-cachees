@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Dame cachées</title>
+    <title></title>
     <script src="lib/jquery.min.js"></script>
 
     <!-- Chess librairies -->
@@ -26,37 +26,36 @@
 
       <div id="main-content">
         <div id="login">
-          <h2 id="login-title">Login</h2>
+          <h2 id="login-title"></h2>
           <input id="playerName" placeholder="votre nom..." name="" value=""/>
         </div>
         <div id="waitingRoom" hidden>
-          <h2 id="waitingRoom-title">Joueurs en attente</h2>
+          <h2 id="waitingRoom-title"></h2>
           <div id="playerList"></div>
         </div>
         <div id="board"></div>
       </div>
 
       <div id="side-content">
-        <a href="list" id="game-room-list">Matchs en cours</a>
-        <button id="rematch-btn" hidden>Rematch</button>
-        <button id="draw-btn" hidden>Draw</button>
-        <button id="resign-btn" hidden>Resign</button>
+        <a href="list" id="all-games"></a>
+        <button id="rematch-btn" hidden></button>
+        <button id="draw-btn" hidden></button>
+        <button id="resign-btn" hidden></button>
       </div>
 
     </div>
     <script type="text/javascript">
       var $title = $('#title');
+      var $login = $("#login");
       var $loginTitle = $('#login-title');
-
+      var $playerName = $("#playerName");
       var $waitingRoom = $("#waitingRoom");
       var $playerList = $("#playerList");
       var $msgInput = $("#chat-input");
-      var $login = $("#login");
-      var $playerName = $("#playerName");
-      var $resingBtn = $('#resign-btn');
+      var $allGames = $('#all-games');
       var $rematchBtn = $('#rematch-btn');
+      var $resingBtn = $('#resign-btn');
       var $drawBtn = $('#draw-btn');
-      var $gameRoomList = $('#game-room-list');
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="commons/constants.js"></script>

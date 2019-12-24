@@ -26,23 +26,32 @@ class HqGameRoom {
 
       player.on('rematch', () => {
         this.rematchOffers[idx] = true;
-        this.sendToPlayer(opponent, "event",`${player.name} veut rejouer !`);
+        this.sendToPlayer(opponent, "event",{
+          key : 'rematch.offer.recieved',
+          args : {player:player.name}
+        });
         this.checkRematchOffers();
       })
 
       player.on('draw', () => {
         this.drawOffers[idx] = true;
-        this.sendToPlayer(opponent, "event",`${player.name} propose nulle !`);
+        this.sendToPlayer(opponent, "event",{
+          key : 'draw.offer.recieved',
+          args : {player:player.name}
+        });
         this.checkDrawOffers();
       })
 
       player.on('resign', () => {
-        this.sendToPlayers("resign", player.name);
+        this.sendToPlayers("resign", opponent.name);
         this.state = GameState.OVER;
       })
 
       player.on('disconnect', () => {
-        this.sendToPlayer(opponent, "event", `${player.name} a quitté la partie !`)
+        this.sendToPlayer(opponent, "event", {
+          key : 'disconnect',
+          args : {player:player.name}
+        });
         this.state = GameState.OVER;
       })
 
@@ -69,7 +78,6 @@ class HqGameRoom {
         opponent : this.getOpponent(i).name
       });
     });
-    this.sendToPlayers("event", "Veuillez selectionner votre dame cachée");
   }
 
   sendToPlayers(key, msg){
@@ -78,10 +86,6 @@ class HqGameRoom {
 
   sendToPlayer(player, key,msg){
     player.emit(key, msg)
-  }
-
-  sendColorsToPlayers(colors){
-    this.players.forEach((p,i) => this.sendToPlayer(p, 'startSelect', colors[i]));
   }
 
   checkBothHqChosen(){

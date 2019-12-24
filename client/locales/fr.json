@@ -1,11 +1,43 @@
 {
 	"title":"Dames Cachées",
+	"hq": "dame cachée",
 	"welcome":"Bienvenue sur $t(title) !",
+	"back-home":"Retour à l'accueil",
 	"login-title":"Login",
 	"playerName":"Votre nom...",
 	"waitingRoom-title":"Joueurs en attente",
-	"game-room-list":"Matchs en cours",
+	"all-games":"Matchs en cours",
 	"rematch-btn":"Revanche",
 	"resign-btn":"Abandonner",
-	"draw-btn":"Proposer nulle"
+	"draw-btn":"Proposer nulle",
+	"new-match":"Nouveau match {{whitePlayer}} vs {{blackPlayer}} !",
+	"select":{
+		"start":"Veuillez selectionnez votre dame cachée",
+		"hq":"Votre $t(hq) : {{square}}",
+		"wrong-piece":"Mauvaise pièce !"
+	},
+	"play":{
+		"start":"Que la partie commence !",
+		"over":"Partie Terminée !",
+		"win":"$t(play.over) {{player}} gagne $t({{reason}}) !",
+		"end-reason":{
+			"king-capture":"en prenant le roi",
+			"checkmate":"par échec et mat",
+			"par abandon":"par abandon"
+		}
+	},
+	"draw":{
+		"offer":{
+			"sent": "Proposition de nulle envoyée...",
+			"recieved": "{{player}} propose nulle !"
+		},
+		"agreed":"Partie nulle par accord mutuel !"
+	},
+	"rematch":{
+		"offer":{
+			"sent": "Revanche envoyée...",
+			"recieved": "{{player}} veut rejouer !"
+		}
+	},
+	"disconnect":"{{player}} a quitté la partie !"
 }
