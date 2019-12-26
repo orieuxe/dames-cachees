@@ -10,17 +10,16 @@ https://dames-cachees.herokuapp.com/
 
 FEATURES
 --------
-- hidden queen piece manually added to [Chess.js](https://github.com/jhlywa/chess.js/blob/master/chess.js) and [chessoard.js](https://chessboardjs.com/) 
+- hidden queen piece manually added to [Chess.js](https://github.com/jhlywa/chess.js/blob/master/chess.js) and [chessoard.js](https://chessboardjs.com/)
 - multiplayer real-time game using [socket.io](https://socket.io/)
 - project fully translated in french and english with [i18next](https://www.i18next.com/)
 
 TODO
 -----
-- [ ] move matches to /play and leave root for a real home page
 - [ ] write rules
-- [ ] better UI for matches in progess
+- [ ] work on header, ui, css...
 - [ ] piece promotion menu
-- [ ] HQ python engines
+- [ ] HQ python engine ? 
 
 Usage
 -----
