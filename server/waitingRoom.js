@@ -3,42 +3,38 @@ const clientPath = `${__dirname}/../client`;
 const constants = require(`${clientPath}/commons/constants.js`);
 
 module.exports = (io) => {
+  live = io.of('/live')
+  
+  const waitingPlayers = {};
   const waitingRoom = constants.WAITINGROOM;
+
   if (constants.AUTO_LOGIN) {
     var clientCounter = 0;
   }
 
-  const getSocketIds = (room) => {
-    const list = io.sockets.adapter.rooms[room];
-    if (list !== undefined) {
-      return Object.keys(list.sockets);
-    }
-    return [];
-  }
-
   const updateWaitingList = () => {
-    const socketIds = getSocketIds(waitingRoom);
-    const clients = socketIds.map(id => {
-      return{
-        id: id,
-        name: io.sockets.connected[id].name
+    const clients = Object.values(waitingPlayers).map((sock) => {
+      return {
+        id:sock.id,
+        name:sock.name
       }
     });
-    io.in(waitingRoom).emit('clientsChange', clients);
+
+    live.in(waitingRoom).emit('clientsChange', clients);
   }
 
   const broadcastMessage = (clientMessage) => {
-    io.in(waitingRoom).emit('message', clientMessage);
+    live.in(waitingRoom).emit('message', clientMessage);
   }
 
   const registerPlayer = (sock, name) => {
+    waitingPlayers[sock.id] = sock;
     sock.name = name
     sock.join(waitingRoom);
     updateWaitingList();
   }
 
-  var index = io.of('/')
-  index.on('connection', (sock) => {
+  live.on('connection', (sock) => {
     if (constants.AUTO_LOGIN) {
       registerPlayer(sock, `player${++clientCounter}`);
     }
@@ -53,8 +49,8 @@ module.exports = (io) => {
 
     sock.on('opponentClick', (opponentId) => {
       //announcing match
-      opponent = io.sockets.connected[opponentId];
-      io.in(waitingRoom).emit('event', {
+      const opponent = waitingPlayers[opponentId]
+      live.in(waitingRoom).emit('event', {
         key: "new-match",
         args:{
           whitePlayer:sock.name,
@@ -63,6 +59,8 @@ module.exports = (io) => {
       });
 
       //leaving waitingRoom
+      delete waitingPlayers[opponentId];
+      delete waitingPlayers[sock.id];
       opponent.leave(waitingRoom)
       sock.leave(waitingRoom)
       sock.off('message', broadcastMessage);

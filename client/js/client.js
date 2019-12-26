@@ -1,4 +1,4 @@
-const sock = io('/')
+const sock = io('/live')
 var boardOrientation = null;
 var board = null;
 var selectBoard = null;
@@ -8,8 +8,6 @@ var opponent = null;
 var gameRoomId = null;
 
 const clientReady = () => {
-  Chatbox.writeEvent('welcome');
-
   const writeEvent = (key) => {
     if(typeof key === 'object'){
       Chatbox.writeEvent(key.key, key.args);

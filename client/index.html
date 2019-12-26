@@ -3,69 +3,20 @@
   <head>
     <title></title>
     <script src="lib/jquery.min.js"></script>
-
-    <!-- Chess librairies -->
-    <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
     <script src="lib/i18next.min.js"></script>
     <script src="lib/i18nextBackend.min.js"></script>
-    <script src="lib/myChessboard.js"></script>
-    <script src="lib/myChess.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/index.css">
   </head>
 
   <body style="font-size: 20px;">
-    <h1 id="title"></h1>
-    <div class="parent">
-      <div id="chat">
-        <div id="chat-box">
-          <ul id="chat-history"></ul>
-        </div>
-        <textarea id="chat-input"></textarea>
-      </div>
-
-      <div id="main-content">
-        <div id="login">
-          <h2 id="login-title"></h2>
-          <input id="playerName" placeholder="votre nom..." name="" value=""/>
-        </div>
-        <div id="waitingRoom" hidden>
-          <h2 id="waitingRoom-title"></h2>
-          <div id="playerList"></div>
-        </div>
-        <div id="board"></div>
-      </div>
-
-      <div id="side-content">
-        <a href="list" id="all-games"></a>
-        <button id="rematch-btn" hidden></button>
-        <button id="draw-btn" hidden></button>
-        <button id="resign-btn" hidden></button>
-      </div>
-
+    <h1 id="welcome"></h1>
+    <div class="navigation">
+      <a id="rules" href="/rules"></a>
+      <a id="live" href="/live"></a>
+      <a id="watch" href="/list"></a>
     </div>
     <script type="text/javascript">
-      var $title = $('#title');
-      var $login = $("#login");
-      var $loginTitle = $('#login-title');
-      var $playerName = $("#playerName");
-      var $waitingRoom = $("#waitingRoom");
-      var $playerList = $("#playerList");
-      var $msgInput = $("#chat-input");
-      var $allGames = $('#all-games');
-      var $rematchBtn = $('#rematch-btn');
-      var $resingBtn = $('#resign-btn');
-      var $drawBtn = $('#draw-btn');
     </script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="commons/constants.js"></script>
-    <script src="commons/GameState.js"></script>
-    <script src="js/Chatbox.js"></script>
-    <script src="js/Player.js"></script>
-    <script src="js/AbstractBoard.js"></script>
-    <script src="js/SelectHqBoard.js"></script>
-    <script src="js/PlayingBoard.js"></script>
     <script src="js/translate.js"></script>
-    <script src="js/client.js"></script>
   </body>
 </html>

@@ -33,11 +33,11 @@ module.exports = (io) => {
     })
   })
 
-  var index = io.of('/')
-  index.on('connection', (sock) => {
+  var live = io.of('/live')
+  live.on('connection', (sock) => {
     sock.on('opponentClick', (opponentId) => {
-      opponent = io.sockets.connected[opponentId];
-
+      opponent = live.connected[opponentId];
+      
       var gameRoom = new HqGameRoom(sock, opponent, gameRoomMap.length);
       gameRoomMap[gameRoom.id] = gameRoom;
     })

@@ -8,6 +8,10 @@ app.get('/list', function (req, res) {
   res.sendFile('./list.html', { root: clientPath });
 })
 
+app.get('/live', function (req, res) {
+  res.sendFile('./live.html', { root: clientPath });
+})
+
 app.use(express.static(clientPath));
 
 var server = app.listen(process.env.PORT || constants.LOCALHOSTPORT);
