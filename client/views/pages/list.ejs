@@ -1,23 +1,20 @@
 <!doctype html>
 <html>
   <head>
-    <title></title>
-    <link rel="shortcut icon" type="png" href="img/chesspieces/wikipedia/wH.png"/>
+    <%- include ('../partials/head') %>
 
-    <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
     <link rel="stylesheet" type="text/css" href="css/list.css">
+    <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
 
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/i18next.min.js"></script>
-    <script src="lib/i18nextBackend.min.js"></script>
     <script src="lib/myChessboard.js"></script>
+
   </head>
 
-  <body style="font-size: 20px;">
-    <h1 id="all-games"></h1>
-    <div class="navigation">
-      <a id="back-home" href="/"></a>
-    </div>
+  <body>
+    <header>
+      <%- include ('../partials/header') %>
+    </header>
+
     <div class="game-room" id="game-room-prototype">
       <div class="board"></div>
       <div class="infos">
@@ -27,6 +24,8 @@
     <div id="game-room-list">
 
     </div>
+
+    <%- include ('../partials/scripts') %>
     <script type="text/javascript">
       var $gameRoomList = $('#game-room-list')
       var $gameRoomPrototype = $('#game-room-prototype')
@@ -34,7 +33,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="commons/constants.js"></script>
     <script src="commons/GameState.js"></script>
-    <script src="js/translate.js"></script>
     <script src="js/gameRoomList.js"></script>
   </body>
+  <footer>
+    <%- include ('../partials/footer') %>
+  </footer>
 </html>

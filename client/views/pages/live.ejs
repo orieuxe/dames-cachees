@@ -1,22 +1,18 @@
 <!doctype html>
 <html>
   <head>
-    <title></title>
-    <link rel="shortcut icon" type="png" href="img/chesspieces/wikipedia/wH.png"/>
-
+    <%- include ('../partials/head') %>
+    <link rel="stylesheet" type="text/css" href="css/live.css">
     <link rel="stylesheet" type="text/css" href="css/chessboard.min.css">
 
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/i18next.min.js"></script>
-    <script src="lib/i18nextBackend.min.js"></script>
     <script src="lib/myChessboard.js"></script>
     <script src="lib/myChess.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/live.css">
   </head>
 
-  <body style="font-size: 20px;">
-    <h1 id="title"></h1>
+  <body>
+    <header>
+      <%- include ('../partials/header') %>
+    </header>
     <div class="parent">
       <div id="chat">
         <div id="chat-box">
@@ -28,7 +24,7 @@
       <div id="main-content">
         <div id="login">
           <h2 id="login-title"></h2>
-          <input id="playerName" placeholder="votre nom..." name="" value=""/>
+          <input id="playerName"/>
         </div>
         <div id="waitingRoom" hidden>
           <h2 id="waitingRoom-title"></h2>
@@ -38,13 +34,13 @@
       </div>
 
       <div id="side-content">
-        <a href="list" id="all-games"></a>
         <button id="rematch-btn" hidden></button>
         <button id="draw-btn" hidden></button>
         <button id="resign-btn" hidden></button>
       </div>
-
     </div>
+
+    <%- include ('../partials/scripts') %>
     <script type="text/javascript">
       var $title = $('#title');
       var $login = $("#login");
@@ -66,7 +62,6 @@
     <script src="js/AbstractBoard.js"></script>
     <script src="js/SelectHqBoard.js"></script>
     <script src="js/PlayingBoard.js"></script>
-    <script src="js/translate.js"></script>
     <script src="js/client.js"></script>
   </body>
 </html>

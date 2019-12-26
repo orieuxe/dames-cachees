@@ -5,7 +5,7 @@
 	"back-home":"Back to home",
 	"live":"Play",
 	"watch":"Spectate",
-	"rules":"Rules",
+	"learn":"Rules",
 	"login-title":"Login",
 	"playerName":"Your name...",
 	"waitingRoom-title":"Waiting players",
@@ -42,5 +42,6 @@
 			"recieved": "{{player}} wants to play again !"
 		}
 	},
-	"disconnect":"{{player}} left the game !"
+	"disconnect":"{{player}} left the game !",
+	"rules":"Official rules have not been written... yet. Any contribution is welcome !"
 }

@@ -1,0 +1,9 @@
+body{
+  padding-top: 10px;
+  font-size: 20px;
+}
+
+#logo{
+  width: 50px;
+  float: left;
+}

@@ -5,7 +5,7 @@
 	"back-home":"Retour à l'accueil",
 	"live":"Jouer",
 	"watch":"Regarder",
-	"rules":"Règles",
+	"learn":"Règles",
 	"login-title":"Login",
 	"playerName":"Votre nom...",
 	"waitingRoom-title":"Joueurs en attente",
@@ -42,5 +42,6 @@
 			"recieved": "{{player}} veut rejouer !"
 		}
 	},
-	"disconnect":"{{player}} a quitté la partie !"
+	"disconnect":"{{player}} a quitté la partie !",
+	"rules":"En cours d'écriture... Toute contribution est la bienvenue !"
 }

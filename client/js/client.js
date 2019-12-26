@@ -20,7 +20,6 @@ const clientReady = () => {
     Chatbox.writeEvent('select.start')
     $rematchBtn.hide()
     $waitingRoom.hide();
-    $allGames.hide();
     boardOrientation = infos.color;
     gameRoomId = infos.id;
     opponent = new Player(infos.opponent);
