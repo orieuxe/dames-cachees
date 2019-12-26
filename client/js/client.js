@@ -56,8 +56,11 @@ const clientReady = () => {
     $waitingRoom.show();
     $playerList.empty();
     clients.forEach((client) => {
-      html = `<button type="button" id=${client.id} class="btn btn-primary client">${client.name}</button>`;
-      $playerList.append(html);
+      $player = $playerPrototype.clone();
+      $player.removeClass('prototype');
+      $player.attr('id', client.id);
+      $player.text(client.name);
+      $playerList.append($player);
       //Can't click if own user
       if (client.id == sock.id){
         $playerList.children().last().attr('disabled', true)
@@ -70,7 +73,7 @@ const clientReady = () => {
   }
 
   //New match
-  $playerList.on('click',".client",(event) => {
+  $playerList.on('click',".player",(event) => {
     let opponentId = event.target.id
     sock.emit('opponentClick', opponentId);
   });

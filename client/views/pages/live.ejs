@@ -28,7 +28,9 @@
         </div>
         <div id="waitingRoom" hidden>
           <h2 id="waitingRoom-title"></h2>
-          <div id="playerList"></div>
+          <div id="playerList">
+             <button class="player prototype btn btn-primary" id="player-prototype"</button>
+          </div>
         </div>
         <div id="board"></div>
       </div>
@@ -57,6 +59,7 @@
       var $loginInput = $("#login-input");
       var $waitingRoom = $("#waitingRoom");
       var $playerList = $("#playerList");
+      var $playerPrototype = $("#player-prototype");
 
       //side-content
       var $opponentName = $('#opponent-name');

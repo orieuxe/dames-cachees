@@ -9,6 +9,7 @@ const renderGame = (game) => {
     position: game.fen,
   }
   $gameRoom = $gameRoomPrototype.clone();
+  $gameRoom.removeClass('prototype');
   $gameRoom.attr('id', getGameRoomId(game.id));
   $gameRoom.children('.board').attr('id', getBoardId(game.id));
   $gameRoomList.append($gameRoom);

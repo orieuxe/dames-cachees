@@ -7,3 +7,7 @@ body{
   width: 50px;
   float: left;
 }
+
+.prototype{
+  display: none !important;
+}
