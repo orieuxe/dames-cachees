@@ -1,1 +1,6 @@
-<p class="text-center text-muted">© Copyright 2019 Etienne Orieux</p>
+<p class="text-center text-muted">© Copyright <span id="current-year"></span> Etienne Orieux</p>
+
+<script type="text/javascript">
+  var currentYear = new Date().getFullYear()
+  document.getElementById('current-year').innerText = currentYear
+</script>
