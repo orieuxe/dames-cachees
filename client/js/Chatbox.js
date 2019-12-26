@@ -8,9 +8,7 @@ class Chatbox{
   }
 
   static addText(text){
-    const chatHistory = $('#chat-history')
-    const chatBox = $('#chat-box')
-    chatHistory.append(`<li>${text}</li>`)
-    chatBox.scrollTop(chatHistory.height())
+    $chatHistory.append(`<li>${text}</li>`)
+    $chatBox.scrollTop($chatHistory.height())
   }
 }

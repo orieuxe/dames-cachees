@@ -34,25 +34,36 @@
       </div>
 
       <div id="side-content">
-        <button id="rematch-btn" hidden></button>
-        <button id="draw-btn" hidden></button>
-        <button id="resign-btn" hidden></button>
+        <div id="opponent-name"></div>
+        <div id="buttons">
+          <button class="live-button" id="rematch-btn" hidden></button>
+          <button class="live-button" id="draw-btn" hidden></button>
+          <button class="live-button" id="resign-btn" hidden></button>
+        </div>
+        <div id="player-name"></div>
       </div>
     </div>
 
     <%- include ('../partials/scripts') %>
     <script type="text/javascript">
-      var $title = $('#title');
+      // chat
+      var $chatHistory = $('#chat-history')
+      var $chatBox = $('#chat-box')
+      var $msgInput = $("#chat-input");
+
+      // main-content
       var $login = $("#login");
       var $loginTitle = $('#login-title');
-      var $playerName = $("#playerName");
+      var $loginInput = $("#login-input");
       var $waitingRoom = $("#waitingRoom");
       var $playerList = $("#playerList");
-      var $msgInput = $("#chat-input");
-      var $allGames = $('#all-games');
+
+      //side-content
+      var $opponentName = $('#opponent-name');
       var $rematchBtn = $('#rematch-btn');
       var $resingBtn = $('#resign-btn');
       var $drawBtn = $('#draw-btn');
+      var $playerName = $('#player-name');
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="commons/constants.js"></script>

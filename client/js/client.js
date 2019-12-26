@@ -23,6 +23,9 @@ const clientReady = () => {
     boardOrientation = infos.color;
     gameRoomId = infos.id;
     opponent = new Player(infos.opponent);
+    $opponentName.text(opponent.getName());
+    $playerName.text(player.getName());
+
     if (selectBoard === null){
       selectBoard = new SelectHqBoard();
     }else{
@@ -53,7 +56,7 @@ const clientReady = () => {
     $waitingRoom.show();
     $playerList.empty();
     clients.forEach((client) => {
-      html = `<button id=${client.id} class="client">${client.name}</button>`;
+      html = `<button type="button" id=${client.id} class="btn btn-primary client">${client.name}</button>`;
       $playerList.append(html);
       //Can't click if own user
       if (client.id == sock.id){
@@ -85,9 +88,9 @@ const clientReady = () => {
   });
 
   //player registered
-  $playerName.keypress(function(event) {
+  $loginInput.keypress(function(event) {
       if (event.key === "Enter") {
-        let name = $playerName.val()
+        let name = $loginInput.val()
         $login.remove();
         player = new Player(name);
         sock.emit('clientRegistered', name);
