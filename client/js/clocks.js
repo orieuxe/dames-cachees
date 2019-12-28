@@ -5,7 +5,7 @@ const setT = ($clock, time) => { t[$clock.attr('id')] = time; }
 
 const initClocks = (mins) => {
   $clocks.show();
-  tInit = moment.duration(mins, 'seconds');
+  tInit = moment.duration(mins, 'minutes');
   setT($playerClock, tInit);
   setT($opponentClock, tInit.clone());
 
