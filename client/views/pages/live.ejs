@@ -7,6 +7,7 @@
 
     <script src="lib/myChessboard.js"></script>
     <script src="lib/myChess.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
   </head>
 
   <body>
@@ -36,24 +37,30 @@
       </div>
 
       <div id="side-content">
-        <div id="opponent-name"></div>
+        <div id="opponent">
+          <div id="opponent-name"></div>
+          <div class="clocks" id="opponent-clock" hidden></div>
+        </div>
         <div id="buttons">
           <button class="live-button" id="rematch-btn" data-i18n="rematch.btn" hidden></button>
           <button class="live-button" id="draw-btn" data-i18n="draw.btn" hidden></button>
           <button class="live-button" id="resign-btn" data-i18n="resign.btn" hidden></button>
         </div>
-        <div id="player-name"></div>
+        <div id="player">
+          <div class="clocks" id="player-clock" hidden></div>
+          <div id="player-name"></div>
+        </div>
       </div>
     </div>
 
     <%- include ('../partials/scripts') %>
     <script type="text/javascript">
-      // chat
-      var $chatHistory = $('#chat-history')
-      var $chatBox = $('#chat-box')
+      //chat
+      var $chatHistory = $('#chat-history');
+      var $chatBox = $('#chat-box');
       var $msgInput = $("#chat-input");
 
-      // main-content
+      //main-content
       var $login = $("#login");
       var $loginTitle = $('#login-title');
       var $loginInput = $("#login-input");
@@ -61,12 +68,17 @@
       var $playerList = $("#playerList");
       var $playerPrototype = $("#player-prototype");
 
-      //side-content
+      //players
+      var $clocks = $('.clocks');
       var $opponentName = $('#opponent-name');
+      var $opponentClock = $('#opponent-clock');
+      var $playerClock = $('#player-clock');
+      var $playerName = $('#player-name');
+
+      //buttons
       var $rematchBtn = $('#rematch-btn');
       var $resingBtn = $('#resign-btn');
       var $drawBtn = $('#draw-btn');
-      var $playerName = $('#player-name');
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="commons/constants.js"></script>
@@ -76,6 +88,7 @@
     <script src="js/AbstractBoard.js"></script>
     <script src="js/SelectHqBoard.js"></script>
     <script src="js/PlayingBoard.js"></script>
+    <script src="js/clocks.js"></script>
     <script src="js/client.js"></script>
   </body>
 </html>

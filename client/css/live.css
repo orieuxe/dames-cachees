@@ -19,19 +19,23 @@
   top: 45%;
 }
 
-#opponent-name {
+#opponent {
   position: absolute;
   top: 0%;
 }
 
-#player-name {
+#player {
   position: absolute;
-  top: 95%;
+  top: 80%;
 }
 
 #chat-box{
   overflow: auto;
   height: 79vh;
+}
+
+.clocks{
+  font-size: 10vh;
 }
 
 .live-button{

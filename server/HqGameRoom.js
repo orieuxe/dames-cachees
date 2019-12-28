@@ -47,6 +47,11 @@ class HqGameRoom {
         this.state = GameState.OVER;
       })
 
+      player.on('timeLost', () => {
+        this.sendToPlayers('timeWin', opponent.name);
+        this.state = GameState.OVER;
+      })
+
       player.on('disconnect', () => {
         this.sendToPlayer(opponent, "event", {
           key : 'disconnect',

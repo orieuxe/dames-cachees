@@ -18,6 +18,7 @@ const clientReady = () => {
 
   const startSelect = (infos) => {
     Chatbox.writeEvent('select.start')
+    initClocks(5);
     $rematchBtn.hide()
     $waitingRoom.hide();
     boardOrientation = infos.color;

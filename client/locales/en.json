@@ -27,7 +27,8 @@
 		"end-reason":{
 			"king-capture":"by capturing the king",
 			"checkmate":"by checkmate",
-			"resignation":"by resignation"
+			"resignation":"by resignation",
+			"time":"on time"
 		}
 	},
 	"draw":{

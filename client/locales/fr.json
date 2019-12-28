@@ -27,7 +27,8 @@
 		"end-reason":{
 			"king-capture":"en prenant le roi",
 			"checkmate":"par échec et mat",
-			"resignation":"par abandon"
+			"resignation":"par abandon",
+			"time":"au temps"
 		}
 	},
 	"draw":{

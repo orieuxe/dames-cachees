@@ -15,6 +15,11 @@ class PlayingBoard extends AbstractBoard{
       Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.resignation'});
       this.sendGameInfo();
     })
+    sock.on('timeWin', (playerName) => {
+      this.setGameOver();
+      Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.time'});
+      this.sendGameInfo();
+    })
   }
 
   initBoard(fen){
@@ -53,6 +58,7 @@ class PlayingBoard extends AbstractBoard{
     // illegal move
     if (move === null) return 'snapback';
 
+    runClock($opponentClock);
     sock.emit('move', move);
     this.updateBoardPosition();
 
@@ -127,6 +133,7 @@ class PlayingBoard extends AbstractBoard{
 
   makeMove(move) {
     this.chess.move(move);
+    runClock($playerClock);
     this.updateBoardPosition();
     this.checkGameOver();
     this.sendGameInfo();
