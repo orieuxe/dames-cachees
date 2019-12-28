@@ -2,17 +2,18 @@
 	"title":"Hidden Queens",
 	"hq": "hidden queen",
 	"welcome":"Welcome to $t(title) !",
-	"back-home":"Back to home",
-	"live":"Play",
-	"watch":"Spectate",
-	"learn":"Rules",
-	"login-title":"Login",
-	"login-input":"Your name...",
-	"waitingRoom-title":"Waiting players",
-	"all-games":"Lives matches",
-	"rematch-btn":"Rematch",
-	"resign-btn":"Resign",
-	"draw-btn":"Draw",
+	"nav":{
+		"live":"Play",
+		"watch":"Spectate",
+		"learn":"Rules"
+	},
+
+	"waiting-room":{
+		"login":"Login",
+		"placeholder":"Your name...",
+		"players":"Waiting players"
+	},
+
 	"new-match":"New match {{whitePlayer}} vs {{blackPlayer}} !",
 	"select":{
 		"start":"Please select your $t(hq)",
@@ -30,6 +31,7 @@
 		}
 	},
 	"draw":{
+		"btn": "Draw"
 		"offer":{
 			"sent": "Draw offered...",
 			"recieved": "{{player}} offers a draw !"
@@ -37,11 +39,15 @@
 		"agreed":"Game drawn by mutual agrement !"
 	},
 	"rematch":{
+		"btn": "Rematch"
 		"offer":{
 			"sent": "Rematch requested...",
 			"recieved": "{{player}} wants to play again !"
 		}
 	},
-	"disconnect":"{{player}} left the game !",
+	"resign":{
+		"btn": "Resign"
+	},
+	"disconnect":"$t(play.over) {{player}} left the game !",
 	"rules":"Official rules have not been written... yet. Any contribution is welcome !"
 }

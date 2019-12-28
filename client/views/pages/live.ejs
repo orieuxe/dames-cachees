@@ -23,11 +23,11 @@
 
       <div id="main-content">
         <div id="login">
-          <h2 id="login-title"></h2>
-          <input id="login-input"/>
+          <h2 data-i18n="waiting-room.login"></h2>
+          <input id="login-input" data-i18n="[placeholder]waiting-room.placeholder"/>
         </div>
         <div id="waitingRoom" hidden>
-          <h2 id="waitingRoom-title"></h2>
+          <h2 data-i18n="waiting-room.players"></h2>
           <div id="playerList">
              <button class="player prototype btn btn-primary" id="player-prototype"</button>
           </div>
@@ -38,9 +38,9 @@
       <div id="side-content">
         <div id="opponent-name"></div>
         <div id="buttons">
-          <button class="live-button" id="rematch-btn" hidden></button>
-          <button class="live-button" id="draw-btn" hidden></button>
-          <button class="live-button" id="resign-btn" hidden></button>
+          <button class="live-button" id="rematch-btn" data-i18n="rematch.btn" hidden></button>
+          <button class="live-button" id="draw-btn" data-i18n="draw.btn" hidden></button>
+          <button class="live-button" id="resign-btn" data-i18n="resign.btn" hidden></button>
         </div>
         <div id="player-name"></div>
       </div>

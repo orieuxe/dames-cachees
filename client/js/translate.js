@@ -12,18 +12,16 @@ i18next
     if (typeof clientReady === "function") {
       clientReady();
     }
-    updateContent();
+    initJquery();
+    $(document).localize(); // translate whole document
   });
 })();
 
-function updateContent() {
-  $('title').html(i18next.t('title'));
-
-  $('button, a, :header').each((i, elt) => {
-    $(elt).html(i18next.t(elt.id))
-  })
-
-  $('input').each((i, elt) => {
-    $(elt).attr('placeholder', i18next.t(elt.id))
-  })
+function initJquery(){
+  jqueryI18next.init(i18next, $, {
+    tName: 't',
+    i18nName: 'i18n',
+    handleName: 'localize',
+    selectorAttr: 'data-i18n'
+  });
 }

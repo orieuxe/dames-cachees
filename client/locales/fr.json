@@ -2,17 +2,18 @@
 	"title":"Dames Cachées",
 	"hq": "dame cachée",
 	"welcome":"Bienvenue sur $t(title) !",
-	"back-home":"Retour à l'accueil",
-	"live":"Jouer",
-	"watch":"Regarder",
-	"learn":"Règles",
-	"login-title":"Login",
-	"login-input":"Votre nom...",
-	"waitingRoom-title":"Joueurs en attente",
-	"all-games":"Matchs en cours",
-	"rematch-btn":"Revanche",
-	"resign-btn":"Abandonner",
-	"draw-btn":"Proposer nulle",
+	"nav":{
+		"live":"Jouer",
+		"watch":"Regarder",
+		"learn":"Règles"
+	},
+
+	"waiting-room":{
+		"login":"Login",
+		"placeholder":"Votre nom...",
+		"players":"Joueurs en attente"
+	},
+
 	"new-match":"Nouveau match {{whitePlayer}} vs {{blackPlayer}} !",
 	"select":{
 		"start":"Veuillez selectionnez votre dame cachée",
@@ -30,6 +31,7 @@
 		}
 	},
 	"draw":{
+		"btn": "Nulle",
 		"offer":{
 			"sent": "Proposition de nulle envoyée...",
 			"recieved": "{{player}} propose nulle !"
@@ -37,11 +39,16 @@
 		"agreed":"Partie nulle par accord mutuel !"
 	},
 	"rematch":{
+		"btn": "Revanche",
 		"offer":{
 			"sent": "Revanche envoyée...",
 			"recieved": "{{player}} veut rejouer !"
 		}
 	},
-	"disconnect":"{{player}} a quitté la partie !",
+	"resign":{
+		"btn": "Abandonner"
+	},
+	"disconnect":"$t(play.over) {{player}} a quitté la partie !",
+
 	"rules":"En cours d'écriture... Toute contribution est la bienvenue !"
 }

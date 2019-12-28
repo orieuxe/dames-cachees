@@ -17,7 +17,7 @@ FEATURES
 TODO
 -----
 - [ ] write rules
-- [ ] use 18next-jquery for translations
+- [x] use 18next-jquery for translations
 - [ ] add clocks
 - [ ] work on header, ui, css...
 - [ ] piece promotion menu
