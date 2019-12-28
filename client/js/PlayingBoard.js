@@ -126,6 +126,7 @@ class PlayingBoard extends AbstractBoard{
 
   setGameOver(){
     this.state = GameState.OVER;
+    stopClocks();
     $rematchBtn.show();
     $resingBtn.hide();
     $drawBtn.hide();

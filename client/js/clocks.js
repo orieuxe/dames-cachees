@@ -34,9 +34,12 @@ const runClock = ($clock) => {
       setClock($clock, tClock);
     }else{
       timeLost($clock);
-      clearInterval(timer);
     }
   }, 1000)
+}
+
+const stopClocks = () => {
+  clearInterval(timer);
 }
 
 const timeLost = ($clock) => {
