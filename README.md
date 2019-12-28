@@ -17,9 +17,8 @@ FEATURES
 TODO
 -----
 - [ ] write rules
-- [x] use 18next-jquery for translations
-- [ ] add clocks
-- [ ] work on header, ui, css...
+- [ ] work on UI (navigation, live interface...)
+- [ ] more precise clocks
 - [ ] piece promotion menu
 - [ ] HQ python engine ?
 
