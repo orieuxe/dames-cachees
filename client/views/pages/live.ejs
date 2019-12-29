@@ -15,7 +15,7 @@
       <%- include ('../partials/header') %>
     </header>
     <div class="parent">
-      <div id="chat">
+      <div id="chat" hidden>
         <div id="chat-box">
           <ul id="chat-history"></ul>
         </div>
@@ -56,6 +56,7 @@
     <%- include ('../partials/scripts') %>
     <script type="text/javascript">
       //chat
+      var $chat = $('#chat');
       var $chatHistory = $('#chat-history');
       var $chatBox = $('#chat-box');
       var $msgInput = $("#chat-input");
