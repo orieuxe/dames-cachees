@@ -17,7 +17,6 @@ FEATURES
 TODO
 -----
 - [ ] write rules
-- [ ] work on UI (navigation, live interface...)
 - [ ] more precise clocks
 - [ ] piece promotion menu
 - [ ] HQ python engine ?

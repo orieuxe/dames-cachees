@@ -2,13 +2,28 @@
 <html>
   <head>
     <%- include ('../partials/head') %>
+    <link rel="stylesheet" href="css/index.css">
   </head>
   <body>
     <header>
       <%- include ('../partials/header') %>
     </header>
-
-    <h1 data-i18n="welcome"></h1>
+    <div class="parent">
+      <div id="intro">
+        <div class="info-box">
+          <h2 class="text-center" data-i18n="index.welcome"></h2>
+          <p data-i18n="index.intro"></p>
+          <a href="/rules">
+            <button class="my-btn" data-i18n="index.learn"></button>
+          </a>
+        </div>
+        <div class="info-box">
+          <h2 class="text-center" data-i18n="[prepend]index.contribute"><a href="//github.com/orieuxe/dames-cachees"><img height="30px" id="github-logo" src="img/logos/github.png"></a></h2>
+          <p data-i18n="index.open-source"></p>
+        </div>
+      </div>
+      <img id="chess-position" src="img/hq-chess/scandi.png" alt="#teamScandi">
+    </div>
 
     <%- include ('../partials/scripts') %>
     <footer>

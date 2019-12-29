@@ -1,0 +1,9 @@
+.parent {
+  display: grid;
+}
+
+#intro { grid-area: 1 / 1 / 1 / 1; }
+#chess-position {
+  grid-area: 1 / 2 / 1 / 2;
+  width: 50vw;
+}

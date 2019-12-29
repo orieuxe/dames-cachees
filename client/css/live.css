@@ -26,32 +26,16 @@
 
 #player {
   position: absolute;
-  top: 80%;
+  top: 83%;
 }
 
 #chat-box{
   overflow: auto;
-  height: 79vh;
+  height: 83vh;
 }
 
 .clocks{
   font-size: 10vh;
-}
-
-.live-button{
-  padding: 6px 12px;
-  color: #fff;
-  background-color: #1b3c58;
-  border-color: #1b4061;
-  font-size: 14px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-
-.live-button:hover, .live-button:focus {
-  color: #fff;
-  background-color: #085192;
-  border-color: #154774;
 }
 
 textarea {

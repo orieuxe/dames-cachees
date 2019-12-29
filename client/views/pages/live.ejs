@@ -23,14 +23,14 @@
       </div>
 
       <div id="main-content">
-        <div id="login">
+        <div class="info-box" id="login">
           <h2 data-i18n="waiting-room.login"></h2>
           <input id="login-input" data-i18n="[placeholder]waiting-room.placeholder"/>
         </div>
-        <div id="waitingRoom" hidden>
+        <div class="info-box" id="waitingRoom" hidden>
           <h2 data-i18n="waiting-room.players"></h2>
           <div id="playerList">
-             <button class="player prototype btn btn-primary" id="player-prototype"</button>
+             <button class="player prototype my-btn" id="player-prototype"</button>
           </div>
         </div>
         <div id="board"></div>
@@ -42,9 +42,9 @@
           <div class="clocks" id="opponent-clock" hidden></div>
         </div>
         <div id="buttons">
-          <button class="live-button" id="rematch-btn" data-i18n="rematch.btn" hidden></button>
-          <button class="live-button" id="draw-btn" data-i18n="draw.btn" hidden></button>
-          <button class="live-button" id="resign-btn" data-i18n="resign.btn" hidden></button>
+          <button class="my-btn" id="rematch-btn" data-i18n="rematch.btn" hidden></button>
+          <button class="my-btn" id="draw-btn" data-i18n="draw.btn" hidden></button>
+          <button class="my-btn" id="resign-btn" data-i18n="resign.btn" hidden></button>
         </div>
         <div id="player">
           <div class="clocks" id="player-clock" hidden></div>

@@ -1,13 +1,18 @@
 {
 	"title":"Hidden Queens",
 	"hq": "hidden queen",
-	"welcome":"Welcome to $t(title) !",
 	"nav":{
-		"live":"Play",
-		"watch":"Spectate",
+		"play":"Play",
+		"watch":"Watch",
 		"learn":"Rules"
 	},
-
+	"index":{
+		"welcome":"Welcome to $t(title) !",
+		"intro": "The only chess-variant where you can win by taking the king with a single pawn !"
+		"learn": "Learn how to play",
+		"contribute": "Contribute on ",
+		"open-source": "This project is open-source. Feel free to look at the code and give suggestions !"
+	},
 	"waiting-room":{
 		"login":"Login",
 		"placeholder":"Your name...",

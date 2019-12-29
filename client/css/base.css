@@ -1,11 +1,10 @@
 body{
-  padding-top: 10px;
   font-size: 20px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
-#logo{
-  width: 50px;
-  float: left;
+.text-center{
+  text-align: center;
 }
 
 .prototype{
