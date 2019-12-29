@@ -96,6 +96,7 @@ const clientReady = () => {
       if (event.key === "Enter") {
         let name = $loginInput.val()
         $login.remove();
+        $chat.show();
         player = new Player(name);
         sock.emit('clientRegistered', name);
       }
