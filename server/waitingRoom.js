@@ -4,7 +4,7 @@ const constants = require(`${clientPath}/commons/constants.js`);
 
 module.exports = (io) => {
   live = io.of('/live')
-  
+
   const waitingPlayers = {};
   const waitingRoom = constants.WAITINGROOM;
 
@@ -39,7 +39,10 @@ module.exports = (io) => {
       registerPlayer(sock, `player${++clientCounter}`);
     }
 
-    sock.on('disconnect', updateWaitingList);
+    sock.on('disconnect', () => {
+       delete waitingPlayers[sock.id];
+       updateWaitingList();
+    });
 
     sock.on('message', broadcastMessage);
 
