@@ -2,13 +2,39 @@
 <html>
   <head>
     <%- include ('../partials/head') %>
+    <link rel="stylesheet" href="/css/rules.css">
   </head>
   <body>
     <header>
       <%- include ('../partials/header') %>
     </header>
-    <h5 id="rules"></h5>
+    <div class="parent">
+      <div id="hq-role">
+        <p id="intro" data-i18n="rules.intro"></p>
+        <div class="info-box">
+          <h2  data-i18n="rules.hq-role.title"></h2>
+          <p  data-i18n="rules.hq-role.content"></p>
+        </div>
+      </div>
+      <img id="hq-role-img" src="img/hq-chess/hq-role.png">
 
+      <div id="king-capture">
+        <div class="info-box">
+          <h2 data-i18n="rules.king-capture.title"></h2>
+          <p data-i18n="rules.king-capture.content"></p>
+        </div>
+
+        <div class="info-box">
+          <h2 data-i18n="rules.hidden-pin.title"></h2>
+          <p data-i18n="rules.hidden-pin.content"></p>
+          <ul>
+            <li>1. e4 d5    </li>
+            <li>2. exd5?? exde1#</li>
+          </ul>
+        </div>
+      </div>
+      <img id="king-capture-img" src="img/hq-chess/king-capture.png">
+    </div>
     <%- include ('../partials/scripts') %>
     <footer>
       <%- include ('../partials/footer') %>

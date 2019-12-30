@@ -19,6 +19,22 @@
 		"players":"Joueurs en attente"
 	},
 
+	"rules":{
+		"intro":"Une fois votre adversaire choisi, vous devez désigner l'un de vos pions comme dame cachée. Votre adversaire fait de même en secret. La partie peut alors commencer.",
+		"hq-role":{
+			"title":"Déplacement de la dame cachée",
+			"content":"Tant que la dame cachée est déplacée comme un pion ordinaire, l'adversaire ne peut pas la distinguer des autres pions. Si la dame cachée est déplacée comme une dame, alors elle se transforme en dame classique. L'adversaire la verra jusqu'à la fin de la partie."
+		},
+		"king-capture":{
+			"title":"Prise du roi",
+			"content":"Même si la dame cachée est un pion, elle peut menacer le roi ennemi horizontalement, verticalement ou en diagonal. Ce n'est pas considéré comme un échec, Contrairement aux échecs traditionnel, l'adversaire n'est pas forcé de parer la menace cachée. Il est alors possible de remporter la partie en le capturant !"
+		},
+		"hidden-pin":{
+			"title":"Clouage caché",
+			"content":"Une pièce adverse se situe entre la dame cachée et roi ennemi. Si la pièce est déplacée sans mettre en échec, alors la dame cachée est prête à capturer le roi. On parle alors de clouage caché indirect. Cette tactique existe dans l'ouverture scandinave au 2e coup si les noirs placent leur dame cachée en e7 !"
+		}
+	},
+
 	"new-match":"Nouveau match {{whitePlayer}} vs {{blackPlayer}} !",
 	"select":{
 		"start":"Veuillez selectionnez votre dame cachée",
@@ -54,7 +70,5 @@
 	"resign":{
 		"btn": "Abandonner"
 	},
-	"disconnect":"$t(play.over) {{player}} a quitté la partie !",
-
-	"rules":"En cours d'écriture... Toute contribution est la bienvenue !"
+	"disconnect":"$t(play.over) {{player}} a quitté la partie !"
 }

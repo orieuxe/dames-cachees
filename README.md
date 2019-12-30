@@ -16,7 +16,7 @@ FEATURES
 
 TODO
 -----
-- [ ] write rules
+- [x] write rules
 - [ ] more precise clocks
 - [ ] piece promotion menu
 - [ ] HQ python engine ?

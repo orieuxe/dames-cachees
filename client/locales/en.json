@@ -8,7 +8,7 @@
 	},
 	"index":{
 		"welcome":"Welcome to $t(title) !",
-		"intro": "The only chess-variant where you can win by taking the king with a single pawn !"
+		"intro": "The only chess-variant where you can win by taking the king with a single pawn !",
 		"learn": "Learn how to play",
 		"contribute": "Contribute on ",
 		"open-source": "This project is open-source. Feel free to look at the code and give suggestions !"
@@ -17,6 +17,22 @@
 		"login":"Login",
 		"placeholder":"Your name...",
 		"players":"Waiting players"
+	},
+
+	"rules":{
+		"intro":"Once the opponent selected, each players needs to secretly choose one of their pawn as hidden queen. The game can now starts.",
+		"hq-role":{
+			"title":"Moving the hidden queen",
+			"content":"As long as the hidden queen moves like a pawn, the opponent cannot see it. If one player moves his hidden queen like a queen, then it changes into a regular chess queen. Everybody will be able to see it until the end of the game."
+		},
+		"king-capture":{
+			"title":"Capturing the king",
+			"content":"Even if the hidden queen acts like a pawn, it can threaten the ennemy king horizontaly, verticaly or diagonally. This is not considered as a check. That's why, unlike regular chess, the opponent doesn't have to react to the hidden threat. If the king remains in the range of the hidden queen, then it's possible to win the game by taking it !"
+		},
+		"hidden-pin":{
+			"title":"The hidden pin",
+			"content":"A ennemy piece sits between the hidden queen and the opponent's king. If this piece moves out of the way without checking, then the hidden queen is ready to capture the king. This is called a hidden relative pin. This tactic exists in the scandinavian defense on move 2 if black put his queen on e7 !"
+		}
 	},
 
 	"new-match":"New match {{whitePlayer}} vs {{blackPlayer}} !",
@@ -37,7 +53,7 @@
 		}
 	},
 	"draw":{
-		"btn": "Draw"
+		"btn": "Draw",
 		"offer":{
 			"sent": "Draw offered...",
 			"recieved": "{{player}} offers a draw !"
@@ -45,7 +61,7 @@
 		"agreed":"Game drawn by mutual agrement !"
 	},
 	"rematch":{
-		"btn": "Rematch"
+		"btn": "Rematch",
 		"offer":{
 			"sent": "Rematch requested...",
 			"recieved": "{{player}} wants to play again !"
@@ -54,6 +70,5 @@
 	"resign":{
 		"btn": "Resign"
 	},
-	"disconnect":"$t(play.over) {{player}} left the game !",
-	"rules":"Official rules have not been written... yet. Any contribution is welcome !"
+	"disconnect":"$t(play.over) {{player}} left the game !"
 }

@@ -1,0 +1,25 @@
+.parent {
+  grid-template-columns: 15vw 40vw 25vw;
+  grid-row-gap: 1vh;
+  grid-column-gap: 1vw;
+  display: grid;
+  margin-left: 5vw
+}
+
+#intro{
+  font-style: italic;
+}
+
+#hq-role-img {
+  grid-area: 1 / 1 / 1 / 1;
+  height: 15vw;
+  margin-top: 10%;
+}
+#hq-role { grid-area: 1 / 2 / 1 / 4; }
+
+#king-capture { grid-area: 2 / 1 / 2 / 3; }
+#king-capture-img {
+  grid-area: 2 / 3 / 2 / 3;
+  height: 25vw;
+  margin-top: 20%;
+}
