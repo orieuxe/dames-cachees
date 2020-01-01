@@ -126,5 +126,6 @@ const clientReady = () => {
 
   if (constants.AUTO_LOGIN) {
     $login.remove();
+    $chat.show();
   }
 }
