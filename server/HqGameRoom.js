@@ -53,11 +53,8 @@ class HqGameRoom {
       })
 
       player.on('disconnect', () => {
-        this.sendToPlayer(opponent, "event", {
-          key : 'disconnect',
-          args : {player:player.name}
-        });
-        this.state = GameState.OVER;
+        this.sendToPlayer(opponent, 'opponentDisconnect', null);
+        this.state = GameState.MATCH_OVER;
       })
 
       player.on('gameInfo', (infos) => {

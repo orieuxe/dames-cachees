@@ -40,8 +40,10 @@ module.exports = (io) => {
     }
 
     sock.on('disconnect', () => {
-       delete waitingPlayers[sock.id];
-       updateWaitingList();
+      if (waitingPlayers.hasOwnProperty(sock.id)){
+        delete waitingPlayers[sock.id];
+        updateWaitingList();
+      }
     });
 
     sock.on('message', broadcastMessage);

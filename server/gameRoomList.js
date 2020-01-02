@@ -11,7 +11,7 @@ module.exports = (io) => {
     var currentGames = []
     const gameRoomList = Object.values(gameRoomMap);
     gameRoomList.forEach((gameRoom) => {
-      if (gameRoom.state == GameState.OVER) {
+      if (gameRoom.state == GameState.MATCH_OVER) {
         delete gameRoomMap[gameRoom.id];
       }else{
         currentGames.push({

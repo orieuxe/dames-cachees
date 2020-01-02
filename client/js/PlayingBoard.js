@@ -8,17 +8,14 @@ class PlayingBoard extends AbstractBoard{
     sock.on('drawAgreed', () => {
       this.setGameOver();
       Chatbox.writeEvent('draw.agreed');
-      this.sendGameInfo();
     })
     sock.on('resign', (playerName) => {
       this.setGameOver();
       Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.resignation'});
-      this.sendGameInfo();
     })
     sock.on('timeWin', (playerName) => {
       this.setGameOver();
       Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.time'});
-      this.sendGameInfo();
     })
   }
 
@@ -44,7 +41,8 @@ class PlayingBoard extends AbstractBoard{
     if(!piece.includes(this.color)) return false;
 
     // do not pick up pieces if the game is over
-    if (this.state == GameState.OVER) return false
+    if(this.isGameOver()) return false;
+
   }
 
   onDrop (source, target) {
@@ -123,14 +121,6 @@ class PlayingBoard extends AbstractBoard{
 
       Chatbox.writeEvent("play.win", {player : movePlayer, reason : `play.end-reason.${reason}`});
     }
-  }
-
-  setGameOver(){
-    this.state = GameState.OVER;
-    stopClocks();
-    $rematchBtn.show();
-    $resingBtn.hide();
-    $drawBtn.hide();
   }
 
   makeMove(move) {

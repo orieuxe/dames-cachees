@@ -25,6 +25,22 @@ class AbstractBoard{
      return 'img/chesspieces/' + pieceDir + '/' + pieceString +'.png'
    }
 
+   setGameOver(){
+     this.state = GameState.OVER;
+     stopClocks();
+     $rematchBtn.show();
+     $resingBtn.hide();
+     $drawBtn.hide();
+   }
+
+   setMatchOver(){
+     this.state = GameState.MATCH_OVER;
+     stopClocks();
+     $rematchBtn.remove();
+     $resingBtn.remove();
+     $drawBtn.remove();
+   }
+
    sendGameInfo(){
      if (this.color == 'w') {
        sock.emit('gameInfo', {
@@ -35,5 +51,9 @@ class AbstractBoard{
          black:opponent.getName()
        })
      }
+   }
+
+   isGameOver(){
+     return (this.state == GameState.OVER || this.state == GameState.MATCH_OVER);
    }
 }
