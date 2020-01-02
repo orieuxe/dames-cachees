@@ -8,7 +8,6 @@
 // start anonymous scope
 ;(function () {
   'use strict'
-
   var $ = window['jQuery']
 
   // ---------------------------------------------------------------------------
@@ -686,7 +685,8 @@
     var squareElsIds = {}
     var squareElsOffsets = {}
     var squareSize = 16
-
+    var imgCache = {}
+    cacheImages();
     // -------------------------------------------------------------------------
     // Validation / Errors
     // -------------------------------------------------------------------------
@@ -859,9 +859,6 @@
 
       return interpolateTemplate(html, CSS)
     }
-
-    var imgCache = {}
-
     function cacheImages() {
       var pieces = ['wH', 'bH', 'wK', 'wQ', 'wR', 'wB', 'wN', 'wP', 'bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
       pieces.forEach(function(piece) {

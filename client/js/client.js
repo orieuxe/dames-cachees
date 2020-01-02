@@ -38,19 +38,15 @@ const clientReady = () => {
 
   const startPlay = () => {
     const fen = board.getFen();
-    board.board.clear();
-    //delay needed to prevent hq from flickering
-    setTimeout(function () {
-      if (playingBoard === null){
-        playingBoard = new PlayingBoard(fen);
-      }else{
-        playingBoard.initBoard(fen);
-      }
-      $drawBtn.show();
-      $resingBtn.show();
-      board = playingBoard;
-      board.sendGameInfo();
-    }, 100);
+    if (playingBoard === null){
+      playingBoard = new PlayingBoard(fen);
+    }else{
+      playingBoard.initBoard(fen);
+    }
+    $drawBtn.show();
+    $resingBtn.show();
+    board = playingBoard;
+    board.sendGameInfo();
     Chatbox.writeEvent('play.start');
   }
 
