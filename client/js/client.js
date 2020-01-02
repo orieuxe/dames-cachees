@@ -8,6 +8,8 @@ var opponent = null;
 var gameRoomId = null;
 
 const clientReady = () => {
+  console.log('client ready');
+  
   const writeEvent = (key) => {
     if(typeof key === 'object'){
       Chatbox.writeEvent(key.key, key.args);
@@ -137,5 +139,4 @@ const clientReady = () => {
     $chat.show();
   }
 
-  Chatbox.writeEvent("Bienvenue dans l'arène !")
 }
