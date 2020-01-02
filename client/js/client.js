@@ -136,4 +136,6 @@ const clientReady = () => {
     $login.remove();
     $chat.show();
   }
+
+  Chatbox.writeEvent("Bienvenue dans l'arène !")
 }
