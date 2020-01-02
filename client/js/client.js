@@ -93,6 +93,7 @@ const clientReady = () => {
 
   //player registered
   $loginInput.keypress(function(event) {
+      console.log(event.key);
       if (event.key === "Enter") {
         let name = $loginInput.val()
         $login.remove();
