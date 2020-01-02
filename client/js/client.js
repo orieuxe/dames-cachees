@@ -50,7 +50,7 @@ const clientReady = () => {
       $resingBtn.show();
       board = playingBoard;
       board.sendGameInfo();
-    }, 300);
+    }, 100);
     Chatbox.writeEvent('play.start');
   }
 
