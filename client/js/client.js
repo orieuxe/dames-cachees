@@ -46,13 +46,12 @@ const clientReady = () => {
       }else{
         playingBoard.initBoard(fen);
       }
+      $drawBtn.show();
+      $resingBtn.show();
+      board = playingBoard;
+      board.sendGameInfo();
     }, 300);
-    $drawBtn.show();
-    $resingBtn.show();
-    board = playingBoard
-    board.sendGameInfo();
     Chatbox.writeEvent('play.start');
-
   }
 
   const showClients = (clients) => {

@@ -860,7 +860,31 @@
       return interpolateTemplate(html, CSS)
     }
 
+    var imgCache = {}
+
+    function cacheImages() {
+      var pieces = ['wH', 'bH', 'wK', 'wQ', 'wR', 'wB', 'wN', 'wP', 'bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
+      pieces.forEach(function(piece) {
+        var img = new Image()
+        img.onload = function() {
+          imgCache[piece] = getBase64Image(img)
+        }
+        img.src = buildPieceImgSrc(piece)
+      })
+
+      function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL;
+      }
+    }
+
     function buildPieceImgSrc (piece) {
+      if(imgCache[piece]) return imgCache[piece]
       if (isFunction(config.pieceTheme)) {
         return config.pieceTheme(piece)
       }
