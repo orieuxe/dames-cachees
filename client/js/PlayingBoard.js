@@ -86,7 +86,7 @@ class PlayingBoard extends AbstractBoard{
       if ((delta_file == -1 || delta_file == 1) && move.flags.includes(this.chess.FLAGS.CAPTURE)) return false
     }
     if (delta_rank == 2){
-      if (delta_file == 0 && move.from[1] == start_rank) return false;
+      if (delta_file == 0 && move.from[1] == start_rank && !move.flags.includes(this.chess.FLAGS.CAPTURE)) return false;
     }
     return true;
   }
