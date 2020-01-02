@@ -18,7 +18,7 @@ class AbstractBoard{
         type:pieceString[1],
       };
 
-     if (piece.type == "H" && piece.color != this.color) {
+     if (piece.type == "H" && piece.color == this.color) {
        pieceDir = hiddenQueenDir;
      }
 
