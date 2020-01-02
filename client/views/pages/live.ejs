@@ -26,6 +26,7 @@
         <div class="info-box" id="login">
           <h2 data-i18n="waiting-room.login"></h2>
           <input id="login-input" data-i18n="[placeholder]waiting-room.placeholder"/>
+          <button class="my-btn" id="login-submit" data-i18n="nav.play"></button>
         </div>
         <div class="info-box" id="waitingRoom" hidden>
           <h2 data-i18n="waiting-room.players"></h2>
@@ -65,6 +66,7 @@
       var $login = $("#login");
       var $loginTitle = $('#login-title');
       var $loginInput = $("#login-input");
+      var $loginSubmit = $("#login-submit");
       var $waitingRoom = $("#waitingRoom");
       var $playerList = $("#playerList");
       var $playerPrototype = $("#player-prototype");

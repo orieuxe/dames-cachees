@@ -93,15 +93,22 @@ const clientReady = () => {
 
   //player registered
   $loginInput.keypress(function(event) {
-      console.log(event.key);
       if (event.key === "Enter") {
-        let name = $loginInput.val()
-        $login.remove();
-        $chat.show();
-        player = new Player(name);
-        sock.emit('clientRegistered', name);
+        registerPlayer();
       }
   });
+
+  $loginSubmit.click(() => {
+    registerPlayer();
+  });
+
+  const registerPlayer = () => {
+    let name = $loginInput.val()
+    $login.remove();
+    $chat.show();
+    player = new Player(name);
+    sock.emit('clientRegistered', name);
+  }
 
   $rematchBtn.click((e) => {
     Chatbox.writeEvent('rematch.offer.sent')
