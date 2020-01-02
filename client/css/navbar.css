@@ -4,7 +4,7 @@ nav ul {
   padding: 0;
   margin-bottom: 1vh;
   overflow: hidden;
-  background-color: #1b3c58;
+  background-color: var(--main-color);
 }
 
 nav li {
@@ -21,6 +21,10 @@ nav li a {
 
 nav li a:hover {
   background-color: #085192;
+}
+
+nav li a:visited {
+  color: white;
 }
 
 nav img {

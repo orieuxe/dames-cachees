@@ -70,5 +70,12 @@
 	"resign":{
 		"btn": "Resign"
 	},
-	"disconnect":"$t(play.over) {{player}} left the game !"
+	"disconnect":"$t(play.over) {{player}} left the game !",
+
+	"list":{
+		"no-game":{
+			"msg":"No games being played.",
+			"first-to-play":"Be the first to play !"
+		}
+	}
 }

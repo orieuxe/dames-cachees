@@ -70,5 +70,12 @@
 	"resign":{
 		"btn": "Abandonner"
 	},
-	"disconnect":"$t(play.over) {{player}} a quitté la partie !"
+	"disconnect":"$t(play.over) {{player}} a quitté la partie !",
+
+	"list":{
+		"no-game":{
+			"msg":"Aucune partie en cours.",
+			"first-to-play":"Soyez le premier à jouer !"
+		}
+	}
 }

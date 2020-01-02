@@ -1,3 +1,9 @@
+:root {
+    --main-color:#1b3c58;
+    --hover-color:#085192;
+    --disabled-color:#4e96d3;
+}
+
 body{
   font-size: 20px;
   font-family: "Trebuchet MS", Helvetica, sans-serif
@@ -15,4 +21,12 @@ ul{
   list-style:none;
   margin-left:0;
   padding-left:0;
+}
+
+a{
+  color:var(--main-color)
+}
+
+a:visited{
+  color:var(--main-color)
 }

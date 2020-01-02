@@ -25,9 +25,12 @@ const setInfos = (game) => {
 }
 
 sock.on('createList', (list) => {
-  list.forEach((game) => {
-    renderGame(game);
-  })
+  if (list.length > 0) {
+    $noGameMsg.hide();
+    list.forEach((game) => {
+      renderGame(game);
+    })
+  }
 })
 
 sock.on('updateGame', (game) => {
@@ -35,6 +38,7 @@ sock.on('updateGame', (game) => {
     boards[game.id].position(game.fen);
     setInfos(game);
   }else{
+    $noGameMsg.hide();
     renderGame(game);
   }
 })

@@ -14,7 +14,9 @@
     <header>
       <%- include ('../partials/header') %>
     </header>
-
+    <div class="info-box" id="no-game-msg">
+      <p><span data-i18n="list.no-game.msg"></span> <a data-i18n="list.no-game.first-to-play" href="/live"></a></p>
+    </div>
     <div id="game-room-list">
       <div class="game-room prototype" id="game-room-prototype">
         <div class="board"></div>
@@ -25,6 +27,7 @@
     </div>
 
     <script type="text/javascript">
+      var $noGameMsg = $('#no-game-msg')
       var $gameRoomList = $('#game-room-list')
       var $gameRoomPrototype = $('#game-room-prototype')
     </script>

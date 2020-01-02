@@ -1,7 +1,7 @@
 .my-btn{
   padding: 6px 12px;
   color: #fff;
-  background-color: #1b3c58;
+  background-color: var(--main-color);
   border-color: #1b4061;
   font-size: 14px;
   border: 1px solid transparent;
@@ -10,11 +10,12 @@
 
 .my-btn:hover:enabled, .my-btn:focus {
   color: #fff;
-  background-color: #085192;
+  background-color: var(--hover-color);
   border-color: #154774;
+  cursor: pointer;
 }
 
 .my-btn:disabled {
   color: #fff;
-  background-color: #4e96d3;
+  background-color: var(--disabled-color);
 }
