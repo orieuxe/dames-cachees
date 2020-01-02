@@ -64,10 +64,10 @@ class PlayingBoard extends AbstractBoard{
 
     if(this.hqHasMovedLikeQ(move)){
       sock.emit('putQ', move);
+    }else{
+      this.checkGameOver();
+      this.sendGameInfo();
     }
-
-    this.checkGameOver();
-    this.sendGameInfo();
   }
 
   updateBoardPosition(){
@@ -95,6 +95,7 @@ class PlayingBoard extends AbstractBoard{
     this.chess.put({ type: this.chess.QUEEN, color: move.color }, move.to);
     this.chess.load(this.chess.fen());
     this.updateBoardPosition();
+    this.checkGameOver();
     this.sendGameInfo();
   }
 
