@@ -8,8 +8,6 @@ var opponent = null;
 var gameRoomId = null;
 
 const clientReady = () => {
-  console.log('client ready');
-  
   const writeEvent = (key) => {
     if(typeof key === 'object'){
       Chatbox.writeEvent(key.key, key.args);
@@ -75,6 +73,14 @@ const clientReady = () => {
     })
   }
 
+  const registerPlayer = () => {
+    let name = $loginInput.val()
+    $login.remove();
+    $chat.show();
+    player = new Player(name);
+    sock.emit('clientRegistered', name);
+  }
+
   //New match
   $playerList.on('click',".player",(event) => {
     let opponentId = event.target.id
@@ -103,14 +109,6 @@ const clientReady = () => {
   $loginSubmit.click(() => {
     registerPlayer();
   });
-
-  const registerPlayer = () => {
-    let name = $loginInput.val()
-    $login.remove();
-    $chat.show();
-    player = new Player(name);
-    sock.emit('clientRegistered', name);
-  }
 
   $rematchBtn.click((e) => {
     Chatbox.writeEvent('rematch.offer.sent')
