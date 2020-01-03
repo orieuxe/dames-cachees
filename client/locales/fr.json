@@ -15,6 +15,7 @@
 	},
 	"waiting-room":{
 		"login":"Login",
+		"login-invalid-msg":"nom d'utilisateur invalide",
 		"placeholder":"Votre nom...",
 		"players":"Joueurs en attente"
 	},

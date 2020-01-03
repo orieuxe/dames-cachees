@@ -72,11 +72,16 @@ const clientReady = () => {
   }
 
   const registerPlayer = () => {
-    let name = $loginInput.val()
-    $login.remove();
-    $chat.show();
-    player = new Player(name);
-    sock.emit('clientRegistered', name);
+    if (!$loginInput.val().match(/^[0-9a-zA-Z]+$/)){
+      $loginInput.addClass('invalid');
+      $loginInvalidMsg.show();
+    }else{
+      let name = $loginInput.val()
+      $login.remove();
+      $chat.show();
+      player = new Player(name);
+      sock.emit('clientRegistered', name);
+    }
   }
 
   const opponentDisconnect = () => {

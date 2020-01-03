@@ -17,6 +17,15 @@ body{
   display: none !important;
 }
 
+.invalid{
+  border-color: red;
+}
+
+.invalid-msg{
+  font-size: 15px;
+  color: red;
+}
+
 ul{
   list-style:none;
   margin-left:0;

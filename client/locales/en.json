@@ -16,6 +16,7 @@
 	"waiting-room":{
 		"login":"Login",
 		"placeholder":"Your name...",
+		"login-invalid-msg":"invalid username"
 		"players":"Waiting players"
 	},
 
