@@ -64,6 +64,7 @@ class HqGameRoom {
       player.on('gameInfo', (infos) => {
         this.fen = infos.fen;
         this.state = infos.state;
+        if(this.state == GameState.OVER) this.stopClockTimer();
       })
     })
   }
