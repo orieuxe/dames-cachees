@@ -16,10 +16,15 @@ FEATURES
 
 TODO
 -----
-- [x] write rules
-- [ ] more precise clocks
 - [ ] piece promotion menu
-- [ ] HQ python engine ?
+- [ ] custom time controls
+
+FUTURE
+------
+
+- user authentification
+- game database
+- HQ python engine
 
 Usage
 -----
