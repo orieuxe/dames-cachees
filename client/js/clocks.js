@@ -19,7 +19,7 @@ const setClock = (name, time) => {
 
 const initClocks = (mins) => {
   $clocks.show();
-  tInit = moment.duration(15, 's');
+  tInit = moment.duration(mins, 'm');
 
   $playerClock.attr('id', getClockId(player.getName()));
   $opponentClock.attr('id', getClockId(opponent.getName()));
