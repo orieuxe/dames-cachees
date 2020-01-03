@@ -12,6 +12,7 @@ class HqGameRoom {
       })
 
       player.on('move', (move) => {
+        this.playerOnMove = opponent;
         this.sendToPlayer(opponent, 'makeMove', move);
       })
 
@@ -44,16 +45,19 @@ class HqGameRoom {
 
       player.on('resign', () => {
         this.sendToPlayers("resign", opponent.name);
+        this.stopClockTimer();
         this.state = GameState.OVER;
       })
 
       player.on('timeLost', () => {
         this.sendToPlayers('timeWin', opponent.name);
+        this.stopClockTimer();
         this.state = GameState.OVER;
       })
 
       player.on('disconnect', () => {
         this.sendToPlayer(opponent, 'opponentDisconnect', null);
+        this.stopClockTimer();
         this.state = GameState.MATCH_OVER;
       })
 
@@ -72,6 +76,8 @@ class HqGameRoom {
     this.rematchOffers = [false, false];
     this.drawOffers = [false, false];
     this.players = [s1,s2];
+    this.playerOnMove = s1;
+    this.clockTimer = null;
 
     this.players.forEach((p,i) => {
       this.sendToPlayer(p, 'startSelect', {
@@ -94,6 +100,7 @@ class HqGameRoom {
     if (this.hqs.every(hq => hq !== null)){
       this.hqs.forEach(hq => this.sendToPlayers('putHq',hq));
       this.sendToPlayers("startPlay", null);
+      this.runClockTimer();
       this.state = GameState.ONGOING
     }
   }
@@ -109,10 +116,21 @@ class HqGameRoom {
       this.sendToPlayers("drawAgreed", null);
     }
     this.state = GameState.OVER;
+    this.stopClockTimer();
   }
 
   getOpponent(idx){
     return this.players[(idx + 1)%2];
+  }
+
+  runClockTimer(){
+    this.clockTimer = setInterval(() => {
+      this.sendToPlayers('tick', this.playerOnMove.name);
+    }, 100)
+  }
+
+  stopClockTimer(){
+    clearInterval(this.clockTimer);
   }
 }
 

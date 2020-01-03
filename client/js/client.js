@@ -18,7 +18,6 @@ const clientReady = () => {
 
   const startSelect = (infos) => {
     Chatbox.writeEvent('select.start')
-    initClocks(5);
     $rematchBtn.hide()
     $waitingRoom.hide();
     boardOrientation = infos.color;
@@ -26,6 +25,8 @@ const clientReady = () => {
     opponent = new Player(infos.opponent);
     $opponentName.text(opponent.getName());
     $playerName.text(player.getName());
+
+    initClocks(5);
 
     if (selectBoard === null){
       selectBoard = new SelectHqBoard();
@@ -78,6 +79,10 @@ const clientReady = () => {
     sock.emit('clientRegistered', name);
   }
 
+  const opponentDisconnect = () => {
+    if (board !== null) board.opponentDisconnect();
+  }
+
   //New match
   $playerList.on('click',".player",(event) => {
     let opponentId = event.target.id
@@ -128,10 +133,10 @@ const clientReady = () => {
   sock.on('message', Chatbox.writeMessage);
   sock.on('startSelect', startSelect);
   sock.on('startPlay', startPlay);
+  sock.on('opponentDisconnect', opponentDisconnect);
 
   if (constants.AUTO_LOGIN) {
     $login.remove();
     $chat.show();
   }
-
 }

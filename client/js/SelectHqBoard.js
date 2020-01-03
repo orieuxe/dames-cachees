@@ -4,11 +4,6 @@ class SelectHqBoard extends AbstractBoard{
     this.initBoard();
 
     sock.on('putHq', this.putHq.bind(this));
-    sock.on('opponentDisconnect', () => {
-      this.setMatchOver();
-      Chatbox.writeEvent('disconnect', {player : opponent.getName()});
-      this.sendGameInfo();
-    })
   }
 
   initBoard(){
@@ -27,6 +22,7 @@ class SelectHqBoard extends AbstractBoard{
 
   onHqChoice(square, piece){
     if(this.isGameOver()) return false;
+    
     if(piece.includes(this.color) && piece[1] == 'P'){
       sock.emit('putHq', {color:this.color, square:square});
       Chatbox.writeEvent('select.hq', {square:square});

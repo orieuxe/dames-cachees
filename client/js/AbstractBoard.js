@@ -27,15 +27,19 @@ class AbstractBoard{
 
    setGameOver(){
      this.state = GameState.OVER;
-     stopClocks();
      $rematchBtn.show();
      $resingBtn.hide();
      $drawBtn.hide();
    }
 
+   opponentDisconnect(){
+     this.setMatchOver();
+     Chatbox.writeEvent('disconnect', {player : opponent.getName()});
+     this.sendGameInfo();
+   }
+
    setMatchOver(){
      this.state = GameState.MATCH_OVER;
-     stopClocks();
      $rematchBtn.remove();
      $resingBtn.remove();
      $drawBtn.remove();

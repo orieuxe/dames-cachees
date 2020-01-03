@@ -1,49 +1,46 @@
 var t = {}
 
-const getT = ($clock) => { return t[$clock.attr('id')]; }
-const setT = ($clock, time) => { t[$clock.attr('id')] = time; }
-
-const initClocks = (mins) => {
-  $clocks.show();
-  tInit = moment.duration(mins, 'minutes');
-  setT($playerClock, tInit);
-  setT($opponentClock, tInit.clone());
-
-  setClock($playerClock, tInit);
-  setClock($opponentClock, tInit);
+const getClockId = (name) => { return `${name}-clock`};
+const getT = (name) => { return t[getClockId(name)]; }
+const setT = (name, time) => {
+  t[getClockId(name)] = time;
+  setClock(name, time)
 }
 
-const setClock = ($clock, time) => {
-  secs = time.get('seconds');
+const setClock = (name, time) => {
+  $clock = $('#'+getClockId(name));
+
+  secs = time.get('s');
   if (secs < 10) {
     secs = `0${secs}`;
   }
-  $clock.html(`${time.get('minutes')}:${secs}`);
+  $clock.html(`${time.get('m')}:${secs}`);
 }
 
-timer = null
-const runClock = ($clock) => {
-  if (timer !== null) {
-    clearInterval(timer);
+const initClocks = (mins) => {
+  $clocks.show();
+  tInit = moment.duration(15, 's');
+
+  $playerClock.attr('id', getClockId(player.getName()));
+  $opponentClock.attr('id', getClockId(opponent.getName()));
+
+  setT(player.getName(), tInit);
+  setT(opponent.getName(), tInit.clone());
+}
+
+
+const tickClock = (name) => {
+  var time = getT(name);
+  time.subtract(moment.duration(100, 'ms'));
+  if (time.as('ms') > 0){
+    setT(name, time);
+  }else{
+    timeLost(name);
   }
-
-  timer = setInterval(() => {
-    tClock = getT($clock);
-    tClock.subtract(moment.duration(1, 's'));
-    if (tClock.as('seconds') >= 0){
-      setClock($clock, tClock);
-    }else{
-      timeLost($clock);
-    }
-  }, 1000)
 }
 
-const stopClocks = () => {
-  clearInterval(timer);
-}
-
-const timeLost = ($clock) => {
-   if($clock.attr('id') == $playerClock.attr('id')){
-     sock.emit('timeLost', null);
+const timeLost = (name) => {
+   if(player.getName() == name){
+     sock.emit('timeLost');
    }
 }

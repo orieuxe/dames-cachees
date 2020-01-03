@@ -17,6 +17,7 @@ class PlayingBoard extends AbstractBoard{
       this.setGameOver();
       Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.time'});
     })
+    sock.on('tick', tickClock);
   }
 
   initBoard(fen){
@@ -37,12 +38,10 @@ class PlayingBoard extends AbstractBoard{
   }
 
   onDragStart (source, piece, position, orientation) {
-    // only pick up pieces for the player to move
-    if(!piece.includes(this.color)) return false;
-
-    // do not pick up pieces if the game is over
     if(this.isGameOver()) return false;
 
+    // only pick up pieces for the player to move
+    if(!piece.includes(this.color)) return false;
   }
 
   onDrop (source, target) {
@@ -56,7 +55,6 @@ class PlayingBoard extends AbstractBoard{
     // illegal move
     if (move === null) return 'snapback';
 
-    runClock($opponentClock);
     sock.emit('move', move);
     this.updateBoardPosition();
 
@@ -125,7 +123,6 @@ class PlayingBoard extends AbstractBoard{
 
   makeMove(move) {
     this.chess.move(move);
-    runClock($playerClock);
     this.updateBoardPosition();
     this.checkGameOver();
     this.sendGameInfo();
