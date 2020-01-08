@@ -4,7 +4,12 @@
 	"nav":{
 		"play":"Jouer",
 		"watch":"Regarder",
-		"learn":"Règles"
+		"learn":"Règles",
+		"auth":{
+			"logged_as": "Connecté en tant que",
+			"logout": "Se déconnecter",
+			"login": "Se connecter"
+		}
 	},
 	"index":{
 		"welcome":"Bienvenue sur $t(title) !",
@@ -14,9 +19,8 @@
 		"open-source": "Ce projet est open-source ! Vous êtez libre de regarder le code et de proposer des améliorations !"
 	},
 	"waiting-room":{
-		"login":"Login",
-		"login-invalid-msg":"nom d'utilisateur invalide",
-		"placeholder":"Votre nom...",
+		"join":"Rejoindre",
+		"leave":"Quitter",
 		"players":"Joueurs en attente"
 	},
 

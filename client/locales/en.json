@@ -4,7 +4,12 @@
 	"nav":{
 		"play":"Play",
 		"watch":"Watch",
-		"learn":"Rules"
+		"learn":"Rules",
+		"auth":{
+			"logged_as": "Logged as",
+			"logout": "Logout",
+			"login": "Login"
+		}
 	},
 	"index":{
 		"welcome":"Welcome to $t(title) !",
@@ -14,9 +19,8 @@
 		"open-source": "This project is open-source. Feel free to look at the code and give suggestions !"
 	},
 	"waiting-room":{
-		"login":"Login",
-		"placeholder":"Your name...",
-		"login-invalid-msg":"invalid username",
+		"join":"Join",
+		"leave":"Leave",
 		"players":"Waiting players"
 	},
 

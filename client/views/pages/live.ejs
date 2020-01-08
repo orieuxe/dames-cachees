@@ -15,7 +15,7 @@
       <%- include ('../partials/header') %>
     </header>
     <div class="parent">
-      <div id="chat" hidden>
+      <div id="chat">
         <div id="chat-box">
           <ul id="chat-history"></ul>
         </div>
@@ -23,14 +23,11 @@
       </div>
 
       <div id="main-content">
-        <div class="info-box" id="login">
-          <h2 data-i18n="waiting-room.login"></h2>
-          <input id="login-input" data-i18n="[placeholder]waiting-room.placeholder"/>
-          <button class="my-btn" id="login-submit" data-i18n="nav.play"></button>
-          <div class="invalid-msg" id="login-invalid-msg" data-i18n="waiting-room.login-invalid-msg" hidden></div>
-        </div>
-        <div class="info-box" id="waitingRoom" hidden>
-          <h2 data-i18n="waiting-room.players"></h2>
+        <div class="info-box" id="waitingRoom">
+          <h2 data-i18n="[prepend]waiting-room.players">
+            <button class="my-btn" id="waiting-room-join" data-i18n="waiting-room.join"></button>
+            <button class="my-btn" id="waiting-room-leave" data-i18n="waiting-room.leave" hidden></button>
+          </h2>
           <div id="playerList">
              <button class="player prototype my-btn" id="player-prototype"</button>
           </div>
@@ -56,6 +53,9 @@
     </div>
 
     <script type="text/javascript">
+      //ejs
+      var user = <%-JSON.stringify(user)%>;
+
       //chat
       var $chat = $('#chat');
       var $chatHistory = $('#chat-history');
@@ -63,11 +63,8 @@
       var $msgInput = $("#chat-input");
 
       //main-content
-      var $login = $("#login");
-      var $loginTitle = $('#login-title');
-      var $loginInput = $("#login-input");
-      var $loginInvalidMsg = $("#login-invalid-msg");
-      var $loginSubmit = $("#login-submit");
+      var $JoinWaitingRoom = $("#waiting-room-join");
+      var $LeaveWaitingRoom = $("#waiting-room-leave");
       var $waitingRoom = $("#waitingRoom");
       var $playerList = $("#playerList");
       var $playerPrototype = $("#player-prototype");
@@ -85,7 +82,6 @@
       var $drawBtn = $('#draw-btn');
     </script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="commons/constants.js"></script>
     <script src="commons/GameState.js"></script>
     <script src="js/Chatbox.js"></script>
     <script src="js/Player.js"></script>

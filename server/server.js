@@ -1,31 +1,41 @@
-var express   = require('express');
-var app       = express();
+var express     = require('express');
+var app         = express();
+var ensureLogin = require('connect-ensure-login');
 
 const clientPath = `${__dirname}/../client`;
-const constants = require(`${clientPath}/commons/constants.js`);
 
 app.use(express.static(clientPath));
 
 app.set('view engine', 'ejs');
 app.set('views', `${clientPath}/views`);
 
-app.get('/', function(req, res) {
-    res.render(`pages/index`);
+require('./auth')(app);
+
+app.get('/', (req, res) => {
+  res.render('pages/index', { user: req.user });
 });
 
-app.get('/list', function(req, res) {
-  res.render(`pages/list`);
+app.get('/list', (req, res) => {
+  res.render(`pages/list`, { user: req.user });
 });
 
-app.get('/live', function(req, res) {
-  res.render(`pages/live`);
+app.get('/live',
+  ensureLogin.ensureLoggedIn(),
+  (req, res) => {
+    res.render(`pages/live`, { user: req.user });
+  });
+
+app.get('/rules', (req, res) => {
+  res.render(`pages/rules`, { user: req.user });
 });
 
-app.get('/rules', function(req, res) {
-  res.render(`pages/rules`);
-});
+app.get('/profile',
+  ensureLogin.ensureLoggedIn(),
+  (req, res) => {
+    res.render('pages/profile', { user: req.user });
+  });
 
-var server = app.listen(process.env.PORT || constants.LOCALHOSTPORT);
+var server = app.listen(process.env.PORT || 8080);
 
 var io = require('socket.io').listen(server);
 

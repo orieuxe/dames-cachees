@@ -61,27 +61,10 @@ const clientReady = () => {
       $player.text(client.name);
       $playerList.append($player);
       //Can't click if own user
-      if (client.id == sock.id){
+      if (client.name == user.username){
         $playerList.children().last().attr('disabled', true)
-        //register own player if AUTO_LOGIN enabled
-        if (constants.AUTO_LOGIN && player === null){
-          player = new Player(client.name)
-        }
       }
     })
-  }
-
-  const registerPlayer = () => {
-    if (!$loginInput.val().match(/^[0-9a-zA-Z]+$/)){
-      $loginInput.addClass('invalid');
-      $loginInvalidMsg.show();
-    }else{
-      let name = $loginInput.val()
-      $login.remove();
-      $chat.show();
-      player = new Player(name);
-      sock.emit('clientRegistered', name);
-    }
   }
 
   const opponentDisconnect = () => {
@@ -100,21 +83,23 @@ const clientReady = () => {
         let msg = $msgInput.val()
         $msgInput.val('');
         sock.emit('message', {
-          author: player.getName(),
+          author: user.username,
           content:msg
         });
       }
   });
 
-  //player registered
-  $loginInput.keypress(function(event) {
-      if (event.key === "Enter") {
-        registerPlayer();
-      }
+  $JoinWaitingRoom.click(() => {
+    player = new Player(user.username);
+    sock.emit('joinWaitingRoom', player.getName());
+    $JoinWaitingRoom.hide();
+    $LeaveWaitingRoom.show();
   });
 
-  $loginSubmit.click(() => {
-    registerPlayer();
+  $LeaveWaitingRoom.click(() => {
+    sock.emit('leaveWaitingRoom', name);
+    $JoinWaitingRoom.show();
+    $LeaveWaitingRoom.hide();
   });
 
   $rematchBtn.click((e) => {
@@ -131,7 +116,6 @@ const clientReady = () => {
     sock.emit('resign');
   })
 
-
   //New client / client quitting lobby
   sock.on('clientsChange', showClients);
   sock.on('event', writeEvent);
@@ -139,9 +123,4 @@ const clientReady = () => {
   sock.on('startSelect', startSelect);
   sock.on('startPlay', startPlay);
   sock.on('opponentDisconnect', opponentDisconnect);
-
-  if (constants.AUTO_LOGIN) {
-    $login.remove();
-    $chat.show();
-  }
 }

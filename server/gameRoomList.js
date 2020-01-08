@@ -1,6 +1,5 @@
 const clientPath = `${__dirname}/../client`;
 
-const constants = require(`${clientPath}/commons/constants.js`);
 const GameState = require(`${clientPath}/commons/GameState.js`);
 const HqGameRoom = require('./HqGameRoom');
 
