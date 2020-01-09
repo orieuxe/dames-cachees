@@ -1,6 +1,7 @@
 module.exports = (io) => {
   live = io.of('/live')
 
+  const waitingRoom = "waitingRoom";
   const waitingPlayers = {};
 
   const updateWaitingList = () => {
@@ -10,12 +11,12 @@ module.exports = (io) => {
         name:sock.name
       }
     });
-
-    live.emit('clientsChange', clients);
+    console.log(clients);
+    live.in(waitingRoom).emit('clientsChange', clients);
   }
 
   const broadcastMessage = (clientMessage) => {
-    live.emit('message', clientMessage);
+    live.in(waitingRoom).emit('message', clientMessage);
   }
 
   const registerPlayer = (sock, name) => {
@@ -25,6 +26,9 @@ module.exports = (io) => {
   }
 
   live.on('connection', (sock) => {
+    sock.join(waitingRoom);
+    updateWaitingList();
+
     sock.on('disconnect', () => {
       if (waitingPlayers.hasOwnProperty(sock.id)){
         delete waitingPlayers[sock.id];
@@ -55,9 +59,12 @@ module.exports = (io) => {
       });
 
       //leaving waitingRoom
+      sock.leave(waitingRoom);
+      opponent.leave(waitingRoom);
       delete waitingPlayers[opponentId];
       delete waitingPlayers[sock.id];
       sock.off('message', broadcastMessage);
+      opponent.off('message', broadcastMessage);
       updateWaitingList();
     })
   });
