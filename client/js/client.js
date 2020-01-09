@@ -1,4 +1,13 @@
-const sock = io('/live')
+const sock = io('/live');
+
+sock.on('connect', () => {
+  if (user === undefined){
+    user = {
+      username: "Anon"+sock.id.slice(-4)
+    }
+  }
+});
+
 var boardOrientation = null;
 var board = null;
 var selectBoard = null;

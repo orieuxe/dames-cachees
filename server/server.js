@@ -19,11 +19,9 @@ app.get('/list', (req, res) => {
   res.render(`pages/list`, { user: req.user });
 });
 
-app.get('/live',
-  ensureLogin.ensureLoggedIn(),
-  (req, res) => {
-    res.render(`pages/live`, { user: req.user });
-  });
+app.get('/live', (req, res) => {
+  res.render(`pages/live`, { user: req.user });
+});
 
 app.get('/rules', (req, res) => {
   res.render(`pages/rules`, { user: req.user });
