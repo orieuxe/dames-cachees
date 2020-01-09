@@ -42,6 +42,7 @@ module.exports = (io) => {
 
     sock.on('joinWaitingRoom', (name) => {
       registerPlayer(sock, name)
+      sock.join(waitingRoom);
     })
 
     sock.on('opponentClick', (opponentId) => {
