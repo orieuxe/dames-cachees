@@ -26,7 +26,6 @@ module.exports = (io) => {
 
   live.on('connection', (sock) => {
     sock.join(waitingRoom);
-    updateWaitingList();
 
     sock.on('disconnect', () => {
       if (waitingPlayers.hasOwnProperty(sock.id)){
