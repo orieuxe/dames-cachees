@@ -4,7 +4,7 @@
   "description": "une variante du jeu d'échecs",
   "scripts": {
     "start": "node server/server.js prod",
-    "dev": "nodemon server/server.js dev"
+    "dev": "nodemon -e js,json,ejs server/server.js dev"
   },
   "dependencies": {
     "axios": "^0.19.1",
