@@ -11,7 +11,6 @@ module.exports = (io) => {
         name:sock.name
       }
     });
-    console.log(clients);
     live.in(waitingRoom).emit('clientsChange', clients);
   }
 
