@@ -19,6 +19,7 @@ module.exports = (io) => {
   }
 
   const registerPlayer = (sock, name) => {
+    sock.join(waitingRoom);
     waitingPlayers[sock.id] = sock;
     sock.name = name
     updateWaitingList();
@@ -42,7 +43,6 @@ module.exports = (io) => {
 
     sock.on('joinWaitingRoom', (name) => {
       registerPlayer(sock, name)
-      sock.join(waitingRoom);
     })
 
     sock.on('opponentClick', (opponentId) => {
