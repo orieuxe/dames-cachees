@@ -1354,12 +1354,12 @@ var Chess = function(fen) {
 
     game_over: function() {
       return (
+        !both_have_kings() ||
         half_moves >= 100 ||
         in_checkmate() ||
         in_stalemate() ||
         insufficient_material() ||
-        in_threefold_repetition() ||
-        !both_have_kings()
+        in_threefold_repetition()
       );
     },
 
