@@ -685,8 +685,6 @@
     var squareElsIds = {}
     var squareElsOffsets = {}
     var squareSize = 16
-    var imgCache = {}
-    cacheImages();
     // -------------------------------------------------------------------------
     // Validation / Errors
     // -------------------------------------------------------------------------
@@ -859,29 +857,12 @@
 
       return interpolateTemplate(html, CSS)
     }
-    function cacheImages() {
-      var pieces = ['wH', 'bH', 'wK', 'wQ', 'wR', 'wB', 'wN', 'wP', 'bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
-      pieces.forEach(function(piece) {
-        var img = new Image()
-        img.onload = function() {
-          imgCache[piece] = getBase64Image(img)
-        }
-        img.src = buildPieceImgSrc(piece)
-      })
-
-      function getBase64Image(img) {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL;
-      }
-    }
 
     function buildPieceImgSrc (piece) {
-      if(imgCache[piece]) return imgCache[piece]
+      if (piece[1] == 'H' && piece[0] != currentOrientation[0]) {
+        return buildPieceImgSrc(piece[0] + 'P');
+      }
+
       if (isFunction(config.pieceTheme)) {
         return config.pieceTheme(piece)
       }
@@ -896,14 +877,18 @@
     }
 
     function buildPieceHTML (piece, hidden, id) {
+      if (piece[1] == 'H' && piece[0] != currentOrientation[0]) {
+        return buildPieceHTML(piece[0] + 'P', false, id);
+      }
+
       var html = '<img src="' + buildPieceImgSrc(piece) + '" '
       if (isString(id) && id !== '') {
         html += 'id="' + id + '" '
       }
       html += 'alt="" ' +
-        'class="{piece}" ' +
-        'data-piece="' + piece + '" ' +
-        'style="width:' + squareSize + 'px;' + 'height:' + squareSize + 'px;'
+      'class="{piece}" ' +
+      'data-piece="' + piece + '" ' +
+      'style="width:' + squareSize + 'px;' + 'height:' + squareSize + 'px;'
 
       if (hidden) {
         html += 'display:none;'

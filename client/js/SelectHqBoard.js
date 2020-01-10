@@ -10,19 +10,18 @@ class SelectHqBoard extends AbstractBoard{
     super.initBoard();
     var config = {
       draggable: true,
-      position: 'rnbqkbnr/pppppppp/6hH/8/8/8/PPPPPPPP/RNBQKBNR',
+      position: 'start',
       onDragStart: this.onHqChoice.bind(this),
       orientation: boardOrientation,
       pieceTheme:this.getPieceTheme.bind(this),
     }
     this.board = ChessBoard('board', config);
-    this.board.position('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
     this.state = GameState.HQSELECT;
   }
 
   onHqChoice(square, piece){
     if(this.isGameOver()) return false;
-    
+
     if(piece.includes(this.color) && piece[1] == 'P'){
       sock.emit('putHq', {color:this.color, square:square});
       Chatbox.writeEvent('select.hq', {square:square});
