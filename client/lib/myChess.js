@@ -771,7 +771,9 @@ var Chess = function(fen) {
   }
 
   function has_king(color){
-    return board[kings[color]].type === KING;
+    var piece = board[kings[color]];
+    if (piece === undefined) return false;
+    return piece.type === KING;
   }
 
   function king_attacked(color) {

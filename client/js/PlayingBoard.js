@@ -60,10 +60,10 @@ class PlayingBoard extends AbstractBoard{
 
     if(this.hqHasMovedLikeQ(move)){
       sock.emit('putQ', move);
+    }else{
+      this.checkGameOver();
+      this.sendGameInfo();
     }
-
-    this.checkGameOver();
-    this.sendGameInfo();
   }
 
   updateBoardPosition(){
