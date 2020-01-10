@@ -18,11 +18,13 @@ TODO
 -----
 - [ ] piece promotion menu
 - [ ] custom time controls
+- [ ] draw end message
+- [ ] move more code to server side
+- [ ] button to reveal his queen after the game
 
 FUTURE
 ------
 
-- user authentification
 - game database
 - HQ python engine
 
