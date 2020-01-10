@@ -34,7 +34,7 @@ class AbstractBoard{
 
    opponentDisconnect(){
      this.setMatchOver();
-     Chatbox.writeEvent('disconnect', {player : opponent.getName()});
+     Chatbox.writeEvent('disconnect', {player : opponent.username});
      this.sendGameInfo();
    }
 
@@ -51,8 +51,8 @@ class AbstractBoard{
          fen:this.getFen(),
          state:this.state,
          id:gameRoomId,
-         white:player.getName(),
-         black:opponent.getName()
+         white:user.username,
+         black:opponent.username
        })
      }
    }

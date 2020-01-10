@@ -6,14 +6,14 @@ sock.on('connect', () => {
       username: "Anon"+sock.id.slice(-4)
     }
   }
+  sock.emit('userInfos', user);
 });
 
 var boardOrientation = null;
 var board = null;
 var selectBoard = null;
 var playingBoard = null;
-var player = null;
-var opponent = null;
+var opponent = {};
 var gameRoomId = null;
 
 const clientReady = () => {
@@ -31,9 +31,9 @@ const clientReady = () => {
     $waitingRoom.hide();
     boardOrientation = infos.color;
     gameRoomId = infos.id;
-    opponent = new Player(infos.opponent);
-    $opponentName.text(opponent.getName());
-    $playerName.text(player.getName());
+    opponent.username = infos.opponent;
+    $opponentName.text(opponent.username);
+    $playerName.text(user.username);
 
     initClocks(5);
 
@@ -99,8 +99,7 @@ const clientReady = () => {
   });
 
   $JoinWaitingRoom.click(() => {
-    player = new Player(user.username);
-    sock.emit('joinWaitingRoom', player.getName());
+    sock.emit('joinWaitingRoom', user.username);
     $JoinWaitingRoom.hide();
     $LeaveWaitingRoom.show();
   });

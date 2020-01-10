@@ -112,9 +112,9 @@ class PlayingBoard extends AbstractBoard{
       if (this.chess.turn() === this.chess.WHITE){
         moveColor = this.chess.BLACK
       }
-      let movePlayer = player.getName();
+      let movePlayer = user.username;
       if (moveColor !== this.color) {
-        movePlayer = opponent.getName();
+        movePlayer = opponent.username;
       }
 
       Chatbox.writeEvent("play.win", {player : movePlayer, reason : `play.end-reason.${reason}`});

@@ -21,11 +21,11 @@ const initClocks = (mins) => {
   $clocks.show();
   tInit = moment.duration(mins, 'm');
 
-  $playerClock.attr('id', getClockId(player.getName()));
-  $opponentClock.attr('id', getClockId(opponent.getName()));
+  $playerClock.attr('id', getClockId(user.username));
+  $opponentClock.attr('id', getClockId(opponent.username));
 
-  setT(player.getName(), tInit);
-  setT(opponent.getName(), tInit.clone());
+  setT(user.username, tInit);
+  setT(opponent.username, tInit.clone());
 }
 
 
@@ -40,7 +40,7 @@ const tickClock = (name) => {
 }
 
 const timeLost = (name) => {
-   if(player.getName() == name){
+   if(user.username == name){
      sock.emit('timeLost');
    }
 }

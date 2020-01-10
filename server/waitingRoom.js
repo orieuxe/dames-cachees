@@ -19,13 +19,17 @@ module.exports = (io) => {
   }
 
   const registerPlayer = (sock, name) => {
-    sock.join(waitingRoom);
     waitingPlayers[sock.id] = sock;
     sock.name = name
     updateWaitingList();
   }
 
   live.on('connection', (sock) => {
+    sock.on('userInfos', (user) => {
+      sock.join(waitingRoom);
+      sock.name = user.username;
+      updateWaitingList();
+    })
 
     sock.on('disconnect', () => {
       if (waitingPlayers.hasOwnProperty(sock.id)){
