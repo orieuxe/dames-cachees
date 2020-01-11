@@ -8,7 +8,7 @@ module.exports = (io) => {
     const clients = Object.values(waitingPlayers).map((sock) => {
       return {
         id:sock.id,
-        name:sock.name
+        name:sock.username
       }
     });
     live.in(waitingRoom).emit('clientsChange', clients);
@@ -20,14 +20,14 @@ module.exports = (io) => {
 
   const registerPlayer = (sock, name) => {
     waitingPlayers[sock.id] = sock;
-    sock.name = name
+    sock.username = name
     updateWaitingList();
   }
 
   live.on('connection', (sock) => {
     sock.on('userInfos', (user) => {
       sock.join(waitingRoom);
-      sock.name = user.username;
+      sock.username = user.username;
       updateWaitingList();
     })
 
@@ -55,8 +55,8 @@ module.exports = (io) => {
       live.emit('event', {
         key: "new-match",
         args:{
-          whitePlayer:sock.name,
-          blackPlayer:opponent.name
+          whitePlayer:sock.username,
+          blackPlayer:opponent.username
         }
       });
 

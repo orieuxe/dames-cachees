@@ -9,7 +9,7 @@ sock.on('connect', () => {
   sock.emit('userInfos', user);
 });
 
-var boardOrientation = null;
+var color = null;
 var board = null;
 var selectBoard = null;
 var playingBoard = null;
@@ -29,7 +29,7 @@ const clientReady = () => {
     Chatbox.writeEvent('select.start')
     $rematchBtn.hide()
     $waitingRoom.hide();
-    boardOrientation = infos.color;
+    color = infos.color;
     gameRoomId = infos.id;
     opponent.username = infos.opponent;
     $opponentName.text(opponent.username);
@@ -43,11 +43,9 @@ const clientReady = () => {
       selectBoard.initBoard();
     }
     board = selectBoard;
-    board.sendGameInfo();
   }
 
-  const startPlay = () => {
-    const fen = board.getFen();
+  const startPlay = (fen) => {
     if (playingBoard === null){
       playingBoard = new PlayingBoard(fen);
     }else{
@@ -56,7 +54,6 @@ const clientReady = () => {
     $drawBtn.show();
     $resingBtn.show();
     board = playingBoard;
-    board.sendGameInfo();
     Chatbox.writeEvent('play.start');
   }
 

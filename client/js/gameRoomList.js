@@ -35,6 +35,7 @@ sock.on('createList', (list) => {
 
 sock.on('updateGame', (game) => {
   if (boards.hasOwnProperty(game.id)) {
+    console.log(game.fen);
     boards[game.id].position(game.fen);
     setInfos(game);
   }else{

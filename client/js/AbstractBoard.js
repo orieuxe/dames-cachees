@@ -1,6 +1,5 @@
 class AbstractBoard{
     initBoard(){
-      this.color = boardOrientation.charAt(0);
       this.state = null;
     }
 
@@ -18,7 +17,7 @@ class AbstractBoard{
         type:pieceString[1],
       };
 
-     if (piece.type == "H" && piece.color == this.color) {
+     if (piece.type == "H") {
        pieceDir = hiddenQueenDir;
      }
 
@@ -35,7 +34,6 @@ class AbstractBoard{
    opponentDisconnect(){
      this.setMatchOver();
      Chatbox.writeEvent('disconnect', {player : opponent.username});
-     this.sendGameInfo();
    }
 
    setMatchOver(){
@@ -45,19 +43,12 @@ class AbstractBoard{
      $drawBtn.remove();
    }
 
-   sendGameInfo(){
-     if (this.color == 'w') {
-       sock.emit('gameInfo', {
-         fen:this.getFen(),
-         state:this.state,
-         id:gameRoomId,
-         white:user.username,
-         black:opponent.username
-       })
-     }
-   }
-
    isGameOver(){
      return (this.state == GameState.OVER || this.state == GameState.MATCH_OVER);
+   }
+
+   getFullColorName(){
+     if (color == 'w') return 'white';
+     return 'black';
    }
 }

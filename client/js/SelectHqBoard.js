@@ -2,8 +2,6 @@ class SelectHqBoard extends AbstractBoard{
   constructor(){
     super();
     this.initBoard();
-
-    sock.on('putHq', this.putHq.bind(this));
   }
 
   initBoard(){
@@ -12,7 +10,7 @@ class SelectHqBoard extends AbstractBoard{
       draggable: true,
       position: 'start',
       onDragStart: this.onHqChoice.bind(this),
-      orientation: boardOrientation,
+      orientation: this.getFullColorName(),
       pieceTheme:this.getPieceTheme.bind(this),
     }
     this.board = ChessBoard('board', config);
@@ -22,17 +20,12 @@ class SelectHqBoard extends AbstractBoard{
   onHqChoice(square, piece){
     if(this.isGameOver()) return false;
 
-    if(piece.includes(this.color) && piece[1] == 'P'){
-      sock.emit('putHq', {color:this.color, square:square});
+    if(piece.includes(color) && piece[1] == 'P'){
+      sock.emit('putHq', square);
       Chatbox.writeEvent('select.hq', {square:square});
     }else{
       Chatbox.writeEvent('select.wrong-piece');
     }
     return false;
-  }
-
-  putHq(hq){
-    const piece = hq.color+'H';
-    this.board.put(piece, hq.square);
   }
 }

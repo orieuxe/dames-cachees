@@ -859,10 +859,6 @@
     }
 
     function buildPieceImgSrc (piece) {
-      if (piece[1] == 'H' && piece[0] != currentOrientation[0]) {
-        return buildPieceImgSrc(piece[0] + 'P');
-      }
-
       if (isFunction(config.pieceTheme)) {
         return config.pieceTheme(piece)
       }
@@ -877,9 +873,6 @@
     }
 
     function buildPieceHTML (piece, hidden, id) {
-      if (piece[1] == 'H' && piece[0] != currentOrientation[0]) {
-        return buildPieceHTML(piece[0] + 'P', false, id);
-      }
 
       var html = '<img src="' + buildPieceImgSrc(piece) + '" '
       if (isString(id) && id !== '') {

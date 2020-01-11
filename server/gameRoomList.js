@@ -13,13 +13,7 @@ module.exports = (io) => {
       if (gameRoom.state == GameState.MATCH_OVER) {
         delete gameRoomMap[gameRoom.id];
       }else{
-        currentGames.push({
-          id : gameRoom.id,
-          state : gameRoom.state,
-          fen : gameRoom.fen,
-          white : gameRoom.players[0].name,
-          black : gameRoom.players[1].name
-        })
+        currentGames.push(gameRoom.getGameData());
       }
     });
     return currentGames
@@ -28,8 +22,6 @@ module.exports = (io) => {
   var list = io.of('/list')
   list.on('connection', (sock) => {
     list.emit('createList', getCurrentGames());
-    sock.on('disconnect', () => {
-    })
   })
 
   var live = io.of('/live')
@@ -37,11 +29,11 @@ module.exports = (io) => {
     sock.on('opponentClick', (opponentId) => {
       opponent = live.connected[opponentId];
       const gameRoomId = Object.keys(gameRoomMap).length;
-      var gameRoom = new HqGameRoom(sock, opponent, gameRoomId);
+      var gameRoom = new HqGameRoom(sock, opponent, gameRoomId, list);
       gameRoomMap[gameRoom.id] = gameRoom;
     })
 
-    sock.on('gameInfo', (infos) => {
+    sock.on('updateGame', (infos) => {
       list.emit('updateGame', infos)
     })
   });
