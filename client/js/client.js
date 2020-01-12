@@ -14,7 +14,6 @@ var board = null;
 var selectBoard = null;
 var playingBoard = null;
 var opponent = {};
-var gameRoomId = null;
 
 const clientReady = () => {
   const writeEvent = (key) => {
@@ -30,12 +29,12 @@ const clientReady = () => {
     $rematchBtn.hide()
     $waitingRoom.hide();
     color = infos.color;
-    gameRoomId = infos.id;
     opponent.username = infos.opponent;
+
     $opponentName.text(opponent.username);
     $playerName.text(user.username);
+    initClocks(infos.timeControl);
 
-    initClocks(5);
 
     if (selectBoard === null){
       selectBoard = new SelectHqBoard();

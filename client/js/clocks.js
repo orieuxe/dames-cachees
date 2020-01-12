@@ -17,9 +17,9 @@ const setClock = (name, time) => {
   $clock.html(`${time.get('m')}:${secs}`);
 }
 
-const initClocks = (mins) => {
+const initClocks = (secs) => {
   $clocks.show();
-  tInit = moment.duration(mins, 'm');
+  tInit = moment.duration(secs, 's');
 
   $playerClock.attr('id', getClockId(user.username));
   $opponentClock.attr('id', getClockId(opponent.username));
@@ -29,18 +29,6 @@ const initClocks = (mins) => {
 }
 
 
-const tickClock = (name) => {
-  var time = getT(name);
-  time.subtract(moment.duration(100, 'ms'));
-  if (time.as('ms') > 0){
-    setT(name, time);
-  }else{
-    timeLost(name);
-  }
-}
-
-const timeLost = (name) => {
-   if(user.username == name){
-     sock.emit('timeLost');
-   }
+const tickClock = (clock) => {
+  setT(clock.player, moment.duration(clock.duration, 'ms'));
 }

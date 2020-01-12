@@ -3,9 +3,12 @@ const GameState = require(`${clientPath}/commons/GameState`);
 const Chess = require(`${clientPath}/lib/myChess`);
 
 class HqGameRoom {
-  constructor(s1,s2, id, ioList){
+  constructor(s1,s2, id, ioList, timeControl){
     this.ioList = ioList;
-    this.initGameRoom(s1,s2, id);
+    this.id = id;
+    this.timeControl = timeControl;
+
+    this.initGameRoom(s1,s2, id, 300);
 
     this.players.forEach((player, idx) => {
       const opponent = this.getOpponent(idx);
@@ -14,7 +17,8 @@ class HqGameRoom {
       })
 
       player.on('move', (move) => {
-        this.playerOnMove = opponent;
+        this.stopClock(player);
+        this.runClock(opponent);
         this.chess.move(move);
         this.sendToPlayer(opponent, 'gameUpdate', this.exportFen(opponent.color));
         this.sendGameIoList();
@@ -32,10 +36,6 @@ class HqGameRoom {
       player.on('putHq', (square) => {
         player.hq = square;
         this.checkBothHqChosen();
-      })
-
-      player.on('putQ', (move) => {
-        this.sendToPlayers("putQ", move);
       })
 
       player.on('rematch', () => {
@@ -58,42 +58,38 @@ class HqGameRoom {
 
       player.on('resign', () => {
         this.sendToPlayers("resign", opponent.username);
-        this.stopClockTimer();
-        this.state = GameState.OVER;
+        this.setGameOver();
       })
 
       player.on('timeLost', () => {
         this.sendToPlayers('timeWin', opponent.username);
-        this.stopClockTimer();
-        this.state = GameState.OVER;
+        this.setGameOver();
       })
 
       player.on('disconnect', () => {
         this.sendToPlayer(opponent, 'opponentDisconnect', null);
-        this.stopClockTimer();
+        this.stopClocks();
         this.state = GameState.MATCH_OVER;
       })
     })
   }
 
-  initGameRoom(s1,s2, id){
+  initGameRoom(s1,s2){
     this.chess = new Chess();
     s1.color = this.chess.WHITE;
-    s1.hq = null;
     s2.color = this.chess.BLACK;
-    s2.hq = null;
-    this.id = id;
     this.state = GameState.HQSELECT;
     this.rematchOffers = [false, false];
     this.drawOffers = [false, false];
     this.players = [s1,s2];
-    this.playerOnMove = s1;
-    this.clockTimer = null;
 
     this.players.forEach((p,i) => {
+      p.hq = null;
+      p.clock = this.timeControl * 1000;
+      p.timer = null;
       this.sendToPlayer(p, 'startSelect', {
         color : p.color,
-        id : this.id,
+        timeControl : this.timeControl,
         opponent : this.getOpponent(i).username
       });
     });
@@ -116,23 +112,22 @@ class HqGameRoom {
       this.players.forEach(p => {
         this.sendToPlayer(p, 'startPlay', this.exportFen(p.color))
       });
-      this.runClockTimer();
+      this.runClock(this.players[0]);
       this.state = GameState.ONGOING
     }
   }
 
   checkRematchOffers(){
     if (this.rematchOffers.every(offer => offer)){
-      this.initGameRoom(this.players[1],this.players[0], this.id)
+      this.initGameRoom(this.players[1],this.players[0]);
     }
   }
 
   checkDrawOffers(){
     if (this.drawOffers.every(offer => offer)){
       this.sendToPlayers("drawAgreed", null);
+      this.setGameOver();
     }
-    this.state = GameState.OVER;
-    this.stopClockTimer();
   }
 
   checkGameOver(){
@@ -151,8 +146,7 @@ class HqGameRoom {
       }
 
       this.sendToPlayers('gameOver', reason);
-      this.stopClockTimer();
-      this.state = GameState.OVER
+      this.setGameOver();
     }
   }
 
@@ -160,14 +154,28 @@ class HqGameRoom {
     return this.players[(idx + 1)%2];
   }
 
-  runClockTimer(){
-    this.clockTimer = setInterval(() => {
-      this.sendToPlayers('tick', this.playerOnMove.username);
-    }, 100)
+  stopClocks(){
+    this.players.forEach(p => this.stopClock(p));
   }
 
-  stopClockTimer(){
-    clearInterval(this.clockTimer);
+  stopClock(p){
+    clearInterval(p.timer);
+  }
+
+  runClock(p){
+    p.timer = setInterval(() => {
+      p.clock -= 100;
+      this.sendToPlayers('tickClock', {
+        player:p.username,
+        duration:p.clock
+      });
+      if (p.clock <= 0) {
+        this.setGameOver();
+        const winningPlayerIdx = p.color == this.chess.WHITE ? 1 : 0;
+        this.sendToPlayers('timeWin', this.players[winningPlayerIdx].username);
+      }
+
+    }, 100)
   }
 
   exportFen(color){
@@ -211,6 +219,10 @@ class HqGameRoom {
     this.ioList.emit('updateGame', this.getGameData());
   }
 
+  setGameOver(){
+    this.stopClocks();
+    this.state = GameState.OVER;
+  }
 }
 
 module.exports = HqGameRoom;

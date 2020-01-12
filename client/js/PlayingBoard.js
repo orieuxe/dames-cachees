@@ -18,7 +18,7 @@ class PlayingBoard extends AbstractBoard{
       this.setGameOver();
       Chatbox.writeEvent('play.win', {player : playerName, reason : 'play.end-reason.time'});
     })
-    sock.on('tick', tickClock);
+    sock.on('tickClock', tickClock);
   }
 
   initBoard(fen){
