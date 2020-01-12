@@ -49,12 +49,17 @@
 	"play":{
 		"start":"Let the game begin !",
 		"over":"Game over",
+		"draw":"Game drawn $t({{reason}}) !",
 		"win":"$t(play.over) ! {{player}} wins $t({{reason}}) !",
 		"end-reason":{
 			"king-capture":"by capturing the king",
 			"checkmate":"by checkmate",
 			"resignation":"by resignation",
-			"time":"on time"
+			"time":"on time",
+			"agrement":"by agrement",
+			"stalemate":"by stalemate",
+			"threefold-rep":"by threefold repetion",
+			"insufficient-material":"by insufficient material"
 		}
 	},
 	"draw":{
@@ -62,8 +67,7 @@
 		"offer":{
 			"sent": "Draw offered...",
 			"recieved": "{{player}} offers a draw !"
-		},
-		"agreed":"Game drawn by mutual agrement !"
+		}
 	},
 	"rematch":{
 		"btn": "Rematch",

@@ -18,7 +18,7 @@ TODO
 -----
 - [ ] piece promotion menu
 - [ ] custom time controls
-- [ ] draw end message
+- [x] more draw end messages
 - [ ] move more code to server side
 - [ ] button to reveal his queen after the game
 

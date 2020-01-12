@@ -19,18 +19,14 @@ class HqGameRoom {
         this.sendToPlayer(opponent, 'gameUpdate', this.exportFen(opponent.color));
         this.sendGameIoList();
 
-        if (this.hqHasMovedLikeQ(move)) {
+        if(this.hqHasMovedLikeQ(move)) {
           this.chess.put({ type: this.chess.QUEEN, color: move.color }, move.to);
           this.chess.load(this.chess.fen());
           this.sendToPlayers('putQ', move);
           this.sendGameIoList();
         }
 
-        if (this.chess.game_over()) {
-          this.sendToPlayers('gameOver', null);
-          this.stopClockTimer();
-          this.state = GameState.OVER
-        }
+        this.checkGameOver();
       })
 
       player.on('putHq', (square) => {
@@ -139,6 +135,27 @@ class HqGameRoom {
     this.stopClockTimer();
   }
 
+  checkGameOver(){
+    if (this.chess.game_over()) {
+      var reason = 'unknown-reason';
+      if(!this.chess.has_king(this.chess.turn())){
+        reason = 'king-capture';
+      }else if (this.chess.in_checkmate()) {
+        reason = 'checkmate';
+      }else if(this.chess.in_stalemate()){
+        reason = 'stalemate';
+      }else if(this.chess.insufficient_material()){
+        reason = 'insufficient-material';
+      }else if(this.chess.in_threefold_repetition()){
+        reason = 'threefold-rep';
+      }
+
+      this.sendToPlayers('gameOver', reason);
+      this.stopClockTimer();
+      this.state = GameState.OVER
+    }
+  }
+
   getOpponent(idx){
     return this.players[(idx + 1)%2];
   }
@@ -193,6 +210,7 @@ class HqGameRoom {
   sendGameIoList(){
     this.ioList.emit('updateGame', this.getGameData());
   }
+
 }
 
 module.exports = HqGameRoom;

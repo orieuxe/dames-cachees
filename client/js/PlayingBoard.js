@@ -8,7 +8,7 @@ class PlayingBoard extends AbstractBoard{
     sock.on('gameOver', this.gameOver.bind(this));
     sock.on('drawAgreed', () => {
       this.setGameOver();
-      Chatbox.writeEvent('draw.agreed');
+      Chatbox.writeEvent('play.draw', {reason: 'play.end-reason.agrement'});
     })
     sock.on('resign', (playerName) => {
       this.setGameOver();
@@ -68,25 +68,21 @@ class PlayingBoard extends AbstractBoard{
     this.updateBoardPosition();
   }
 
-  gameOver(){
+  gameOver(reason){
     this.setGameOver();
-    var reason = 'unknown-reason';
-    if (this.chess.in_checkmate()) {
-      reason = 'checkmate';
-    }
 
-    if(!this.chess.has_king(this.chess.turn())){
-      reason = 'king-capture';
-    }
-
-    //get the winning player name.
-    let player = ""
-    if (this.chess.turn() == color) {
-      player = opponent.username
+    if (reason == 'king-capture' || reason == 'checkmate') {
+      //get the winning player name.
+      let player = ""
+      if (this.chess.turn() == color) {
+        player = opponent.username
+      }else{
+        player = user.username
+      }
+      Chatbox.writeEvent("play.win", {player : player, reason : `play.end-reason.${reason}`});
     }else{
-      player = user.username
+      Chatbox.writeEvent("play.draw", {reason: `play.end-reason.${reason}`})
     }
-    Chatbox.writeEvent("play.win", {player : player, reason : `play.end-reason.${reason}`});
   }
 
   gameUpdate(fen) {

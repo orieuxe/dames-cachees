@@ -49,12 +49,17 @@
 	"play":{
 		"start":"Que la partie commence !",
 		"over":"Partie Terminée !",
+		"draw":"Partie nulle $t({{reason}}) !",
 		"win":"$t(play.over) {{player}} gagne $t({{reason}}) !",
 		"end-reason":{
 			"king-capture":"en prenant le roi",
 			"checkmate":"par échec et mat",
 			"resignation":"par abandon",
-			"time":"au temps"
+			"time":"au temps",
+			"agrement":"par accord mutuel",
+			"stalemate":"par pat",
+			"threefold-rep":"par triple répétition",
+			"insufficient-material":"car materiel insuffisant"
 		}
 	},
 	"draw":{
@@ -62,8 +67,7 @@
 		"offer":{
 			"sent": "Proposition de nulle envoyée...",
 			"recieved": "{{player}} propose nulle !"
-		},
-		"agreed":"Partie nulle par accord mutuel !"
+		}
 	},
 	"rematch":{
 		"btn": "Revanche",
