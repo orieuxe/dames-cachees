@@ -78,11 +78,9 @@ module.exports = (app) => {
   app.get('/login', passport.authenticate('lichess'));
 
   app.get('/return', passport.authenticate('lichess', {
-    successReturnToOrRedirect : '/',
+    successReturnToOrRedirect : '/live',
     failureRedirect           : '/login'
-  }), (req, res) => {
-    res.redirect('/');
-  });
+  }));
 
   app.get('/logout', (req, res) => {
     req.logout();
