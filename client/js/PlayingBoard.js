@@ -56,6 +56,7 @@ class PlayingBoard extends AbstractBoard{
     if (move === null) return 'snapback';
 
     sock.emit('move', move);
+    this.updateBoardPosition();
   }
 
   updateBoardPosition(){
