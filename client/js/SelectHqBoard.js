@@ -1,6 +1,9 @@
 class SelectHqBoard extends AbstractBoard{
   constructor(){
     super();
+    if (document.visibilityState != 'visible'){
+      Push.create(i18next.t('select.start') + ' vs ' + opponent.username);
+    }
     this.initBoard();
   }
 

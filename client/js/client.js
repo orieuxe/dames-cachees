@@ -15,6 +15,8 @@ var selectBoard = null;
 var playingBoard = null;
 var opponent = {};
 
+Push.Permission.request();
+
 const clientReady = () => {
   const writeEvent = (key) => {
     if(typeof key === 'object'){
@@ -38,9 +40,6 @@ const clientReady = () => {
 
     if (selectBoard === null){
       selectBoard = new SelectHqBoard();
-      if (document.visibilityState != 'visible'){
-        Push.create(i18next.t('select.start') + ' vs ' + opponent.username);
-      }
     }else{
       selectBoard.initBoard();
     }
