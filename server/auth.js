@@ -19,7 +19,7 @@ const localhostConfig = {
 const herokuConfig = {
   clientID: 'vgv3RS0VK5E55ka4',
   clientSecret: 'GVt7X3jHA2SDpsQWoYJjD1seCcYDy2OR',
-  callbackURL: '/return'
+  callbackURL: 'https://dames-cachees.herokuapp.com/return'
 }
 
 var env = process.argv[2];
