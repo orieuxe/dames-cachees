@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-lichess').Strategy;
 
+var User = require('./models/user');
 
 // Configure the Lichess strategy for use by Passport.
 //
@@ -77,10 +78,17 @@ module.exports = (app) => {
   // Define routes.
   app.get('/login', passport.authenticate('lichess'));
 
-  app.get('/return', passport.authenticate('lichess', {
-    successReturnToOrRedirect : '/live',
-    failureRedirect           : '/login'
-  }));
+  app.get('/return', passport.authenticate('lichess'), (req, res) => {
+    let query = { username: req.user.username };
+    let update = { lastLogin : new Date() };
+    let options = { upsert: true };
+
+    User.findOneAndUpdate(query, update, options, function(error, result) {
+      if (error) throw error;
+    });
+
+    res.redirect('/live');
+  });
 
   app.get('/logout', (req, res) => {
     req.logout();

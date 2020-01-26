@@ -1,6 +1,7 @@
 var express     = require('express');
 var app         = express();
 var ensureLogin = require('connect-ensure-login');
+require('./mongoose');
 
 const clientPath = `${__dirname}/../client`;
 
