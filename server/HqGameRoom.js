@@ -1,6 +1,9 @@
+var Games = require('./models/game')
+
 const clientPath = `${__dirname}/../client`;
 const GameState = require(`${clientPath}/commons/GameState`);
 const Chess = require(`${clientPath}/lib/myChess`);
+const ranking  = require('./ranking.js');
 
 class HqGameRoom {
   constructor(s1,s2, id, ioList, timeControl){
@@ -58,16 +61,19 @@ class HqGameRoom {
 
       player.on('resign', () => {
         this.sendToPlayers("resign", opponent.username);
+        this.result = player.color == this.chess.WHITE ? 0 : 1;
         this.setGameOver();
       })
 
       player.on('timeLost', () => {
         this.sendToPlayers('timeWin', opponent.username);
+        this.result = player.color == this.chess.WHITE ? 0 : 1;
         this.setGameOver();
       })
 
       player.on('disconnect', () => {
         this.sendToPlayer(opponent, 'opponentDisconnect', null);
+        this.result = player.color == this.chess.WHITE ? 0 : 1;
         this.stopClocks();
         this.state = GameState.MATCH_OVER;
       })
@@ -82,6 +88,9 @@ class HqGameRoom {
     this.rematchOffers = [false, false];
     this.drawOffers = [false, false];
     this.players = [s1,s2];
+    this.result = null
+
+    ranking.registerPlayers(s1.username, s2.username);
 
     this.players.forEach((p,i) => {
       p.hq = null;
@@ -143,6 +152,12 @@ class HqGameRoom {
         reason = 'insufficient-material';
       }else if(this.chess.in_threefold_repetition()){
         reason = 'threefold-rep';
+      }
+
+      if (this.chess.in_draw()){
+        this.result = 0.5;
+      }else{
+        this.result = this.chess.WHITE == this.chess.turn() ? 0 : 1;
       }
 
       this.sendToPlayers('gameOver', reason);
@@ -221,6 +236,7 @@ class HqGameRoom {
 
   setGameOver(){
     this.stopClocks();
+    ranking.updateRatings(this.result);
     this.state = GameState.OVER;
   }
 }

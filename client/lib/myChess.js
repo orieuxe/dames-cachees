@@ -1333,10 +1333,11 @@ var Chess = function(fen) {
 
     in_draw: function() {
       return (
+        both_have_kings() && (
         half_moves >= 100 ||
         in_stalemate() ||
         insufficient_material() ||
-        in_threefold_repetition()
+        in_threefold_repetition())
       );
     },
 
