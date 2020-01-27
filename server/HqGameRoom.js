@@ -1,5 +1,3 @@
-var Games = require('./models/game')
-
 const clientPath = `${__dirname}/../client`;
 const GameState = require(`${clientPath}/commons/GameState`);
 const Chess = require(`${clientPath}/lib/myChess`);
