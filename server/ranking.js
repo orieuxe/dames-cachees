@@ -36,9 +36,7 @@ const registerPlayers = (white, black, cb) => {
 
       ratings[i] = rating;
       elos[username] = rating.getRating();
-      if (i == 1) {
-        cb(elos);
-      }
+      if (Object.keys(elos).length == 2) cb(elos);
     });
   });
 }
