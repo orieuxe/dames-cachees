@@ -96,6 +96,11 @@ const clientReady = () => {
       }
   });
 
+  const updateRatings = (ratings) => {
+    $playerRating.text(Math.round(ratings[user.username],0));
+    $opponentRating.text(Math.round(ratings[opponent.username],0));
+  }
+
   $JoinWaitingRoom.click(() => {
     sock.emit('joinWaitingRoom', user.username);
     $JoinWaitingRoom.hide();
@@ -129,4 +134,5 @@ const clientReady = () => {
   sock.on('startSelect', startSelect);
   sock.on('startPlay', startPlay);
   sock.on('opponentDisconnect', opponentDisconnect);
+  sock.on('ratings', updateRatings);
 }

@@ -90,7 +90,9 @@ class HqGameRoom {
     this.players = [s1,s2];
     this.result = null
 
-    ranking.registerPlayers(s1.username, s2.username);
+    ranking.registerPlayers(s1.username, s2.username, (ratings) => {
+      this.sendToPlayers('ratings', ratings);
+    });
 
     this.players.forEach((p,i) => {
       p.hq = null;
@@ -135,6 +137,7 @@ class HqGameRoom {
   checkDrawOffers(){
     if (this.drawOffers.every(offer => offer)){
       this.sendToPlayers("drawAgreed", null);
+      this.result = 0.5
       this.setGameOver();
     }
   }
@@ -236,7 +239,8 @@ class HqGameRoom {
 
   setGameOver(){
     this.stopClocks();
-    ranking.updateRatings(this.result);
+    let ratings = ranking.updateRatings(this.result);
+    this.sendToPlayers('ratings', ratings);
     this.state = GameState.OVER;
   }
 }
