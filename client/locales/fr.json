@@ -13,8 +13,9 @@
 	},
 	"index":{
 		"welcome":"Bienvenue sur $t(title) !",
-		"intro": "La seule variante d'échecs où l'on peut gagner en prenant le roi avec un seul pion!",
+		"intro": "La seule variante d'échecs où l'on peut prendre le roi avec un seul pion!",
 		"learn": "Apprendre comment jouer",
+		"leaderboard": "Classement",
 		"contribute": "Contribuer sur ",
 		"open-source": "Ce projet est open-source ! Vous êtez libre de regarder le code et de proposer des améliorations !"
 	},

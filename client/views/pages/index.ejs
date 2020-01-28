@@ -13,13 +13,26 @@
         <div class="info-box">
           <h2 class="text-center" data-i18n="index.welcome"></h2>
           <p data-i18n="index.intro"></p>
-          <a href="/rules">
+          <!-- <a href="/rules">
             <button class="my-btn" data-i18n="index.learn"></button>
-          </a>
+          </a> -->
         </div>
         <div class="info-box">
-          <h2 class="text-center" data-i18n="[prepend]index.contribute"><a href="//github.com/orieuxe/dames-cachees"><img height="30px" id="github-logo" src="img/logos/github.png"></a></h2>
-          <p data-i18n="index.open-source"></p>
+          <h2 class="text-center" data-i18n="index.leaderboard"></h2>
+          <p>
+            <table id="leaderboard">
+            <% for (var i = 0; i < leaderboard.length; i++) { %>
+              <tr>
+                <td><%= leaderboard[i].username %></td>
+                <td>
+                  <% if (leaderboard[i].rating) { %>
+                    <%= Math.round(leaderboard[i].rating.elo, 0) %>
+                  <% } %>
+                </td>
+              </tr>
+            <% } %>
+            </table>
+          </p>
         </div>
       </div>
       <img id="chess-position" src="img/hq-chess/scandi.png" alt="#teamScandi">

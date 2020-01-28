@@ -13,8 +13,9 @@
 	},
 	"index":{
 		"welcome":"Welcome to $t(title) !",
-		"intro": "The only chess-variant where you can win by taking the king with a single pawn !",
+		"intro": "The only chess-variant where you can take the king with a single pawn !",
 		"learn": "Learn how to play",
+		"leaderboard": "Leaderboard",
 		"contribute": "Contribute on ",
 		"open-source": "This project is open-source. Feel free to look at the code and give suggestions !"
 	},

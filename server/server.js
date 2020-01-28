@@ -11,10 +11,7 @@ app.set('view engine', 'ejs');
 app.set('views', `${clientPath}/views`);
 
 require('./auth')(app);
-
-app.get('/', (req, res) => {
-  res.render('pages/index', { user: req.user });
-});
+require('./home')(app);
 
 app.get('/list', (req, res) => {
   res.render(`pages/list`, { user: req.user });
