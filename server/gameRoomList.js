@@ -29,7 +29,7 @@ module.exports = (io) => {
     sock.on('opponentClick', (opponentId) => {
       opponent = live.connected[opponentId];
       const gameRoomId = Object.keys(gameRoomMap).length;
-      var gameRoom = new HqGameRoom(sock, opponent, gameRoomId, list, 300);
+      var gameRoom = new HqGameRoom(sock, opponent, gameRoomId, list, 60);
       gameRoomMap[gameRoom.id] = gameRoom;
     })
 
