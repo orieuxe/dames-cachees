@@ -65,7 +65,7 @@ class HqGameRoom {
 
       player.on('timeLost', () => {
         this.sendToPlayers('timeWin', opponent.username);
-        this.result = player.color == this.chess.WHITE ? 1 : 0;
+        this.result = player.color == this.chess.WHITE ? 0 : 1;
         this.setGameOver();
       })
 
